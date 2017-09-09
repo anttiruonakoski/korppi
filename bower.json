@@ -1,0 +1,21 @@
+{
+  "name": "korppi",
+  "homepage": "https://github.com/anttiruonakoski/korppi",
+  "authors": [
+    "Antti Ruonakoski <aruonakoski@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "leaflet.locatecontrol": "^0.62.0"
+  }
+}
