@@ -25,22 +25,19 @@
             margin: 10px;
             height: calc(100%-20px);
         }
-        #kartta {
+        #map_div {
         	width: calc(50%);
         	height: 720px;
         	border: 1px solid black;
         	margin: 0px;
         	padding: 0px;
         }
-        #oikea {
+        #main_div {
     	background: url('images/corrax.jpg');
       background-size: 150px;
     	background-position: right bottom; /*Positioning*/
-   		background-repeat: no-repeat; /*Prevent showing multiple background images*/;
-      margin-left:0px; 
-      padding-left:0px;
-
-		    }
+   		background-repeat: no-repeat; /*Prevent showing multiple background images*/
+        }
 
         .leaflet-container {
   		cursor: crosshair !important;
@@ -133,7 +130,7 @@
             "Uusi Taustakartta": taustakartta_uusi
         			 }
 
-            const map = new L.map('kartta', init_map
+            const map = new L.map('map_div', init_map
             );
            	L.control.layers(baseMaps).addTo(map);
             L.control.locate().addTo(map);
@@ -220,12 +217,12 @@
    	</head>
 
    <body onload="init();">
-   <div class="container bg-light">
+   <div id="main_div" class="container bg-light">
    		<!-- <div class="row">
 		<h3>Tarkista kunta</h3>
    		</div> -->
    		<div class="row">
-   			<div class="col-lg-8" id="kartta">
+   			<div class="col-lg-8" id="map_div">
     		</div>  
 
     <div class="col-lg-4" id="lomake">  
