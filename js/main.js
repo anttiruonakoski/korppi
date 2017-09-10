@@ -28,8 +28,12 @@
 		icon: 'twitter', prefix: 'fa', markerColor: 'cadetblue'
 	});
 
-	var currentMarker = null;
+	var currentMarker;
     var markerObs, markerBird;
+    currentMarker = obsIcon;
+
+    //make WFS-queries for placenames
+    var getPlaceNames = true;
 				
 	function init() {
 
@@ -104,34 +108,30 @@
 
 			var uppercaseScope = scope.charAt(0).toUpperCase() + scope.slice(1);
 
-			var elements = {accuracy: ["accuracy", "value", 0], disabled: ["accuracy", "disabled", true], nKoord: ["n-koord", "value", null], eKoord: ["e-koord", "value", null], kuntaNimi: ["kunta-nimi", "value", null]};
+			const elements = {accuracy: ["accuracy", "value", 0], disabled: ["accuracy", "disabled", true], nKoord: ["n-koord", "value", null], eKoord: ["e-koord", "value", null], kuntaNimi: ["kunta-nimi", "value", null]};
 
 			for (var [key, value] of Object.entries(elements)) {
 				let elementId = scope.concat("-",value[0]);
 
 					if ( $( "#" + elementId ).length ) {
-						console.log(elementId);
 						document.getElementById(elementId)[value[1]] = value[2];
 					}	
 			}
 
 			var markerName = "marker".concat(uppercaseScope); 
-			
-
 			if (this[markerName]) {
 				map.removeLayer(this[markerName]);
 			} 
 		} 
 
-		// function clearBird() {
-		// 	document.getElementById('bird-accuracy').disabled = true;
-		// 	document.getElementById('bird-n-koord').value = null;
-		// 	document.getElementById('bird-e-koord').value = null;
-		// 	if (markerBird) {
-		// 		map.removeLayer(markerBird);
-		// 	}     
-		// }	
+		function connectPosition() {
 
+			const scopes = ['obs', 'bird'];
+			const elements = {nKoord: ["n-koord"], eKoord: ["e-koord"]};
+
+			// for (var)
+
+		}
 
 		$("#btn-observer").click(function(){
 				currentMarker = obsIcon; 
@@ -152,12 +152,36 @@
 		$("#btn-move").click(function(){
 				currentMarker = null;
 		    }); 
+		$("#btn-distance").click(function(){
+				currentMarker = null;
+		    }); 
+
+		$("#btn-connect").click(function(){
+				connectPosition();
+		    }); 
+
+		$("#btn-get-placenames").click(function(){
+				getPlaceNames = !getPlaceNames;
+				console.log(getPlaceNames);
+		    });
 
 		$("#btn-trash-all").click(function(){
-				currentMarker = null;
+				$().button('toggle');
+				currentMarker = obsIcon;
 				clearPosition("obs");
 				clearPosition("bird");
+
 		    }); 
+
+		$('#obs-accuracy').change(function() {
+			var showAccuracy = true;
+			var accuracyRadius = 1000;
+		  	L.circle(markerObs.getLatLng(), {radius: accuracyRadius}).addTo(map);
+		});
+
+		$('#bird-accuracy').change(function() {
+		  L.circle(markerBird.getLatLng(), {radius: 200}).addTo(map);
+		});
 
     }
 

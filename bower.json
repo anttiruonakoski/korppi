@@ -16,6 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "leaflet.locatecontrol": "^0.62.0"
+    "leaflet.locatecontrol": "^0.62.0",
+    "axios": "^0.16.2"
   }
 }

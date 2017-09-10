@@ -30,14 +30,13 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
 
     <link rel="stylesheet" href="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css">
     <link rel="stylesheet" href="bower_components/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
 
     <link rel="stylesheet" type="text/css" href="styles/korppi_style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
 
     <!--site dependencies. manage with bower later maybe-->
 
@@ -61,6 +60,7 @@
     <script src="js/bootstraphelper.js" type="text/javascript"></script>
     <script src="js/wfs_queries.js" type="text/javascript"></script>
     <script src="js/mapfunctions.js" type="text/javascript"></script>
+
     <script src="js/main.js" type="text/javascript"></script>
 
   	<script type="text/javascript">  
@@ -89,49 +89,56 @@
   			<fieldset>
     			<legend class="m-0 p-0"><small>Havainnoijan paikka</small></legend>
           <div class="form-group">
-            <div class="row m-0 p-0 justify-content-end"">
-              <div class="col-md-3 mr-1 p-0">
+            <div class="row m-0 p-0 justify-content-start">
+              <div class="col-lg-3 mr-1 p-0">
     				    <label class="mb-1"><small>P-koord:</small></label>
     				    <input type="text" class="form-control form-control-sm" id="obs-n-koord" placeholder="0000000" size="8" disabled>
               </div>
-              <div class="col-md-3 mx-1 p-0">
+              <div class="col-lg-3 mx-1 p-0">
     				    <label class="mb-1"><small>I-koord:</small></label>
     				    <input type="text" class="form-control form-control-sm" id="obs-e-koord" placeholder="000000" size="6" disabled>	
               </div>  
-              <div class="col-md-4 mx-1 p-0 align-self-end">
+              <div class="col-lg-3 mx-1 p-0 align-self-end">
                 <label class="mb-1"><small>Tarkkuus:</small></label>
                 <select class="custom-select form-control-sm" id="obs-accuracy" disabled>
                   <option selected value="0">ei määr.</option>
-                  <option value="1">alle 50 m</option>
-                  <option value="2">alle 200 m</option>
-                  <option value="3">alle 1 km</option>
-                  <option value="3">alle 5 km</option>
-                  <option value="3">yli 5 km</option>
+                  <option value="50">alle 50 m</option>
+                  <option value="200">alle 200 m</option>
+                  <option value="1000">alle 1 km</option>
+                  <option value="5000">alle 5 km</option>
+                  <option value="5001">yli 5 km</option>
                   </select> 
               </div> 
-              <div class="col ml-1 p-0 align-self-end">   
+
+              <div class="btn-group col-lg-2 p-0 m-0 align-self-end" data-toggle="buttons">   
                   <button type="button" class="btn btn-sm btn-danger" id="btn-clear-obs" data-toggle="tooltip" data-placement="bottom" title="Tyhjennä havaintopaikka"><i class="fa fa-times" aria-hidden="true"></i></button>
+
+                  <label class="btn btn-sm btn-success active" id="btn-get-placenames">
+                  <input type="checkbox" checked autocomplete="off">
+                  <i class="fa fa-paper-plane" aria-hidden="true"></i> </label>
+                  
               </div> 
             </div>   
 
     				<label><small>Kunta:</small></label>
-    				<input type="text" class="form-control form-control-sm" id="obs-kunta-nimi" placeholder="Rovaniemi" size="25" disabled/>
+    				<input type="text" class="form-control form-control-sm" id="obs-kunta-nimi" placeholder="ei kuntaa" size="25" disabled/>
                 <div class="invalid-feedback">
                     Et voi asettaa havaintopaikkaa Suomen ulkopuolelle.
                 </div>
     				<label><small>Paikannimi:</small></label>
     				<input type="text" class="form-control" id="paikka_nimi" size="25">
     				<legend class="m-0 p-0"><small>Linnun paikka</small></legend>
-    				<div class="row m-0 p-0 justify-content-end"">
-              <div class="col-md-3 mr-1 p-0">
+
+    				<div class="row m-0 p-0 justify-content-start">
+              <div class="col-lg-3 mr-1 p-0">
     				    <label class="mb-1"><small>P-koord:</small></label>
     				    <input type="text" class="form-control form-control-sm" id="bird-n-koord" placeholder="0000000" size="8" readonly />
               </div>
-              <div class="col-md-3 mx-1 p-0">
+              <div class="col-lg-3 mx-1 p-0">
     				    <label class="mb-1"><small>I-koord:</small></label>
     				    <input type="text" class="form-control form-control-sm" id="bird-e-koord" placeholder="000000" size="6" readonly />	
               </div>  
-              <div class="col-md-4 mx-1 p-0 align-self-end">
+              <div class="col-lg-3 mx-1 p-0 align-self-end">
                 <label class="mb-1"><small>Tarkkuus:</small></label>
                 <select class="custom-select form-control-sm" id="bird-accuracy" disabled>
                   <option selected value="0">ei määr.</option>
@@ -142,9 +149,13 @@
                   <option value="3">yli 5 km</option>
                   </select> 
               </div> 
-              <div class="col ml-1 p-0 align-self-end">   
-                  <button type="button" class="btn btn-sm btn-danger" id="btn-clear-bird" data-toggle="tooltip" data-placement="bottom" title="Tyhjennä linnun paikka"><i class="fa fa-times" aria-hidden="true"></i></button>
-              </div> 
+              <div class="btn-group col-lg-2 ml-0 p-0 align-self-end"> 
+              	
+                 <button type="button" class="btn btn-sm btn-danger" id="btn-clear-bird" data-toggle="tooltip" data-placement="bottom" title="Tyhjennä linnun paikka"><i class="fa fa-times" aria-hidden="true"></i></button>
+
+                 <button type="button" class="btn btn-sm btn-success" id="btn-connect-bird" data-toggle="tooltip" data-placement="bottom" title="Aseta samaksi kuin havaintopaikka"><i class="fa fa-clone" aria-hidden="true"></i></button>
+
+               </div>   
 
           </div>  
     		</fieldset>
@@ -152,28 +163,58 @@
      </div>  
 
 
-     <div class="btn-group" role="group btn-group-sm" aria-label="tools">
-       <button type="button" class="btn btn-secondary btn-sm" id="btn-observer" data-toggle="tooltip" data-placement="bottom" title="Aseta havainnoija"><i class="fa fa-binoculars" aria-hidden="true"></i></button>
-       <button type="button" class="btn btn-secondary btn-sm" id="btn-bird" data-toggle="tooltip" data-placement="bottom" title="Aseta lintu"><i class="fa fa-twitter" aria-hidden="true"></i></button>
-     </div>   
+    <div class="btn-group" data-toggle="buttons" aria-label="tools">
+     	<label class="btn btn-secondary active" id="btn-observer" data-toggle="tooltip" data-placement="bottom" title="Aseta havainnoija" >
+     		<input type="radio" name="options" autocomplete="off" checked>	
+       	<i class="fa fa-binoculars" aria-hidden="true"></i></label>
+       	
+      <label class="btn btn-secondary" id="btn-bird" data-toggle="tooltip" data-placement="bottom" title="Aseta lintu">
+      	<input type="radio" name="options" autocomplete="off" >
+       	<i class="fa fa-twitter" aria-hidden="true"></i></label> 	
 
-     <div class="btn-group" role="group btn-group-sm" aria-label="tools">
-        <button type="button" class="btn btn-secondary btn-sm" id="btn-move" data-toggle="tooltip" data-placement="bottom" title="Siirrä karttaa"><i class="fa fa-arrows" aria-hidden="true"></i></button>
+     		<label class="btn btn-secondary" id="btn-move" data-toggle="tooltip" data-placement="bottom" title="Siirrä karttaa">
+     		<input type="radio" name="options" autocomplete="off" >
+     		<i class="fa fa-arrows" aria-hidden="true"></i></label>
+
+    </div>   
+
+    <div class="btn-group" role="group btn-group-sm" aria-label="tools">
      
-       <button type="button" class="btn btn-secondary btn-sm" id="btn-distance" data-toggle="tooltip" data-placement="bottom" title="Mittaa matka"><i class="fa fa-arrows-h" aria-hidden="true"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" id="btn-distance" data-toggle="tooltip" data-placement="bottom" title="Mittaa matka"><i class="fa fa-arrows-h" aria-hidden="true"></i></button>
        <button type="button" class="btn btn-danger btn-sm" id="btn-trash-all" data-toggle="tooltip" data-placement="bottom" title="Tyhjennä paikkatiedot"><i class="fa fa-trash" aria-hidden="true"></i></button>
        
-     </div> 
+    </div> 
 
-    <div class="py-4" >
-<!--            <p><button class="btn btn-dark" type="button">Merkitse paikka</button></p>
- -->            <button class="btn btn-primary btn-sm" type="button" ><i class="fa fa-check fa-1x" aria-hidden="true"></i> Tallenna omiin paikkoihin</button>
+    <div class="row">
+
+    	<div class="col-lg-4 form-check">
+    	  <label class="form-check-label">
+    	  <input class="form-check-input" type="checkbox" value="">
+    	    <button class="btn btn-primary btn-sm" type="button" >Yhdistyspaikat</button>
+    	  </label>
+
+    	</div>
+    	<div class="col-lg-4 form-check">
+    	  <label class="form-check-label">
+    	    <input class="form-check-input" type="checkbox" value="">
+    	    <button class="btn btn-primary btn-sm" type="button" >Omat paikat</button>
+    	  </label>
+    	  </label>
+    	</div>
+
+      
     </div>
 
-    <div class="py-4 mx-auto" >
-<!--            <p><button class="btn btn-dark" type="button">Merkitse paikka</button></p>
- -->            <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-check fa-1x" aria-hidden="true"></i> Hyväksy paikka</button>
+    <div class="py-3" >            
+ 			<button class="btn btn-primary btn-sm" type="button" ><i class="fa fa-check fa-1x" aria-hidden="true"></i>Tallenna omiin paikkoihin</button>
     </div>
+
+    <div class="py-3">
+        <button class="btn btn-success btn-sm" type="button"><i class="fa fa-check fa-1x" aria-hidden="true"></i> Hyväksy paikka</button>
+    </div>
+
+    </div>
+
     <div class="bottom-column">
           
           <button type="button" class="btn btn-info" data-toggle="modal" data-target="#tietoa_sivusta">
