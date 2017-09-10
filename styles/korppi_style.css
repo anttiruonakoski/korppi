@@ -39,6 +39,10 @@
     bottom: 0;
     }
   	
+    
+    .real_disabled{
+    color: #868e96;
+    }
   		/*#oikea form {
   		  overflow: hidden;
   		}

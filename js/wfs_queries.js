@@ -41,12 +41,13 @@ const WFS_SERVICE="https://avaa.tdata.fi/geoserver/paituli/wfs";
   function handleKunta(response){ 
   //parsi kuntanimi
   if (response.totalFeatures) {
-  document.getElementById('kunta_nimi').value = response.features[0].properties.NAMEFIN;
-  document.getElementById('kunta_nimi').classList.remove('is-invalid');
+  document.getElementById('obs-kunta-nimi').value = response.features[0].properties.NAMEFIN;
+  document.getElementById('obs-kunta-nimi').classList.remove('is-invalid');
   }
+
   //kysely ei palauta kohteita -> ulkomailla 
   else { 
-  document.getElementById('kunta_nimi').value = '---';
-  document.getElementById('kunta_nimi').classList.add('is-invalid');
+  document.getElementById('obs-kunta-nimi').value = '---';
+  document.getElementById('obs-kunta-nimi').classList.add('is-invalid');
   }
   }

@@ -1,5 +1,5 @@
 // main.js
-
+	
 	var L;
   	const taustakartta = L.tileLayer.mml_wmts({ layer: "taustakartta" });
     const maastokartta = L.tileLayer.mml_wmts({ layer: "maastokartta" });
@@ -21,7 +21,15 @@
                     [71.2133,36.16359]]
 		};
 
-    var marker_l;
+	const obsIcon = L.AwesomeMarkers.icon({
+		icon: 'binoculars', prefix: 'fa', markerColor: 'cadetblue'
+	});
+	const birdIcon = L.AwesomeMarkers.icon({
+		icon: 'twitter', prefix: 'fa', markerColor: 'cadetblue'
+	});
+
+	var currentMarker = null;
+    var markerObs, markerBird;
 				
 	function init() {
 
@@ -38,31 +46,118 @@
         L.control.locate().addTo(map);
         L.control.scale({maxWidth: 400, imperial: false}).addTo(map);
 
-		function onMapClick(e) {   
-			if (marker_l) {
-        		map.removeLayer(marker_l);
-      		}        
+		function onMapClick(e) { 
 
-      		marker_l = new L.marker(e.latlng, {icon: L.AwesomeMarkers.icon({icon: 'twitter', prefix: 'fa', markerColor: 'cadetblue'}) }).addTo(map);
-        
-			var piste = EPSG3067.project(e.latlng).toString();
-			var piste_temp = piste.replace("Point(", "").replace(")", "").split(", ");
-      		var no = Math.round(piste_temp[1]).toString();
-			var ea = Math.round(piste_temp[0]).toString();
-      		var bbox_koord = ea.concat(",",no,",",ea,",",no);
+			if (currentMarker === obsIcon) {  
+				if (markerObs) {
+	        		map.removeLayer(markerObs);
+	      		}        
 
-    		document.getElementById('n_koord').value = no;	
-			document.getElementById('e_koord').value = ea;
+	      		markerObs = new L.marker(e.latlng, {icon: currentMarker}).addTo(map);
+	        
+				var piste = EPSG3067.project(e.latlng).toString();
+				var piste_temp = piste.replace("Point(", "").replace(")", "").split(", ");
+	      		var no = Math.round(piste_temp[1]).toString();
+				var ea = Math.round(piste_temp[0]).toString();
+	      		var bbox_koord = ea.concat(",",no,",",ea,",",no);
 
-      		//poista tarkkuudesta disabled
-      		document.getElementById('hp_tarkkuus').disabled = false;
+	    		document.getElementById('obs-n-koord').value = no;	
+				document.getElementById('obs-e-koord').value = ea;
+				document.getElementById('obs-n-koord').classList.remove('real_disabled');
+				document.getElementById('obs-e-koord').classList.remove('real_disabled');
+				document.getElementById('obs-kunta-nimi').classList.remove('real_disabled');
 
-      //document.getElementById('paikka_nimi').value = piste_temp;
-  			getKunta(bbox_koord).done(handleKunta);
+	      		//poista tarkkuudesta disabled
+	      		document.getElementById('obs-accuracy').disabled = false;
+
+	      		//hae koordinaattipisteen kunta
+  				getKunta(bbox_koord).done(handleKunta);
+
+  			}
+
+  			if (currentMarker === birdIcon) {  
+				if (markerBird) {
+	        		map.removeLayer(markerBird);
+	      		}        
+
+	      		markerBird = new L.marker(e.latlng, {icon: currentMarker}).addTo(map);
+	        
+				var piste = EPSG3067.project(e.latlng).toString();
+				var piste_temp = piste.replace("Point(", "").replace(")", "").split(", ");
+	      		var no = Math.round(piste_temp[1]).toString();
+				var ea = Math.round(piste_temp[0]).toString();
+	      		var bbox_koord = ea.concat(",",no,",",ea,",",no);
+
+	    		document.getElementById('bird-n-koord').value = no;	
+				document.getElementById('bird-e-koord').value = ea;
+
+	      		//poista tarkkuudesta disabled
+	      		document.getElementById('bird-accuracy').disabled = false;
+  			}
 
 		}
 	
 		map.on('click', onMapClick);
+
+		function clearPosition(scope) {
+		//clear and reset input fields and markers after button press 	
+
+			var uppercaseScope = scope.charAt(0).toUpperCase() + scope.slice(1);
+
+			var elements = {accuracy: ["accuracy", "value", 0], disabled: ["accuracy", "disabled", true], nKoord: ["n-koord", "value", null], eKoord: ["e-koord", "value", null], kuntaNimi: ["kunta-nimi", "value", null]};
+
+			for (var [key, value] of Object.entries(elements)) {
+				let elementId = scope.concat("-",value[0]);
+
+					if ( $( "#" + elementId ).length ) {
+						console.log(elementId);
+						document.getElementById(elementId)[value[1]] = value[2];
+					}	
+			}
+
+			var markerName = "marker".concat(uppercaseScope); 
+			
+
+			if (this[markerName]) {
+				map.removeLayer(this[markerName]);
+			} 
+		} 
+
+		// function clearBird() {
+		// 	document.getElementById('bird-accuracy').disabled = true;
+		// 	document.getElementById('bird-n-koord').value = null;
+		// 	document.getElementById('bird-e-koord').value = null;
+		// 	if (markerBird) {
+		// 		map.removeLayer(markerBird);
+		// 	}     
+		// }	
+
+
+		$("#btn-observer").click(function(){
+				currentMarker = obsIcon; 
+		    }); 
+
+		$("#btn-bird").click(function(){
+				currentMarker = birdIcon;
+		    }); 
+
+		$("#btn-clear-obs").click(function(){
+				clearPosition("obs");
+			});
+			
+		$("#btn-clear-bird").click(function(){
+				clearPosition("bird");
+			});
+
+		$("#btn-move").click(function(){
+				currentMarker = null;
+		    }); 
+
+		$("#btn-trash-all").click(function(){
+				currentMarker = null;
+				clearPosition("obs");
+				clearPosition("bird");
+		    }); 
 
     }
 
