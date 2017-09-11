@@ -1,2 +1,3 @@
 *.sublime-project
 *.sublime-workspace
+bower_components/leaflet/docs/examples/crs-simple/crs-simple.md
