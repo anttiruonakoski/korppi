@@ -103,31 +103,28 @@
 	
 		map.on('click', onMapClick);
 
-		function clearPosition(scope) {
+		function clearPositionForm(form) {
 		//clear and reset input fields and markers after button press 	
 
-			var uppercaseScope = scope.charAt(0).toUpperCase() + scope.slice(1);
+			var uppercaseScope = form.charAt(0).toUpperCase() + form.slice(1);
+			const formName = form + '-form';
 
-			const elements = {accuracy: ["accuracy", "value", 0], disabled: ["accuracy", "disabled", true], nKoord: ["n-koord", "value", null], eKoord: ["e-koord", "value", null], kuntaNimi: ["kunta-nimi", "value", null]};
+			document.getElementById(formName).reset();
 
-			for (var [key, value] of Object.entries(elements)) {
-				let elementId = scope.concat("-",value[0]);
-
-					if ( $( "#" + elementId ).length ) {
-						document.getElementById(elementId)[value[1]] = value[2];
-					}	
+			if (form==='obs') {
+			document.getElementById("obs-kunta-nimi").classList.remove('is-invalid');			
 			}
 
 			var markerName = "marker".concat(uppercaseScope); 
 			if (this[markerName]) {
 				map.removeLayer(this[markerName]);
 			} 
+
 		} 
 
-		function connectPosition() {
+		function connectPosition(obs, bird) {
 
-			const scopes = ['obs', 'bird'];
-			const elements = {nKoord: ["n-koord"], eKoord: ["e-koord"]};
+			const fields = {nKoord: ["n-koord"], eKoord: ["e-koord"]};
 
 			// for (var)
 
@@ -142,11 +139,11 @@
 		    }); 
 
 		$("#btn-clear-obs").click(function(){
-				clearPosition("obs");
+				clearPositionForm("obs");
 			});
 			
 		$("#btn-clear-bird").click(function(){
-				clearPosition("bird");
+				clearPositionForm("bird");
 			});
 
 		$("#btn-move").click(function(){
@@ -157,7 +154,7 @@
 		    }); 
 
 		$("#btn-connect").click(function(){
-				connectPosition();
+				connectPosition("obs", "bird");
 		    }); 
 
 		$("#btn-get-placenames").click(function(){
@@ -168,8 +165,8 @@
 		$("#btn-trash-all").click(function(){
 				$().button('toggle');
 				currentMarker = obsIcon;
-				clearPosition("obs");
-				clearPosition("bird");
+				clearPositionForm("obs");
+				clearPositionForm("bird");
 
 		    }); 
 

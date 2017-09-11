@@ -17,6 +17,6 @@
   ],
   "dependencies": {
     "leaflet.locatecontrol": "^0.62.0",
-    "axios": "^0.16.2"
+    "Leaflet.MML-layers": "https://github.com/jleh/Leaflet.MML-layers.git#^2.0.1"
   }
 }

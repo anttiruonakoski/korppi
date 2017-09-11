@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- PROMISEEES -->
+<!-- etaoin shrdlu-->
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
@@ -7,7 +7,6 @@
     <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
 
     <title>Havaintojärjestelmä 2017 karttademo</title>
 
@@ -47,8 +46,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.4.4/proj4.js"></script>
+
+    <!-- promise library -->
 
     <!-- leaflet libraries already bower components -->
 
@@ -85,9 +85,7 @@
     		</div>  
 
     <div class="col-lg-4" id="lomake">  
-    <div>
-    	<form class="needs-validation" novalidate>
-  			<fieldset>
+    	<form class="needs-validation" id="obs-form" novalidate>
     			<legend class="m-0 p-0"><small>Havainnoijan paikka</small></legend>
           <div class="form-group">
             <div class="row m-0 p-0 justify-content-start">
@@ -128,6 +126,9 @@
                 </div>
     				<label><small>Paikannimi:</small></label>
     				<input type="text" class="form-control" id="paikka_nimi" size="25">
+    	</form>
+    	 <form class="needs-validation" id="bird-form" novalidate>
+    			<fieldset>
     				<legend class="m-0 p-0"><small>Linnun paikka</small></legend>
 
     				<div class="row m-0 p-0 justify-content-start">
@@ -159,10 +160,9 @@
                </div>   
 
           </div>  
-    		</fieldset>
-    	<form>
-     </div>  
-
+  
+          </fieldset>
+        </form>
 
     <div class="btn-group" data-toggle="buttons" aria-label="tools">
      	<label class="btn btn-secondary active" id="btn-observer" data-toggle="tooltip" data-placement="bottom" title="Aseta havainnoija" >
