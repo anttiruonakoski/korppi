@@ -40,7 +40,7 @@ function getKunta(bBox) {
   //   	}});
   // }
 
-  function handleKunta(response){ 
+  function parseKunta(response){ 
   //parsi kuntanimi
   if (response.totalFeatures) {
   document.getElementById('obs-kunta-nimi').value = response.features[0].properties.NAMEFIN;

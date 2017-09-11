@@ -50,7 +50,17 @@
         L.control.locate().addTo(map);
         L.control.scale({maxWidth: 400, imperial: false}).addTo(map);
 
+        function getCoords(point) {
+    		var point_temp = point.replace("Point(", "").replace(")", "").split(", ");
+      		var no = Math.round(point_temp[1]).toString();
+			var ea = Math.round(point_temp[0]).toString();
+      		var bbox = ea.concat(",",no,",",ea,",",no);
+      		return {no: no, ea: ea, bbox: bbox};
+        }
+
 		function onMapClick(e) { 
+
+			var coords = getCoords(EPSG3067.project(e.latlng).toString());
 
 			if (currentMarker === obsIcon) {  
 				if (markerObs) {
@@ -58,24 +68,12 @@
 	      		}        
 
 	      		markerObs = new L.marker(e.latlng, {icon: currentMarker}).addTo(map);
-	        
-				var piste = EPSG3067.project(e.latlng).toString();
-				var piste_temp = piste.replace("Point(", "").replace(")", "").split(", ");
-	      		var no = Math.round(piste_temp[1]).toString();
-				var ea = Math.round(piste_temp[0]).toString();
-	      		var bbox_koord = ea.concat(",",no,",",ea,",",no);
-
-	    		document.getElementById('obs-n-koord').value = no;	
-				document.getElementById('obs-e-koord').value = ea;
-				document.getElementById('obs-n-koord').classList.remove('real_disabled');
-				document.getElementById('obs-e-koord').classList.remove('real_disabled');
-				document.getElementById('obs-kunta-nimi').classList.remove('real_disabled');
-
+	    		document.getElementById('obs-n-koord').value = coords.no;	
+				document.getElementById('obs-e-koord').value = coords.ea;
 	      		//poista tarkkuudesta disabled
 	      		document.getElementById('obs-accuracy').disabled = false;
-
 	      		//hae koordinaattipisteen kunta
-  				getKunta(bbox_koord).done(handleKunta);
+  				getKunta(coords.bbox).done(parseKunta);
 
   			}
 
@@ -85,16 +83,8 @@
 	      		}        
 
 	      		markerBird = new L.marker(e.latlng, {icon: currentMarker}).addTo(map);
-	        
-				var piste = EPSG3067.project(e.latlng).toString();
-				var piste_temp = piste.replace("Point(", "").replace(")", "").split(", ");
-	      		var no = Math.round(piste_temp[1]).toString();
-				var ea = Math.round(piste_temp[0]).toString();
-	      		var bbox_koord = ea.concat(",",no,",",ea,",",no);
-
-	    		document.getElementById('bird-n-koord').value = no;	
-				document.getElementById('bird-e-koord').value = ea;
-
+	    		document.getElementById('bird-n-koord').value = coords.no;	
+				document.getElementById('bird-e-koord').value = coords.ea;
 	      		//poista tarkkuudesta disabled
 	      		document.getElementById('bird-accuracy').disabled = false;
   			}
