@@ -5,10 +5,29 @@
     const maastokartta = L.tileLayer.mml_wmts({ layer: "maastokartta" });
     const ortokuva = L.tileLayer.mml("Ortokuva_3067");
     ortokuva.options.minZoom = 8;  
+    // const taustakartta_uusi = L.tileLayer.mml("Taustakartta_3067");
+
+    const siteMarkerOptions = {
+    	radius : 9,
+    	fillOpacity : 0.9,
+    	fillColor : '#4169E1',
+    	color : 'dimgray',
+    	weight: 2 
+    };
+
+    function onEachFeature(feature, layer) {
+     // does this feature have a property named name?
+        if (feature.properties && feature.properties.name) {
+            layer.bindPopup(feature.properties.name);
+        }
+    }
+
+    const sitesExample = new L.GeoJSON.AJAX("data/lintutornit_lly_kaikki_2017_wgs84.geojson", { pointToLayer : function(geoJsonPoint, latlng) {
+    return L.circleMarker(latlng, siteMarkerOptions);
+	}, onEachFeature: onEachFeature});
+    const testLayer = new L.GeoJSON();
 
     const EPSG3067 = L.TileLayer.MML.get3067Proj();
-
-    const taustakartta_uusi = L.tileLayer.mml("Taustakartta_3067");
 
   	const initMap = {
         crs: L.TileLayer.MML.get3067Proj(),
@@ -40,13 +59,23 @@
     	const baseMaps = { 
     		"Taustakartta" : taustakartta,
     		"Maastokartta" : maastokartta,
-        	"Ilmakuva" : ortokuva,
-        	"Uusi Taustakartta": taustakartta_uusi
+        	"Ilmakuva" : ortokuva
+        	// "Uusi Taustakartta": taustakartta_uusi
     	};
+
+    	const siteLayers = {
+    		"yhdistyspaikat" : sitesExample,
+    		"omat paikat" : testLayer
+    	}
 
         const map = new L.map('map_div', initMap);
 
-       	L.control.layers(baseMaps).addTo(map);
+        
+        sitesExample.addTo(map);
+
+       	L.control.layers(baseMaps, null, {collapsed: false}).addTo(map);
+       	L.control.layers(null, siteLayers, {collapsed: false}).addTo(map);
+
         L.control.locate().addTo(map);
         L.control.scale({maxWidth: 400, imperial: false}).addTo(map);
 
