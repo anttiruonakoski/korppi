@@ -57,7 +57,8 @@
     <script src="bower_components/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
 		<script src="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
 		<script src="bower_components/leaflet-ajax/dist/leaflet.ajax.min.js"></script>
-
+		<!-- <script src="bower_components/Leaflet.Control.Custom.js"></script>
+ -->
     <!--korppi app javascript files-->
     <script src="js/bootstraphelper.js" type="text/javascript"></script>
     <script src="js/wfs_queries.js" type="text/javascript"></script>
@@ -82,22 +83,32 @@
    		<div class="row">
    			<div class="col-lg-8" id="map_div">
 
-<!--    			nappuloita kartalla	
- -->   			
-    <div class="btn-group" data-toggle="buttons" aria-label="tools">
-     	<label class="btn btn-secondary active" id="btn-observer" data-toggle="tooltip" data-placement="bottom" title="Aseta havainnoija" >
+<!--  tool buttons on map (hack) should bee a proper leaflet control-->   			
+ 		<div id="obs-tools" class="leaflet-control leaflet-control-layers leaflet-control-layers-expanded">
+    <div class="btn-group" data-toggle="buttons" aria-label="obs-tools">
+     	<label class="btn btn-secondary btn-sm active" id="btn-observer" data-toggle="tooltip" data-placement="bottom" title="Aseta havainnoija" >
      		<input type="radio" name="options" autocomplete="off" checked>	
        	<i class="fa fa-binoculars" aria-hidden="true"></i></label>
        	
-      <label class="btn btn-secondary" id="btn-bird" data-toggle="tooltip" data-placement="bottom" title="Aseta lintu">
+      <label class="btn btn-secondary btn-sm" id="btn-bird" data-toggle="tooltip" data-placement="bottom" title="Aseta lintu">
       	<input type="radio" name="options" autocomplete="off" >
        	<i class="fa fa-twitter" aria-hidden="true"></i></label> 	
 
-     		<label class="btn btn-secondary" id="btn-move" data-toggle="tooltip" data-placement="bottom" title="Siirrä karttaa">
+     		<label class="btn btn-secondary btn-sm" id="btn-move" data-toggle="tooltip" data-placement="bottom" title="Siirrä karttaa">
      		<input type="radio" name="options" autocomplete="off" >
      		<i class="fa fa-arrows" aria-hidden="true"></i></label>
-    </div>  
-    		</div>  
+    </div> 
+
+    <div class="btn-group ml-1" role="group btn-group-sm" aria-label="tools">
+     
+      <button type="button" class="btn btn-secondary btn-sm" id="btn-distance" data-toggle="tooltip" data-placement="bottom" title="Mittaa matka"><i class="fa fa-arrows-h" aria-hidden="true"></i></button>
+       <button type="button" class="btn btn-danger btn-sm" id="btn-trash-all" data-toggle="tooltip" data-placement="bottom" title="Tyhjennä paikkatiedot"><i class="fa fa-trash" aria-hidden="true"></i></button>
+       
+    </div> 
+    </div> 
+
+		</div>
+<!-- 		end of map_div   -->
 
     <div class="col-lg-4" id="lomake">  
     	<form class="needs-validation" id="obs-form" novalidate>
@@ -180,24 +191,16 @@
         </form>
  
 
-    <div class="btn-group" role="group btn-group-sm" aria-label="tools">
-     
-      <button type="button" class="btn btn-secondary btn-sm" id="btn-distance" data-toggle="tooltip" data-placement="bottom" title="Mittaa matka"><i class="fa fa-arrows-h" aria-hidden="true"></i></button>
-       <button type="button" class="btn btn-danger btn-sm" id="btn-trash-all" data-toggle="tooltip" data-placement="bottom" title="Tyhjennä paikkatiedot"><i class="fa fa-trash" aria-hidden="true"></i></button>
-       
-    </div> 
 
     <div class="row">
 
     	<div class="col-lg-4 form-check">
-    	  <label class="form-check-label">
-    	    <button class="btn btn-primary btn-sm" type="button" >Yhdistyspaikat</button>
-    	  </label>
-
+    	  <button class="btn btn-primary btn-sm" type="button" id="common-sites" data-toggle="modal" data-target="#site-list" >Yhdistyspaikat</button>
     	</div>
+
     	<div class="col-lg-4 form-check">
     	  <label class="form-check-label">
-    	    <button class="btn btn-primary btn-sm" type="button" >Omat paikat</button>
+    	    <button class="btn btn-primary btn-sm" type="button" id="own-sites" >Omat paikat</button>
     	  </label>
     	  </label>
     	</div>
@@ -217,12 +220,12 @@
 
     <div class="bottom-column">
           
-          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#tietoa_sivusta">
+          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#tietoa-sivusta">
           <i class="fa fa-info fa-1x" aria-hidden="true"></i> Sivusta
           </button>   
 
           <!-- Modal -->
-          <div class="modal fade" id="tietoa_sivusta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade" id="tietoa-sivusta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -248,6 +251,7 @@
                   <p>Tekniikat:
                   <ul>
                     <li>Leaflet 1.2, Leaflet.MML-layers, Proj4.js, Proj4leaflet.js ja muita Leaflet liitännäisiä</li>
+                    <li>jQuery</li>
                     <li>Bootstrap 4.0</li>
                   </ul></p>
                   <p>Toteutus:</p> 
@@ -259,7 +263,27 @@
                 </div>
               </div>
             </div>
-          </div>     
+          </div> 
+
+          <!-- Modal sitelist scaffolding -->
+          <div class="modal fade" id="site-list" tabindex="-1" role="dialog" aria-labelledby="sitelistlabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="site-list-label">Lista paikoista</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body" id ="site-list-body">
+									<p>listaa tähän</p>  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Selvä!</button>
+                </div>
+              </div>
+            </div>
+          </div>      
 
     </div>  
    </div>  

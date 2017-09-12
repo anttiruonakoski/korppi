@@ -19,7 +19,7 @@
      // does this feature have a property named name?
 
         if (feature.properties && feature.properties.name) {
-            layer.bindPopup('Aseta havainnoijan paikaksi: <button type="button" class="btn btn-sm btn-success btn-select-site">' + feature.properties.name +'</button>', {
+            layer.bindPopup('Aseta paikaksi: <button type="button" class="btn btn-sm btn-success btn-select-site">' + feature.properties.name +'</button>', {
                 maxWidth : 'auto'
                 });
             }
@@ -87,12 +87,12 @@
 
                 corners[vSide + hSide] = L.DomUtil.create('div', className, container);
             }
-
             createCorner('verticalcenter', 'left');
+            createCorner('top', 'horisontalcenter');
         }
         addControlPlaceholders(map);
 
-        //add custom control to hold tools
+        //add custom control to show Raven
 
         L.Control.Raven = L.Control.extend({
         	onAdd: function(map) {
@@ -109,31 +109,33 @@
         	    }
         	});
 
-        L.Control.Tools = L.Control.extend({
-        	onAdd: function(map) {
-        	        var div = L.DomUtil.create('div','laatikko');
+        //add custom control to show tools
 
-        	        // img.src = 'images/corrax.jpg';
-        	        // img.style.width = '48px';
+        // L.Control.Tools = L.Control.extend({
+        //     onAdd: function(map) {
+        //     var divi = L.DomUtil.create('div', 'leaflet-control leaflet-control-layers leaflet-control-layers-expanded');
+     
+        //     divi.setAttribute("class", "leaflet-control leaflet-control-layers leaflet-control-layers-expanded");
+        //         return divi;
+        //        },
 
-        	        return div;
-        	    },
+        //     onRemove: function(map) {
+        //             // Nothing to do here
+        //         }
 
-        	    onRemove: function(map) {
-        	        // Nothing to do here
-        	    }
-        	});
+        // });
 
         var raven = function(opts) {
             return new L.Control.Raven(opts);
-        }
-        var tools = function(opts) {
-            return new L.Control.Tools(opts);
-        }
+        };
+
+        // var tools = function(opts) {
+        //     return new L.Control.Tools(opts);
+        //  };
 
         sitesExample.addTo(map);
         //assign variable only after json request complete, otherwise empty result
-        var sitesExampleAsGeoJSON = sitesExample.toGeoJSON();
+        var sitesExampleAsJSON = sitesExample.toGeoJSON();
 
        	L.control.layers(baseMaps, null, {collapsed: false}).addTo(map);
        	L.control.layers(null, siteLayers, {collapsed: false}).addTo(map);
@@ -144,7 +146,12 @@
         // custom controls
 
         raven({ position: 'bottomright' }).addTo(map);
-        tools({ position: 'verticalcenterleft' }).addTo(map);
+        // tools({ position: 'tophorisontalcenter' }).addTo(map);
+        
+        el = document.getElementById('obs-tools') 
+        L.DomEvent.disableClickPropagation(this.el);
+
+        // helper functions
 
         function getCoords(point) {
     		var point_temp = point.replace("Point(", "").replace(")", "").split(", ");
@@ -225,7 +232,8 @@
 			document.getElementById(formName).reset();
 
 			if (form==='obs') {
-			document.getElementById("obs-kunta-nimi").classList.remove('is-invalid');			
+			document.getElementById("obs-kunta-nimi").classList.remove('is-invalid');
+            document.getElementById('obs-accuracy').disabled = true;			
 			}
 
 			var markerName = "marker".concat(uppercaseScope); 

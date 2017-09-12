@@ -49,14 +49,36 @@
         position: absolute;
         top: 50%; /* possible because the placeholder's parent is the map */
         transform: translateY(-50%); /* using the CSS3 Transform technique */
-        padding-top: 10px;
-        z-index: 800;
+        padding-top: 10px;   
+        z-index: 5;     
     }
+
+    .leaflet-horisontalcenter  {
+          position: relative;
+          padding: 0px!important;
+          margin-left: 60px;
+          width: "auto";   
+          z-index: 5;     
+        }
 
     .leaflet-verticalcenter .leaflet-control {
         margin-bottom: 10px;
-        z-index: 800;
+        z-index: 5;
     }
+
+    .leaflet-horisontalcenter .leaflet-control {
+        margin-bottom: 10px;
+        z-index: 5;
+    }
+
+    #obs-tools {
+      margin-left: 60px;
+      margin-top: 10px;
+      padding: 3px!important;
+      position: relative;
+      z-index: 800;
+    }
+
 
   
 
