@@ -170,7 +170,7 @@
 	        		map.removeLayer(markerObs);
 	      		}        
 
-	      		markerObs = new L.marker(e.latlng, {icon: currentMarker}).addTo(map);
+	      		markerObs = new L.marker(e.latlng, {icon: currentMarker}).bindTooltip('Havainnoija', {permanent: true, direction: 'left' }).addTo(map);
 	    		document.getElementById('obs-n-koord').value = coords.no;	
 				document.getElementById('obs-e-koord').value = coords.ea;
 	      		//poista tarkkuudesta disabled
@@ -204,20 +204,19 @@
                 var coords = getCoords(EPSG3067.project(popupSourceFeature._latlng).toString());
                 console.log(kuntaName, placeName, coords);
 
-                    if (currentMarker === obsIcon) {  
                         if (markerObs) {
                             map.removeLayer(markerObs);
                         }        
-
-                        markerObs = new L.marker(popupSourceFeature._latlng, {icon: currentMarker}).addTo(map);
+                        currentMarker = obsIcon;
+                        markerObs = new L.marker(popupSourceFeature._latlng, {icon: currentMarker}).bindTooltip('Havainnoija', {permanent: true, direction: 'left' }).addTo(map);
                         document.getElementById('obs-n-koord').value = coords.no;   
                         document.getElementById('obs-e-koord').value = coords.ea;
                         //poista tarkkuudesta disabled
                         document.getElementById('obs-accuracy').disabled = false;
-                        document.getElementById('obs-kunta-nimi').value = kuntaName;
-                        document.getElementById("obs-kunta-nimi").classList.remove('is-invalid');
-                        document.getElementById('obs-place-name').value = placeName;                         
-                    }
+                        document.getElementById('obs-kunta-name').value = kuntaName;
+                        document.getElementById('obs-place-name').value = placeName;
+
+                        document.getElementById("obs-kunta-name").classList.remove('is-invalid');
 
                 map.closePopup();
             });
@@ -232,24 +231,17 @@
 			document.getElementById(formName).reset();
 
 			if (form==='obs') {
-			document.getElementById("obs-kunta-nimi").classList.remove('is-invalid');
+			document.getElementById("obs-kunta-name").classList.remove('is-invalid');
             document.getElementById('obs-accuracy').disabled = true;			
 			}
 
 			var markerName = "marker".concat(uppercaseScope); 
 			if (this[markerName]) {
 				map.removeLayer(this[markerName]);
+                this[markerName] = null;
 			} 
 
 		} 
-
-		function connectPosition(obs, bird) {
-
-			const fields = {nKoord: ["n-koord"], eKoord: ["e-koord"]};
-
-			// for (var)
-
-		}
 
 		$("#btn-observer").click(function(){
 				currentMarker = obsIcon; 
@@ -274,22 +266,28 @@
 				currentMarker = null;
 		    }); 
 
-		$("#btn-connect").click(function(){
-				connectPosition("obs", "bird");
+		$("#btn-connect-bird").click(function(){
+				if (markerObs) {
+                    var coords = getCoords(EPSG3067.project(markerObs._latlng).toString());
+                    console.log(coords);
+                    document.getElementById('bird-n-koord').value = coords.no;  
+                    document.getElementById('bird-e-koord').value = coords.ea;
+                    document.getElementById('bird-accuracy').disabled = false;
+                    if (markerBird) {
+                        map.removeLayer(markerBird);
+                     }        
+                    markerBird = new L.marker(markerObs._latlng, {icon: birdIcon}).addTo(map);
+                }
 		    }); 
+
 
 		$("#btn-get-placenames").click(function(){
 				getPlaceNames = !getPlaceNames;
 				console.log(getPlaceNames);
 		    });
 
-        $("#hl3").click(function(){
-                console.log('TF3 ');
-            });
-
 		$("#btn-trash-all").click(function(){
 				$().button('toggle');
-				currentMarker = obsIcon;
 				clearPositionForm("obs");
 				clearPositionForm("bird");
 

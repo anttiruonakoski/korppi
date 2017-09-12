@@ -1,0 +1,9 @@
+työkaluriville:
+
+automaattizoomaus on/off
+keskitä on /off
+keskitä hav paikkaan
+kekitä linnun paikkaan
+
+käytä ylimääräistä leveyttä hyväksi paikkalistoissa
+ 

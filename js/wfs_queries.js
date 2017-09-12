@@ -43,13 +43,13 @@ function getKunta(bBox) {
   function parseKunta(response){ 
   //parsi kuntanimi
   if (response.totalFeatures) {
-  document.getElementById('obs-kunta-nimi').value = response.features[0].properties.NAMEFIN;
-  document.getElementById('obs-kunta-nimi').classList.remove('is-invalid');
+  document.getElementById('obs-kunta-name').value = response.features[0].properties.NAMEFIN;
+  document.getElementById('obs-kunta-name').classList.remove('is-invalid');
   }
 
   //kysely ei palauta kohteita -> ulkomailla 
   else { 
-  document.getElementById('obs-kunta-nimi').value = null;
-  document.getElementById('obs-kunta-nimi').classList.add('is-invalid');
+  document.getElementById('obs-kunta-name').value = null;
+  document.getElementById('obs-kunta-name').classList.add('is-invalid');
   }
   }
