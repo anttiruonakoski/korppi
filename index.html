@@ -85,7 +85,7 @@
 
 <!--  tool buttons on map (hack) should be a proper leaflet control-->   			
  		<div id="obs-tools" class="leaflet-control leaflet-control-layers leaflet-control-layers-expanded">
-    <div class="btn-group" data-toggle="buttons" aria-label="obs-tools">
+    <div class="btn-group ml-0" data-toggle="buttons" aria-label="obs-tools">
      	<label class="btn btn-secondary btn-sm active" id="btn-observer" data-toggle="tooltip" data-placement="bottom" title="Aseta havainnoija" >
      		<input type="radio" name="options" autocomplete="off" id="btn-observer-label" >	
        	<i class="fa fa-binoculars" aria-hidden="true"></i></label>
@@ -99,16 +99,15 @@
      		<i class="fa fa-arrows" aria-hidden="true"></i></label>
     </div> 
 
-    <div class="btn-group ml-1" role="group btn-group-sm" aria-label="tools">
+    <div class="btn-group ml-0 ml-lg-1" role="group btn-group-sm" aria-label="tools">
      
       <button type="button" class="btn btn-secondary btn-sm" id="btn-distance" data-toggle="tooltip" data-placement="bottom" title="Mittaa matka"><i class="fa fa-arrows-h" aria-hidden="true"></i></button>
        <button type="button" class="btn btn-danger btn-sm" id="btn-trash-all" data-toggle="tooltip" data-placement="bottom" title="Tyhjennä paikkatiedot"><i class="fa fa-trash" aria-hidden="true"></i></button>
        
     </div> 
     <!-- buttons to be -->
-    <div class="btn-group ml-1" role="group btn-group-sm" aria-label="tools">
+    <div class="btn-group ml-0 ml-lg-1" role="group btn-group-sm" aria-label="tools">
      
-      <button type="button" class="btn btn-secondary btn-sm" id="btn-x" data-toggle="tooltip" data-placement="bottom" title="Mittaa matka"><i class="fa fa-arrows-h" aria-hidden="true"></i></button>
        <button type="button" class="btn btn-secondary btn-sm" id="btn-x" data-toggle="tooltip" data-placement="bottom" title="empty for a while"><i class="fa fa-question" aria-hidden="true"></i></button>
       <button type="button" class="btn btn-secondary btn-sm" id="btn-obs-center" data-toggle="tooltip" data-placement="bottom" title="Keskitä havainnoijaan"><i class="fa fa-crosshairs" aria-hidden="true"></i></button>
       <button type="button" class="btn btn-secondary btn-sm" id="btn-obs-centerzoom" data-toggle="tooltip" data-placement="bottom" title="Keskitä ja zoomaa havainnoijaan"><i class="fa fa-search-plus" aria-hidden="true"></i></button> 
@@ -120,20 +119,20 @@
 		</div>
 <!-- 		end of map_div   -->
 
-    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" id="lomake">  
+    <div class="col-lg-4" id="lomake">  
     	<form class="needs-validation" id="obs-form" novalidate>
     			<legend class="m-0 p-0"><small>Havainnoijan paikka</small></legend>
           <div class="form-group">
             <div class="row m-0 p-0 justify-content-start">
-              <div class="col-lg-3 mr-1 p-0">
+              <div class="col-lg-3 col-sm-3 col-3 mr-1 p-0">
     				    <label class="mb-1"><small>P-koord:</small></label>
     				    <input type="text" class="form-control form-control-sm" id="obs-n-koord" placeholder="0000000" size="8" disabled>
               </div>
-              <div class="col-lg-3 mx-1 p-0">
+              <div class="col-lg-3 col-sm-3 col-3 mx-1 p-0">
     				    <label class="mb-1"><small>I-koord:</small></label>
     				    <input type="text" class="form-control form-control-sm" id="obs-e-koord" placeholder="000000" size="6" disabled>	
               </div>  
-              <div class="col-lg-3 mx-1 p-0 align-self-end">
+              <div class="col-lg-3 col-sm-3 col-3 mx-1 p-0 align-self-end">
                 <label class="mb-1"><small>Tarkkuus:</small></label>
                 <select class="custom-select form-control-sm" id="obs-accuracy" disabled>
                   <option selected value="0">ei määr.</option>
@@ -145,7 +144,7 @@
                   </select> 
               </div> 
 
-              <div class="btn-group col-lg-2 p-0 m-0 align-self-end" data-toggle="buttons">   
+              <div class="btn-group col-lg-2 col-sm-1 col-1 p-0 m-0 align-self-end" data-toggle="buttons">   
                   <button type="button" class="btn btn-sm btn-danger" id="btn-clear-obs" data-toggle="tooltip" data-placement="bottom" title="Tyhjennä havaintopaikka"><i class="fa fa-times" aria-hidden="true"></i></button>
 
                   <label class="btn btn-sm btn-success active" id="btn-get-placenames">
