@@ -17,14 +17,19 @@
 
     function onEachFeature(feature, layer) {
      // does this feature have a property named name?
+
         if (feature.properties && feature.properties.name) {
-            layer.bindPopup(feature.properties.name);
-        }
+            layer.bindPopup('Aseta havainnoijan paikaksi: <button type="button" class="btn btn-sm btn-success btn-select-site">' + feature.properties.name +'</button>', {
+                maxWidth : 'auto'
+                });
+            }
+            layer._leaflet_id = feature.id;
     }
 
     const sitesExample = new L.GeoJSON.AJAX("data/lintutornit_lly_kaikki_2017_wgs84.geojson", { pointToLayer : function(geoJsonPoint, latlng) {
     return L.circleMarker(latlng, siteMarkerOptions);
 	}, onEachFeature: onEachFeature});
+
     const testLayer = new L.GeoJSON();
 
     const EPSG3067 = L.TileLayer.MML.get3067Proj();
@@ -66,18 +71,80 @@
     	const siteLayers = {
     		"yhdistyspaikat" : sitesExample,
     		"omat paikat" : testLayer
-    	}
+    	};
 
         const map = new L.map('map_div', initMap);
 
-        
+        // Create additional Control placeholders https://stackoverflow.com/questions/33614912/how-to-locate-leaflet-zoom-control-in-a-desired-position
+
+        function addControlPlaceholders(map) {
+            var corners = map._controlCorners,
+                l = 'leaflet-',
+                container = map._controlContainer;
+
+            function createCorner(vSide, hSide) {
+                var className = l + vSide + ' ' + l + hSide;
+
+                corners[vSide + hSide] = L.DomUtil.create('div', className, container);
+            }
+
+            createCorner('verticalcenter', 'left');
+        }
+        addControlPlaceholders(map);
+
+        //add custom control to hold tools
+
+        L.Control.Raven = L.Control.extend({
+        	onAdd: function(map) {
+        	        var img = L.DomUtil.create('img');
+
+        	        img.src = 'images/corrax.jpg';
+        	        img.style.width = '48px';
+
+        	        return img;
+        	    },
+
+        	    onRemove: function(map) {
+        	        // Nothing to do here
+        	    }
+        	});
+
+        L.Control.Tools = L.Control.extend({
+        	onAdd: function(map) {
+        	        var div = L.DomUtil.create('div','laatikko');
+
+        	        // img.src = 'images/corrax.jpg';
+        	        // img.style.width = '48px';
+
+        	        return div;
+        	    },
+
+        	    onRemove: function(map) {
+        	        // Nothing to do here
+        	    }
+        	});
+
+        var raven = function(opts) {
+            return new L.Control.Raven(opts);
+        }
+        var tools = function(opts) {
+            return new L.Control.Tools(opts);
+        }
+
         sitesExample.addTo(map);
+        //assign variable only after json request complete, otherwise empty result
+        var sitesExampleAsGeoJSON = sitesExample.toGeoJSON();
 
        	L.control.layers(baseMaps, null, {collapsed: false}).addTo(map);
        	L.control.layers(null, siteLayers, {collapsed: false}).addTo(map);
 
         L.control.locate().addTo(map);
         L.control.scale({maxWidth: 400, imperial: false}).addTo(map);
+
+        // custom controls
+
+        raven({ position: 'bottomright' }).addTo(map);
+        tools({ position: 'verticalcenterleft' }).addTo(map);
 
         function getCoords(point) {
     		var point_temp = point.replace("Point(", "").replace(")", "").split(", ");
@@ -121,6 +188,33 @@
 		}
 	
 		map.on('click', onMapClick);
+
+        map.on('popupopen', function(e) {
+            $(".btn-select-site").click(function() {
+                var popupSourceFeature = e.popup._source;
+                var kuntaName = popupSourceFeature.feature.properties.kunta;
+                var placeName = popupSourceFeature.feature.properties.name;
+                var coords = getCoords(EPSG3067.project(popupSourceFeature._latlng).toString());
+                console.log(kuntaName, placeName, coords);
+
+                    if (currentMarker === obsIcon) {  
+                        if (markerObs) {
+                            map.removeLayer(markerObs);
+                        }        
+
+                        markerObs = new L.marker(popupSourceFeature._latlng, {icon: currentMarker}).addTo(map);
+                        document.getElementById('obs-n-koord').value = coords.no;   
+                        document.getElementById('obs-e-koord').value = coords.ea;
+                        //poista tarkkuudesta disabled
+                        document.getElementById('obs-accuracy').disabled = false;
+                        document.getElementById('obs-kunta-nimi').value = kuntaName;
+                        document.getElementById("obs-kunta-nimi").classList.remove('is-invalid');
+                        document.getElementById('obs-place-name').value = placeName;                         
+                    }
+
+                map.closePopup();
+            });
+        });
 
 		function clearPositionForm(form) {
 		//clear and reset input fields and markers after button press 	
@@ -180,6 +274,10 @@
 				getPlaceNames = !getPlaceNames;
 				console.log(getPlaceNames);
 		    });
+
+        $("#hl3").click(function(){
+                console.log('TF3 ');
+            });
 
 		$("#btn-trash-all").click(function(){
 				$().button('toggle');

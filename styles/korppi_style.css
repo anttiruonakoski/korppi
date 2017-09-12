@@ -45,23 +45,18 @@
     bottom: 0;
     }
   	
-    
-    .real_disabled{
-    color: #868e96;
+    .leaflet-verticalcenter {
+        position: absolute;
+        top: 50%; /* possible because the placeholder's parent is the map */
+        transform: translateY(-50%); /* using the CSS3 Transform technique */
+        padding-top: 10px;
+        z-index: 800;
     }
-  		/*#oikea form {
-  		  overflow: hidden;
-  		}
 
-  		#oikea label {
-  		  float: left;
-        clear: left
-  		}
-
-  		#oikea input {
-  		  float: right;
-  		  clear: right;*/
-  		}
+    .leaflet-verticalcenter .leaflet-control {
+        margin-bottom: 10px;
+        z-index: 800;
+    }
 
   
 

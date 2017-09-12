@@ -78,11 +78,25 @@
   <body>
 
    <div id="main_div" class="container bg-light">
-   		<!-- <div class="row">
-		<h3>Tarkista kunta</h3>
-   		</div> -->
+   		
    		<div class="row">
    			<div class="col-lg-8" id="map_div">
+
+<!--    			nappuloita kartalla	
+ -->   			
+    <div class="btn-group" data-toggle="buttons" aria-label="tools">
+     	<label class="btn btn-secondary active" id="btn-observer" data-toggle="tooltip" data-placement="bottom" title="Aseta havainnoija" >
+     		<input type="radio" name="options" autocomplete="off" checked>	
+       	<i class="fa fa-binoculars" aria-hidden="true"></i></label>
+       	
+      <label class="btn btn-secondary" id="btn-bird" data-toggle="tooltip" data-placement="bottom" title="Aseta lintu">
+      	<input type="radio" name="options" autocomplete="off" >
+       	<i class="fa fa-twitter" aria-hidden="true"></i></label> 	
+
+     		<label class="btn btn-secondary" id="btn-move" data-toggle="tooltip" data-placement="bottom" title="Siirrä karttaa">
+     		<input type="radio" name="options" autocomplete="off" >
+     		<i class="fa fa-arrows" aria-hidden="true"></i></label>
+    </div>  
     		</div>  
 
     <div class="col-lg-4" id="lomake">  
@@ -126,7 +140,7 @@
                     Et voi asettaa havaintopaikkaa Suomen ulkopuolelle.
                 </div>
     				<label><small>Paikannimi:</small></label>
-    				<input type="text" class="form-control" id="paikka_nimi" size="25">
+    				<input type="text" class="form-control" id="obs-place-name" size="25">
     	</form>
     	 <form class="needs-validation" id="bird-form" novalidate>
     			<fieldset>
@@ -164,21 +178,7 @@
   
           </fieldset>
         </form>
-
-    <div class="btn-group" data-toggle="buttons" aria-label="tools">
-     	<label class="btn btn-secondary active" id="btn-observer" data-toggle="tooltip" data-placement="bottom" title="Aseta havainnoija" >
-     		<input type="radio" name="options" autocomplete="off" checked>	
-       	<i class="fa fa-binoculars" aria-hidden="true"></i></label>
-       	
-      <label class="btn btn-secondary" id="btn-bird" data-toggle="tooltip" data-placement="bottom" title="Aseta lintu">
-      	<input type="radio" name="options" autocomplete="off" >
-       	<i class="fa fa-twitter" aria-hidden="true"></i></label> 	
-
-     		<label class="btn btn-secondary" id="btn-move" data-toggle="tooltip" data-placement="bottom" title="Siirrä karttaa">
-     		<input type="radio" name="options" autocomplete="off" >
-     		<i class="fa fa-arrows" aria-hidden="true"></i></label>
-
-    </div>   
+ 
 
     <div class="btn-group" role="group btn-group-sm" aria-label="tools">
      
@@ -191,14 +191,12 @@
 
     	<div class="col-lg-4 form-check">
     	  <label class="form-check-label">
-    	  <input class="form-check-input" type="checkbox" value="">
     	    <button class="btn btn-primary btn-sm" type="button" >Yhdistyspaikat</button>
     	  </label>
 
     	</div>
     	<div class="col-lg-4 form-check">
     	  <label class="form-check-label">
-    	    <input class="form-check-input" type="checkbox" value="">
     	    <button class="btn btn-primary btn-sm" type="button" >Omat paikat</button>
     	  </label>
     	  </label>
