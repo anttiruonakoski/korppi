@@ -83,11 +83,11 @@
    		<div class="row">
    			<div class="col-lg-8" id="map_div">
 
-<!--  tool buttons on map (hack) should bee a proper leaflet control-->   			
+<!--  tool buttons on map (hack) should be a proper leaflet control-->   			
  		<div id="obs-tools" class="leaflet-control leaflet-control-layers leaflet-control-layers-expanded">
     <div class="btn-group" data-toggle="buttons" aria-label="obs-tools">
      	<label class="btn btn-secondary btn-sm active" id="btn-observer" data-toggle="tooltip" data-placement="bottom" title="Aseta havainnoija" >
-     		<input type="radio" name="options" autocomplete="off" checked>	
+     		<input type="radio" name="options" autocomplete="off" id="btn-observer-label" >	
        	<i class="fa fa-binoculars" aria-hidden="true"></i></label>
        	
       <label class="btn btn-secondary btn-sm" id="btn-bird" data-toggle="tooltip" data-placement="bottom" title="Aseta lintu">
@@ -105,6 +105,16 @@
        <button type="button" class="btn btn-danger btn-sm" id="btn-trash-all" data-toggle="tooltip" data-placement="bottom" title="Tyhjennä paikkatiedot"><i class="fa fa-trash" aria-hidden="true"></i></button>
        
     </div> 
+    <!-- buttons to be -->
+    <div class="btn-group ml-1" role="group btn-group-sm" aria-label="tools">
+     
+      <button type="button" class="btn btn-secondary btn-sm" id="btn-x" data-toggle="tooltip" data-placement="bottom" title="Mittaa matka"><i class="fa fa-arrows-h" aria-hidden="true"></i></button>
+       <button type="button" class="btn btn-secondary btn-sm" id="btn-x" data-toggle="tooltip" data-placement="bottom" title="empty for a while"><i class="fa fa-question" aria-hidden="true"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" id="btn-obs-center" data-toggle="tooltip" data-placement="bottom" title="Keskitä havainnoijaan"><i class="fa fa-crosshairs" aria-hidden="true"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" id="btn-obs-centerzoom" data-toggle="tooltip" data-placement="bottom" title="Keskitä ja zoomaa havainnoijaan"><i class="fa fa-search-plus" aria-hidden="true"></i></button> 
+       
+    </div> 
+
     </div> 
 
 		</div>

@@ -6,4 +6,6 @@ keskitä hav paikkaan
 kekitä linnun paikkaan
 
 käytä ylimääräistä leveyttä hyväksi paikkalistoissa
- 
+anna varoitus:
+- jos havainnon paikka siirtyy nimetystä paikasta yli 1 km
+- jos linnun paikka on erikoisen kaukana (yli 5km) 

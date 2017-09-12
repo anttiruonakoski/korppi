@@ -193,6 +193,10 @@
   			}
 
 		}
+
+        function centerObs(zoomLevel) {
+            map.setView(markerObs.getLatLng(),zoomLevel);
+        }
 	
 		map.on('click', onMapClick);
 
@@ -208,6 +212,9 @@
                             map.removeLayer(markerObs);
                         }        
                         currentMarker = obsIcon;
+                         $( "#btn-observer").toggleClass( "active" );
+                         //needs to reset tool buttons
+
                         markerObs = new L.marker(popupSourceFeature._latlng, {icon: currentMarker}).bindTooltip('Havainnoija', {permanent: true, direction: 'left' }).addTo(map);
                         document.getElementById('obs-n-koord').value = coords.no;   
                         document.getElementById('obs-e-koord').value = coords.ea;
@@ -235,10 +242,14 @@
             document.getElementById('obs-accuracy').disabled = true;			
 			}
 
+            if (form==='bird') {
+            document.getElementById('bird-accuracy').disabled = true;          
+            }
+
 			var markerName = "marker".concat(uppercaseScope); 
 			if (this[markerName]) {
 				map.removeLayer(this[markerName]);
-                this[markerName] = null;
+                this[markerName] = null;         
 			} 
 
 		} 
@@ -298,6 +309,17 @@
 			var accuracyRadius = 1000;
 		  	L.circle(markerObs.getLatLng(), {radius: accuracyRadius}).addTo(map);
 		});
+
+        $("#btn-obs-center").click(function(){
+                centerObs();
+                console.log("keskitetrtty");
+            });
+
+        $("#btn-obs-centerzoom").click(function(){
+                const defaultZoom = 12;
+                centerObs(defaultZoom);
+                console.log("zoomattu");
+            });
 
 		$('#bird-accuracy').change(function() {
 		  L.circle(markerBird.getLatLng(), {radius: 200}).addTo(map);
