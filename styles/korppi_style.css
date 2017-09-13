@@ -114,6 +114,19 @@
         }
       } 
 
+      @media (max-width: 390px) {
+          #map_div {
+                    height: 420px;
+
+          }
+          #obs-tools {
+                      margin-left: 44px;
+                      max-width: 150px;  
+          }
+          #obs-tools-primary {
+                      margin-bottom: 4px;
+          }
+      } 
 
   
 

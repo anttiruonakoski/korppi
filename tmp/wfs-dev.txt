@@ -1,11 +1,16 @@
 työkaluriville:
 
-automaattizoomaus on/off
-keskitä on /off
-keskitä hav paikkaan
-kekitä linnun paikkaan
+automaattizoomaus on/off ei
+keskitä linnun paikkaan on
+keskitä hav paikkaan on
+kekitä linnun paikkaan 
 
 käytä ylimääräistä leveyttä hyväksi paikkalistoissa
+
 anna varoitus:
 - jos havainnon paikka siirtyy nimetystä paikasta yli 1 km
 - jos linnun paikka on erikoisen kaukana (yli 5km) 
+
+
+element = havainto
+data

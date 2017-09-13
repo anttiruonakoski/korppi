@@ -1,6 +1,7 @@
 // main.js
 	
 	var L;
+    var line;
   	const taustakartta = L.tileLayer.mml_wmts({ layer: "taustakartta" });
     const maastokartta = L.tileLayer.mml_wmts({ layer: "maastokartta" });
     const ortokuva = L.tileLayer.mml("Ortokuva_3067");
@@ -161,6 +162,32 @@
       		return {no: no, ea: ea, bbox: bbox};
         }
 
+        function centerObs(zoomLvl) {
+            map.setView(markerObs.getLatLng(),zoomLvl);
+        }
+
+        function drawLine(obs,bird,line) {
+
+            var polyline = line;
+           
+            if (polyline) {
+                map.removeLayer(polyline);        
+            }    
+
+            if (obs && bird) {
+                var latlngs = [obs.getLatLng(), bird.getLatLng()]; 
+                var polyline = L.polyline(latlngs, {color: 'red', opacity: 0.75, weight: 4}).addTo(map).showMeasurements();
+            }
+            return polyline;
+        }
+
+        function drawaccuracyCircle(latlng,radius,type) {
+                
+                var accuracyCircle =[];
+                accuracyCircle.type = L.circle(latlng, {radius: radius}).addTo(map); 
+
+        }
+
 		function onMapClick(e) { 
 
 			var coords = getCoords(EPSG3067.project(e.latlng).toString());
@@ -192,11 +219,11 @@
 	      		document.getElementById('bird-accuracy').disabled = false;
   			}
 
+            if (markerObs && markerBird) {
+                line = drawLine(markerObs, markerBird, line);
+            }
 		}
 
-        function centerObs(zoomLevel) {
-            map.setView(markerObs.getLatLng(),zoomLevel);
-        }
 	
 		map.on('click', onMapClick);
 
@@ -216,6 +243,14 @@
                          //needs to reset tool buttons
 
                         markerObs = new L.marker(popupSourceFeature._latlng, {icon: currentMarker}).bindTooltip('Havainnoija', {permanent: true, direction: 'left' }).addTo(map);
+                        if (map.getZoom() < 12) {
+                            var zoomLevel = 12;
+                        }
+                        else {
+                            var zoomLevel = map.getZoom();
+                        }
+                        centerObs(zoomLevel);
+
                         document.getElementById('obs-n-koord').value = coords.no;   
                         document.getElementById('obs-e-koord').value = coords.ea;
                         //poista tarkkuudesta disabled
@@ -224,6 +259,10 @@
                         document.getElementById('obs-place-name').value = placeName;
 
                         document.getElementById("obs-kunta-name").classList.remove('is-invalid');
+
+                        if (markerObs && markerBird) {
+                            line = drawLine(markerObs, markerBird, line);
+                        }    
 
                 map.closePopup();
             });
@@ -244,13 +283,15 @@
 
             if (form==='bird') {
             document.getElementById('bird-accuracy').disabled = true;          
-            }
+            }          
 
 			var markerName = "marker".concat(uppercaseScope); 
 			if (this[markerName]) {
 				map.removeLayer(this[markerName]);
                 this[markerName] = null;         
 			} 
+
+            line = drawLine(markerObs, markerBird, line);
 
 		} 
 
@@ -288,6 +329,9 @@
                         map.removeLayer(markerBird);
                      }        
                     markerBird = new L.marker(markerObs._latlng, {icon: birdIcon}).addTo(map);
+                    if (line) {
+                        map.removeLayer(line);        
+                    }    
                 }
 		    }); 
 
@@ -306,24 +350,25 @@
 
 		$('#obs-accuracy').change(function() {
 			var showAccuracy = true;
-			var accuracyRadius = 1000;
-		  	L.circle(markerObs.getLatLng(), {radius: accuracyRadius}).addTo(map);
+			var accuracyRadius = document.getElementById('obs-accuracy').value;
+            drawaccuracyCircle(markerObs.getLatLng(), accuracyRadius, 'obs');
 		});
+
+        $('#bird-accuracy').change(function() {
+            var accuracyRadius = document.getElementById('bird-accuracy').value;
+            drawaccuracyCircle(markerBird.getLatLng(), accuracyRadius, 'bird');
+        });
 
         $("#btn-obs-center").click(function(){
                 centerObs();
-                console.log("keskitetrtty");
             });
 
         $("#btn-obs-centerzoom").click(function(){
-                const defaultZoom = 12;
-                centerObs(defaultZoom);
-                console.log("zoomattu");
+                const zoomLevel = 12;
+                centerObs(zoomLevel);
             });
 
-		$('#bird-accuracy').change(function() {
-		  L.circle(markerBird.getLatLng(), {radius: 200}).addTo(map);
-		});
+		
 
     }
 
