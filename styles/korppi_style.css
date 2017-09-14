@@ -25,6 +25,7 @@
       background-size: 150px;
     	background-position: right bottom; /*Positioning*/
    		background-repeat: no-repeat; /*Prevent showing multiple background images*/
+      max-width: 1900px;
         }
 
         .leaflet-container {
@@ -106,25 +107,31 @@
        /*// Extra small devices (portrait phones, less than 576px)*/
       @media (max-width: 575px) {
           #map_div {
-                    height: 475px;
+                    height: 480px;
 
           }
           #obs-tools {
-                      margin-left: 50px;
+                      margin-left: 45px;
         }
       } 
+
+      @media (max-width: 420px) {
+          #obs-tools {
+                      margin-left: 45px;
+                      max-width: 136px;  
+      }
+          #obs-tools-primary {
+                      margin-bottom: 4px;
+      }                
 
       @media (max-width: 390px) {
           #map_div {
                     height: 420px;
-
           }
           #obs-tools {
-                      margin-left: 50px;
-                      max-width: 150px;  
+                      margin-left: 45px;
+                      max-width: 135px;  
           }
-          #obs-tools-primary {
-                      margin-bottom: 4px;
           }
           #raven {
                       display: none; 

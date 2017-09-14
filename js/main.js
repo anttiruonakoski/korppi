@@ -6,7 +6,7 @@
         obs: null,
         bird: null
     };
-    var drawaccuracyCircle = {
+    var drawAccuracyCircle = {
         obs: false,
         bird: false
     }
@@ -177,13 +177,10 @@
         }
 
         function drawLine(obs,bird,line) {
-
-            var polyline = line;
-           
+            var polyline = line; 
             if (polyline) {
                 map.removeLayer(polyline);        
             }    
-
             if (obs && bird) {
                 var latlngs = [obs.getLatLng(), bird.getLatLng()]; 
                 var polyline = L.polyline(latlngs, {color: 'red', opacity: 0.75, weight: 4}).addTo(map).showMeasurements();
@@ -193,10 +190,19 @@
 
         function drawaccuracyCircle(latlng,radius,type) {
                 
-               
                 accuracyCircle.type = L.circle(latlng, {radius: radius}).addTo(map); 
 
         }
+
+        function setMarker(latlng,icon,tooltip) {
+
+            newMarker = L.marker(latlng, icon).addTo(map);
+
+            // bindTooltip('Havainnoija', {permanent: true, direction: 'left' }).addTo(map);
+
+            return newMarker; 
+        }
+
 
 		function onMapClick(e) { 
 
@@ -207,7 +213,12 @@
 	        		map.removeLayer(markerObs);
 	      		}        
 
-	      		markerObs = new L.marker(e.latlng, {icon: currentMarker}).bindTooltip('Havainnoija', {permanent: true, direction: 'left' }).addTo(map);
+                // disable label for now
+                // markerObs = new L.marker(e.latlng, {icon: currentMarker}).bindTooltip('Havainnoija', {permanent: true, direction: 'left' }).addTo(map);
+
+                markerObs = new L.marker(e.latlng, {icon: currentMarker}).
+                addTo(map);
+
 	    		document.getElementById('obs-n-koord').value = coords.no;	
 				document.getElementById('obs-e-koord').value = coords.ea;
 	      		//poista tarkkuudesta disabled
@@ -222,7 +233,8 @@
 	        		map.removeLayer(markerBird);
 	      		}        
 
-	      		markerBird = new L.marker(e.latlng, {icon: currentMarker}).addTo(map);
+	      		markerBird = setMarker(e.latlng, {icon: currentMarker},null);
+
 	    		document.getElementById('bird-n-koord').value = coords.no;	
 				document.getElementById('bird-e-koord').value = coords.ea;
 	      		//poista tarkkuudesta disabled
@@ -249,10 +261,17 @@
                             map.removeLayer(markerObs);
                         }        
                         currentMarker = obsIcon;
-                         $( "#btn-observer").toggleClass( "active" );
+                            $( "#btn-observer").toggleClass("active",true);
+                            $( "#btn-bird").toggleClass("active",false);
+                            $( "#btn-ruler").toggleClass("active",false);
+                            $( "#btn-move").toggleClass("active",false);
+
                          //needs to reset tool buttons
 
-                        markerObs = new L.marker(popupSourceFeature._latlng, {icon: currentMarker}).bindTooltip('Havainnoija', {permanent: true, direction: 'left' }).addTo(map);
+                        markerObs = setMarker(popupSourceFeature._latlng, {icon: currentMarker},null);
+
+                        // L.marker(popupSourceFeature._latlng, {icon: currentMarker}).bindTooltip('Havainnoija', {permanent: true, direction: 'left' }).addTo(map);
+
                         if (map.getZoom() < 12) {
                             var zoomLevel = 12;
                         }
@@ -339,6 +358,8 @@
                         map.removeLayer(markerBird);
                      }        
                     markerBird = new L.marker(markerObs._latlng, {icon: birdIcon}).addTo(map);
+                    markerBird.setRotationAngle(-75);
+
                     if (line) {
                         map.removeLayer(line);        
                     }    
