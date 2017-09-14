@@ -110,7 +110,7 @@
 
           }
           #obs-tools {
-                      margin-left: 44px;
+                      margin-left: 50px;
         }
       } 
 
@@ -120,11 +120,14 @@
 
           }
           #obs-tools {
-                      margin-left: 44px;
+                      margin-left: 50px;
                       max-width: 150px;  
           }
           #obs-tools-primary {
                       margin-bottom: 4px;
+          }
+          #raven {
+                      display: none; 
           }
       } 
 

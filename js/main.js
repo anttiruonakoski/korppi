@@ -2,6 +2,15 @@
 	
 	var L;
     var line;
+    var accuracyCircle = {
+        obs: null,
+        bird: null
+    };
+    var drawaccuracyCircle = {
+        obs: false,
+        bird: false
+    }
+
   	const taustakartta = L.tileLayer.mml_wmts({ layer: "taustakartta" });
     const maastokartta = L.tileLayer.mml_wmts({ layer: "maastokartta" });
     const ortokuva = L.tileLayer.mml("Ortokuva_3067");
@@ -70,8 +79,8 @@
     	};
 
     	const siteLayers = {
-    		"yhdistyspaikat" : sitesExample,
-    		"omat paikat" : testLayer
+    		"<span id='common-sites-control'>Yhdistyspaikat</span>" : sitesExample,
+    		"Omat paikat" : testLayer
     	};
 
         const map = new L.map('map_div', initMap);
@@ -101,6 +110,7 @@
 
         	        img.src = 'images/corrax.jpg';
         	        img.style.width = '48px';
+                    img.id = 'raven'
 
         	        return img;
         	    },
@@ -183,7 +193,7 @@
 
         function drawaccuracyCircle(latlng,radius,type) {
                 
-                var accuracyCircle =[];
+               
                 accuracyCircle.type = L.circle(latlng, {radius: radius}).addTo(map); 
 
         }
@@ -345,8 +355,13 @@
 				$().button('toggle');
 				clearPositionForm("obs");
 				clearPositionForm("bird");
+		    });
 
-		    }); 
+        $("#btn-reset-map").click(function(){
+                map.setView(initMap.center, initMap.zoom);
+                clearPositionForm("obs");
+                clearPositionForm("bird");
+            }); 
 
 		$('#obs-accuracy').change(function() {
 			var showAccuracy = true;

@@ -82,12 +82,12 @@
 
    <div id="main_div" class="container bg-light">
    		
-   		<div class="row">
-   			<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12" id="map_div">
+   	<div class="row">
+   		<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12" id="map_div">
 
 <!--  tool buttons on map (hack) should be a proper leaflet control-->   			
  		<div id="obs-tools" class="leaflet-control leaflet-control-layers leaflet-control-layers-expanded">
-    <div class="btn-group ml-0" data-toggle="buttons" aria-label="obs-tools" id="obs-tools-primary">
+    <div class="btn-group" data-toggle="buttons" aria-label="obs-tools" id="obs-tools-primary">
      	<label class="btn btn-secondary btn-sm active" id="btn-observer" data-toggle="tooltip" data-placement="bottom" title="Aseta havainnoija" >
      		<input type="radio" name="options" autocomplete="off" id="btn-observer-label" >	
        	<i class="fa fa-binoculars" aria-hidden="true"></i></label>
@@ -102,7 +102,7 @@
     </div> 
     <!-- secondary tools -->
 
-    <div class="btn-group mx-0 ml-lg-1" role="group btn-group-sm" aria-label="tools">
+    <div class="btn-group mx-0 ml-lg-2" role="group btn-group-sm" aria-label="tools">
      
       <button type="button" class="btn btn-secondary btn-sm" id="btn-distance" data-toggle="tooltip" data-placement="bottom" title="Mittaa matka"><i class="fa fa-arrows-h" aria-hidden="true"></i></button>
       <!--  <button type="button" class="btn btn-secondary btn-sm" id="btn-x" data-toggle="tooltip" data-placement="bottom" title="empty for a while"><i class="fa fa-question" aria-hidden="true"></i></button> -->
@@ -111,7 +111,11 @@
     </div> 
     <!-- end  -->   
 
-    <button type="button" class="ml-0 ml-lg-3 ml-xl-3 btn btn-danger btn-sm" id="btn-trash-all" data-toggle="tooltip" data-placement="bottom" title="Tyhjennä paikkatiedot"><i class="fa fa-trash" aria-hidden="true"></i></button>
+   <div class="btn-group ml-0 ml-lg-2" role="group btn-group-sm" aria-label="tools">
+
+    <button type="button" class="btn btn-danger btn-sm" id="btn-reset-map" data-toggle="tooltip" data-placement="bottom" title="Palauta kartta alkuun"><i class="fa fa-reply" aria-hidden="true"></i></button>
+    <button type="button" class="btn btn-danger btn-sm" id="btn-trash-all" data-toggle="tooltip" data-placement="bottom" title="Tyhjennä paikkatiedot"><i class="fa fa-trash" aria-hidden="true"></i></button>
+  </div>
 
     </div> 
 
@@ -209,7 +213,6 @@
     	  <label class="form-check-label">
     	    <button class="btn btn-secondary btn-sm" type="button" id="own-sites" >Omat paikat</button>
     	  </label>
-    	  </label>
     	</div>
 
       
@@ -221,8 +224,6 @@
 
     <div class="py-3">
         <button class="btn btn-success btn-sm" type="button"><i class="fa fa-check fa-1x" aria-hidden="true"></i> Hyväksy paikka</button>
-    </div>
-
     </div>
 
     <div class="bottom-column">
@@ -293,12 +294,27 @@
           </div>      
 
     </div>  
-   </div>  
-   </div>
-   </div>  
+  	</div>  
+  	</div>
+  	<div class="row">
+  	<div class="col mt-2">
+  	<form>
+  	<div class="form-row">
+  		<div class ="col-2">
+  			<input type="text" class="form-control" placeholder="Laji">
+  		</div>
+  		<div class ="col-1">
+  			<input type="text" class="form-control" placeholder="Lkm">
+  		</div>
+  		<div class ="col-7">
+  			<p>Other observation data goes here</p>
+  		</div>
+  	</div>
+  	</form>
+  	</div>
+  	</div>
+  	</div>  
 
 	</body>
-
-<!--jos vapaus, sananvastuuta ei ole-->
   
 </html>
