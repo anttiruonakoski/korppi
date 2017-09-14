@@ -173,7 +173,7 @@
         }
 
         function centerObs(zoomLvl) {
-            map.setView(markerObs.getLatLng(),zoomLvl);
+            map.flyTo(markerObs.getLatLng(),zoomLvl);
         }
 
         function drawLine(obs,bird,line) {
@@ -278,7 +278,13 @@
                         else {
                             var zoomLevel = map.getZoom();
                         }
+                        map.removeLayer(sitesExample);
+                        
                         centerObs(zoomLevel);
+
+                        map.once('moveend', function() {
+                            map.addLayer(sitesExample);
+                        });  
 
                         document.getElementById('obs-n-koord').value = coords.no;   
                         document.getElementById('obs-e-koord').value = coords.ea;
