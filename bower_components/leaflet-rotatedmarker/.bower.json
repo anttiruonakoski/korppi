@@ -1,0 +1,15 @@
+{
+  "name": "leaflet-rotatedmarker",
+  "homepage": "https://github.com/bbecquet/Leaflet.RotatedMarker",
+  "version": "0.2.0",
+  "_release": "0.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.0",
+    "commit": "fe2b1c575d043fc02631c1e8dd6c0be8d2c91b3a"
+  },
+  "_source": "https://github.com/bbecquet/Leaflet.RotatedMarker.git",
+  "_target": "^0.2.0",
+  "_originalSource": "leaflet-rotatedmarker",
+  "_direct": true
+}
