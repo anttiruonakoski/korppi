@@ -2,6 +2,7 @@
 	
 	var L;
     var line;
+
     var accuracyCircle = {
         obs: null,
         bird: null
@@ -14,7 +15,7 @@
 
     var layerGroup = {
         obs: null,
-        bird:null
+        bird: null
     };
 
   	const taustakartta = L.tileLayer.mml_wmts({ layer: "taustakartta" });
@@ -25,25 +26,51 @@
     // const taustakartta_uusi = L.tileLayer.mml("Taustakartta_3067");
 
     const siteMarkerOptions = {
-    	radius : 9,
-    	fillOpacity : 0.9,
+    	radius : 8,
+    	fillOpacity : 0.8,
     	fillColor : '#4169E1',
     	color : 'dimgray',
     	weight: 2 
     };
 
+    const ownsiteMarkerOptions = {
+        radius : 7,
+        fillOpacity : 0.6,
+        fillColor : 'darkorange',
+        color : 'dimgray',
+        weight: 1 
+    };
+
+
     function onEachFeature(feature, layer) {
      // does this feature have a property named name?
 
         if (feature.properties && feature.properties.name) {
-            layer.bindPopup('Aseta paikaksi: <button type="button" class="btn btn-sm btn-success btn-select-site">' + feature.properties.name +'</button>', {
+            layer.bindPopup('Siirry yhdistyspaikkaan: <button type="button" class="btn btn-sm btn-success btn-select-site">' + feature.properties.name +'</button>', {
                 maxWidth : 'auto'
                 });
             }
             layer._leaflet_id = feature.id;
     }
 
-    const sitesExample = new L.GeoJSON.AJAX("data/lintutornit_lly_kaikki_2017_wgs84.geojson", { pointToLayer : function(geoJsonPoint, latlng) {
+    function onEachFeature_own(feature, layer) {
+     // does this feature have a property named name?
+
+        if (feature.properties && feature.properties.name) {
+            layer.bindPopup('Siirry omaan paikkaan: <button type="button" class="btn btn-sm btn-success btn-select-site">' + feature.properties.name +'</button>', {
+                maxWidth : 'auto'
+                });   
+            }
+            layer._leaflet_id = feature.id;
+    }
+
+    // example_100_random_site.geojson
+
+    const ownsites = new L.GeoJSON.AJAX("data/100_random_site.geojson", { pointToLayer : function(geoJsonPoint, latlng) {
+    return L.circleMarker(latlng, ownsiteMarkerOptions);
+    }, onEachFeature: onEachFeature_own});
+
+    const sites = new L.GeoJSON.AJAX("data/lintutornit_lly_kaikki_2017_wgs84.geojson", { pointToLayer : function(geoJsonPoint, latlng) {
     return L.circleMarker(latlng, siteMarkerOptions);
 	}, onEachFeature: onEachFeature});
 
@@ -87,8 +114,8 @@
     	};
 
     	const siteLayers = {
-    		"<span id='common-sites-control'>Yhdistyspaikat</span>" : sitesExample,
-    		"Omat paikat" : testLayer
+    		"<span id='common-sites-control'>Yhdistyspaikat</span>" : sites,
+    		"Omat paikat" : ownsites
     	};
 
         const map = new L.map('map_div', initMap);
@@ -152,9 +179,9 @@
         //     return new L.Control.Tools(opts);
         //  };
 
-        sitesExample.addTo(map);
+        sites.addTo(map);
         //assign variable only after json request complete, otherwise empty result
-        var sitesExampleAsJSON = sitesExample.toGeoJSON();
+        var sitesAsJSON = sites.toGeoJSON();
 
        	L.control.layers(baseMaps, null, {collapsed: false}).addTo(map);
        	L.control.layers(null, siteLayers, {collapsed: false}).addTo(map);
@@ -319,12 +346,16 @@
                         else {
                             var zoomLevel = map.getZoom();
                         }
-                        map.removeLayer(sitesExample);
+
+                        //should really fix this, no logic here
+                        map.removeLayer(sites);
+                        map.removeLayer(ownsites);
                         
                         centerObs(zoomLevel);
 
                         map.once('moveend', function() {
-                            map.addLayer(sitesExample);
+                            map.addLayer(sites);
+                            map.addLayer(ownsites);
                         });  
 
                         document.getElementById('obs-n-koord').value = coords.no;   
@@ -391,14 +422,14 @@
 		$("#btn-connect-bird").click(function(){
 				if (markerObs) {
                     var coords = getCoords(EPSG3067.project(markerObs._latlng).toString());
-                    console.log(coords);
                     document.getElementById('bird-n-koord').value = coords.no;  
                     document.getElementById('bird-e-koord').value = coords.ea;
                     document.getElementById('bird-accuracy').disabled = false;
-                    if (markerBird) {
-                        map.removeLayer(markerBird);
-                     }        
-                    markerBird = new L.marker(markerObs._latlng, {icon: birdIcon}).addTo(map);
+                    if (layerGroup['bird']) {
+                        layerGroup['bird'].remove();
+                    }        
+       
+                    markerBird = new setMarker(e.latlng, {icon: currentMarker}, 'bird'). addTo(map);
                     markerBird.setRotationAngle(-75);
 
                     if (line) {

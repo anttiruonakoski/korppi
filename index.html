@@ -66,7 +66,7 @@
     <!--korppi app javascript files-->
     <script src="js/bootstraphelper.js" type="text/javascript"></script>
     <script src="js/wfs_queries.js" type="text/javascript"></script>
-    <script src="js/mapfunctions.js" type="text/javascript"></script>
+    <script src="js/jsonfunctions.js" type="text/javascript"></script>
 
     <script src="js/main.js" type="text/javascript"></script>
 
@@ -248,7 +248,7 @@
                   <ul>
                     <li>Havaintokunta määräytyy koordinaattipisteen perusteella. Havaintopaikan tallentaminen ulkomaahan on estetty.</li>
                     <li>Kartan voi paikantaa sijaintiin, jossa työskennellään.</li>
-                    <li>3-4 nopeasti latautuvaa taustakarttaa.</li>
+                    <li>3 nopeasti latautuvaa, helposti vieritettävää taustakarttaa.</li>
                     <li>Automaattiset paikannimiehdotukset (tulossa).</li>
                   </ul></p>
                   <p>Aineistolähteet:
@@ -256,11 +256,12 @@
                     <li>Maastokartta ja taustakartta: MML paikkatiedon testipalvelu 2017, WMTS</li>
                     <li>Ilmakuva: WMTS-palvelu kartat.kapsi.fi, kuva-aineisto MML 2017 </li>
                     <li>Kuntarajat 1:10 000: WFS-palvelu Paituli / CSC - Tieteen tietotekniikan keskus, aineisto MML 2017</li>
+                    <li>Yhdistyspaikat: LLY:n alueen lintutornit, omat paikat: satunnainen esimerkkiaineisto</li>  
                   </ul></p>
                   <p>Tekniikat:
                   <ul>
                     <li>Leaflet 1.2, Leaflet.MML-layers, Proj4.js, Proj4leaflet.js ja muita Leaflet liitännäisiä</li>
-                    <li>jQuery</li>
+                    <li>jQuery 3.5</li>
                     <li>Bootstrap 4.0</li>
                   </ul></p>
                   <p>Toteutus:</p> 
@@ -299,7 +300,7 @@
   	</div>
   	</div>
   	</div>
-<div class="row">
+<div class="row hack">
   	<div class="col mt-2">
   	<form>
   	<div class="form-row">
