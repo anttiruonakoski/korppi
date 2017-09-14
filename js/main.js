@@ -6,15 +6,22 @@
         obs: null,
         bird: null
     };
-    var drawAccuracyCircle = {
-        obs: false,
-        bird: false
-    }
+
+    var accuracyRadius = {
+        obs: null,
+        bird: null
+    };
+
+    var layerGroup = {
+        obs: null,
+        bird:null
+    };
 
   	const taustakartta = L.tileLayer.mml_wmts({ layer: "taustakartta" });
     const maastokartta = L.tileLayer.mml_wmts({ layer: "maastokartta" });
     const ortokuva = L.tileLayer.mml("Ortokuva_3067");
-    ortokuva.options.minZoom = 8;  
+    ortokuva.options.minZoom = 8;
+    maastokartta.setOpacity(0.75);  
     // const taustakartta_uusi = L.tileLayer.mml("Taustakartta_3067");
 
     const siteMarkerOptions = {
@@ -49,7 +56,7 @@
         center: [66.5, 25.3],
         zoom: 6,
         minZoom: 3,
-        maxZoom: 14,
+        maxZoom: 13,
         layers: [maastokartta],    
         maxBounds: [[58.2133,16.16359],
                     [71.2133,36.16359]]
@@ -64,6 +71,7 @@
 
 	var currentMarker;
     var markerObs, markerBird;
+
     currentMarker = obsIcon;
 
     //make WFS-queries for placenames
@@ -159,7 +167,9 @@
         raven({ position: 'bottomright' }).addTo(map);
         // tools({ position: 'tophorisontalcenter' }).addTo(map);
         
-        el = document.getElementById('obs-tools') 
+
+        //otherwise click events pass through to map layer 
+        el = document.getElementById('obs-tools');
         L.DomEvent.disableClickPropagation(this.el);
 
         // helper functions
@@ -190,17 +200,46 @@
 
         function drawaccuracyCircle(latlng,radius,type) {
                 
-                accuracyCircle.type = L.circle(latlng, {radius: radius}).addTo(map); 
+            var weight = 1;
+            var color = "#c68585";
+            var fillOpacity = 0.25;   
 
+            if (accuracyCircle[type]) {
+                layerGroup[type].removeLayer(accuracyCircle[type]);   
+            }
+
+            accuracyCircle[type] = new L.circle(latlng, {radius: radius, weight: weight, color: color, fillOpacity: fillOpacity }).addTo(map);
+
+            layerGroup[type].addLayer(accuracyCircle[type]);
+            
         }
 
-        function setMarker(latlng,icon,tooltip) {
+        function setMarker(latlng,icon,type) {
 
             newMarker = L.marker(latlng, icon).addTo(map);
+
+            layerGroup[type] = new L.layerGroup().addTo(map);
+
+                if (accuracyRadius[type]) {
+                    drawaccuracyCircle(latlng, accuracyRadius[type], type);    
+                }     
+
+            layerGroup[type].addLayer(newMarker); 
 
             // bindTooltip('Havainnoija', {permanent: true, direction: 'left' }).addTo(map);
 
             return newMarker; 
+        }
+
+        function resetlayerGroups(types) {
+
+            Object.keys(accuracyRadius).forEach(v => accuracyRadius[v] = null);
+
+            types.forEach(function(i) {
+                if (layerGroup[i]) {
+                    layerGroup[i].remove();
+                }  
+            });
         }
 
 
@@ -209,16 +248,19 @@
 			var coords = getCoords(EPSG3067.project(e.latlng).toString());
 
 			if (currentMarker === obsIcon) {  
-				if (markerObs) {
-	        		map.removeLayer(markerObs);
-	      		}        
+				if (layerGroup['obs']) {
+	        		layerGroup['obs'].remove();
+	      		}  
 
                 // disable label for now
                 // markerObs = new L.marker(e.latlng, {icon: currentMarker}).bindTooltip('Havainnoija', {permanent: true, direction: 'left' }).addTo(map);
+                
+                markerObs = new setMarker(e.latlng, {icon: currentMarker}, 'obs').addTo(map);
 
-                markerObs = new L.marker(e.latlng, {icon: currentMarker}).
-                addTo(map);
-
+                // if (accuracyRadius['obs']) {
+                // drawaccuracyCircle(markerObs.getLatLng(), accuracyRadius['obs'], 'obs');
+                // }
+                
 	    		document.getElementById('obs-n-koord').value = coords.no;	
 				document.getElementById('obs-e-koord').value = coords.ea;
 	      		//poista tarkkuudesta disabled
@@ -229,15 +271,14 @@
   			}
 
   			if (currentMarker === birdIcon) {  
-				if (markerBird) {
-	        		map.removeLayer(markerBird);
+				if (layerGroup['bird']) {
+	        		layerGroup['bird'].remove();
 	      		}        
 
-	      		markerBird = setMarker(e.latlng, {icon: currentMarker},null);
+	      		markerBird = new setMarker(e.latlng, {icon: currentMarker}, 'bird'). addTo(map);
 
 	    		document.getElementById('bird-n-koord').value = coords.no;	
 				document.getElementById('bird-e-koord').value = coords.ea;
-	      		//poista tarkkuudesta disabled
 	      		document.getElementById('bird-accuracy').disabled = false;
   			}
 
@@ -255,11 +296,11 @@
                 var kuntaName = popupSourceFeature.feature.properties.kunta;
                 var placeName = popupSourceFeature.feature.properties.name;
                 var coords = getCoords(EPSG3067.project(popupSourceFeature._latlng).toString());
-                console.log(kuntaName, placeName, coords);
 
-                        if (markerObs) {
-                            map.removeLayer(markerObs);
-                        }        
+                        if (layerGroup['obs']) {
+                            layerGroup['obs'].remove();
+                        }     
+
                         currentMarker = obsIcon;
                             $( "#btn-observer").toggleClass("active",true);
                             $( "#btn-bird").toggleClass("active",false);
@@ -268,7 +309,7 @@
 
                          //needs to reset tool buttons
 
-                        markerObs = setMarker(popupSourceFeature._latlng, {icon: currentMarker},null);
+                        markerObs = new setMarker(popupSourceFeature._latlng, {icon: currentMarker}, 'obs').addTo(map);
 
                         // L.marker(popupSourceFeature._latlng, {icon: currentMarker}).bindTooltip('Havainnoija', {permanent: true, direction: 'left' }).addTo(map);
 
@@ -338,13 +379,7 @@
 				currentMarker = birdIcon;
 		    }); 
 
-		$("#btn-clear-obs").click(function(){
-				clearPositionForm("obs");
-			});
-			
-		$("#btn-clear-bird").click(function(){
-				clearPositionForm("bird");
-			});
+		
 
 		$("#btn-move").click(function(){
 				currentMarker = null;
@@ -378,27 +413,40 @@
 				console.log(getPlaceNames);
 		    });
 
+        // clears
+
+        $("#btn-clear-obs").click(function(){
+                clearPositionForm('obs');
+                resetlayerGroups(['obs']);
+            });
+            
+        $("#btn-clear-bird").click(function(){
+                clearPositionForm('bird');
+                resetlayerGroups(['bird'])
+            });
+
 		$("#btn-trash-all").click(function(){
 				$().button('toggle');
-				clearPositionForm("obs");
-				clearPositionForm("bird");
+                clearPositionForm("obs");
+                clearPositionForm("bird");
+                resetlayerGroups(['obs','bird']);
 		    });
 
         $("#btn-reset-map").click(function(){
                 map.setView(initMap.center, initMap.zoom);
                 clearPositionForm("obs");
                 clearPositionForm("bird");
+                resetlayerGroups(['obs','bird']);
             }); 
 
 		$('#obs-accuracy').change(function() {
-			var showAccuracy = true;
-			var accuracyRadius = document.getElementById('obs-accuracy').value;
-            drawaccuracyCircle(markerObs.getLatLng(), accuracyRadius, 'obs');
+			accuracyRadius['obs'] = document.getElementById('obs-accuracy').value;
+            drawaccuracyCircle(markerObs.getLatLng(), accuracyRadius['obs'], 'obs');
 		});
 
         $('#bird-accuracy').change(function() {
-            var accuracyRadius = document.getElementById('bird-accuracy').value;
-            drawaccuracyCircle(markerBird.getLatLng(), accuracyRadius, 'bird');
+            accuracyRadius['bird'] = document.getElementById('bird-accuracy').value;
+            drawaccuracyCircle(markerBird.getLatLng(), accuracyRadius['bird'], 'bird');
         });
 
         $("#btn-obs-center").click(function(){
