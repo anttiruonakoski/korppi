@@ -1,9 +1,6 @@
 <style type="text/css">
 
-        body, html {
-            padding: 0px;
-            margin: 10px;
-            height: calc(100%-20px);
+        body, html {      
         }
 
        /* * {
@@ -43,11 +40,6 @@
           margin: 5%;
       }
 
-        .bottom-column
-    {
-    position: absolute;
-    bottom: 0;
-    }
   	
     .leaflet-verticalcenter {
         position: absolute;
@@ -138,6 +130,9 @@
           }
       } 
 
+      .hack {
+        margin-right: 0px!important;
+      }
   
 
     </style>

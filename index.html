@@ -81,10 +81,12 @@
 	</head>
 
   <body>
-  	<div id="main_div" class="container-fluid bg-light ml-0 ml-sm-0 ml-md-1 ml-lg-1 mt-0 mt-sm-0 mt-md-1 mt-lg-1">
-   		
-   	<div class="row">
-   	<div class="col-lg-8 col-md-7 col-sm-12 col-xs-12" id="map_div">
+  	<div class="container-fluid">
+
+  	<div id="main_div" class="bg-light ml-0 ml-sm-0 ml-md-1 ml-lg-1 mt-0 mt-sm-0 mt-md-1 mt-lg-1 clearfix">
+
+   	<div class="row">	
+   	<div class="col-lg-8 col-md-7 col-sm-12" id="map_div">
 
 <!--  tool buttons on map (hack) should be a proper leaflet control-->   			
  		<div id="obs-tools" class="leaflet-control leaflet-control-layers leaflet-control-layers-expanded">
@@ -124,18 +126,19 @@
 		</div>
 <!-- 		end of map_div   -->
 
-    <div class="col-lg-4 col-md-5 pl-md-1 pl-lg-3 pl-1 pr-1 mt-1 mt-sm-1 mt-md-1 mt-lg-1 mt-xl-1"  id="lomake">  
-    		<div class="row clearfix">
-				<div class="col-4 col-xl-6 py-1 pr-0 mr-xl-2">
-		
-				Havainnoijan paikka
+    <div class="col-lg-4 col-md-5 col-12 pl-md-1 pl-lg-3 pl-1 pr-1 mt-1 mt-sm-1 mt-md-1 mt-lg-0 mt-xl-0 clearfix" id="lomake">
+    		<div class="row hack clearfix">  
 
-				</div>
-				<div class="col-auto ml-sm-0 ml-md-0 ml-lg-0 p-0 ml-xl-2">
+				<div class="col-4 col-xl-6 py-1 pr-0 mr-xl-0">
+				Havainnoijan paikka
+				</div> 
+				<div class="col-auto ml-sm-0 ml-md-0 ml-lg-0 px-3 px-md-1">
     	  <button class="btn btn-secondary btn-sm" type="button" id="common-sites" data-toggle="modal" data-target="#site-list">Yhdistyspaikat</button>
     	  <button class="btn btn-secondary btn-sm" type="button" id="own-sites" >Omat paikat</button>
     		</div>
-				</div>
+
+	<div class="col">
+
 				<form class="needs-validation" id="obs-form" novalidate>
           <div class="form-group">
             <div class="row m-0 p-0 justify-content-start">
@@ -147,7 +150,7 @@
     				    <label class="mb-0"><small>I-koord:</small></label>
     				    <input type="text" class="form-control form-control-sm" id="obs-e-koord" placeholder="000000" size="6" disabled>	
               </div>  
-              <div class="col-auto col-lg-2 col-sm-2 mx-1 p-0 align-self-end">
+              <div class="col-lg-3 col-sm-3 col-auto mx-1 p-0 align-self-end">
                 <label class="mb-0 d-block"><small>Tarkkuus:</small></label>
                 <select class="custom-select form-control-sm d-block" id="obs-accuracy" disabled>
                   <option selected value="0">ei määr.</option>
@@ -177,6 +180,8 @@
     				<label class="d-sm-none d-lg-inline" ><small>Paikannimi:</small></label>
     				<input type="text" class="form-control form-control-sm my-sm-1 my-md-1 my-lg-0" id="obs-place-name" placeholder="paikka" size="25">
     	</form>
+
+    	
     	 <form class="needs-validation" id="bird-form" novalidate>
     			<fieldset>
     				<h6>Linnun paikka</h6>
@@ -190,9 +195,9 @@
     				    <label class="mb-1"><small>I-koord:</small></label>
     				    <input type="text" class="form-control form-control-sm" id="bird-e-koord" placeholder="000000" size="6" readonly />	
               </div>  
-              <div class="col-lg-3 col-sm-3 col-3 mx-1 p-0 align-self-end">
+              <div class="col-lg-3 col-sm-3 col-auto mx-1 p-0 align-self-end">
                 <label class="mb-1"><small>Tarkkuus:</small></label>
-                <select class="custom-select form-control-sm" id="bird-accuracy" disabled>
+                <select class="custom-select form-control-sm d-block" id="bird-accuracy" disabled>
                   <option selected value="0">ei määr.</option>
                   <option value="10">alle 10 m</option>
                   <option value="50">alle 50 m</option>
@@ -212,17 +217,7 @@
   
           </fieldset>
         </form>
- 
 
-
-    <div class="row">
-
-    
-
-    	
-
-      
-    </div>
 
     <div class="py-3" >            
  			<button class="btn btn-primary btn-sm" type="button" ><i class="fa fa-check fa-1x" aria-hidden="true"></i>Tallenna omiin paikkoihin</button>
@@ -300,9 +295,10 @@
           </div>      
 
     </div>  
-  	</div>  
+
   	</div>
-  	<div class="row">
+
+<!--   	<div class="row">
   	<div class="col mt-2">
   	<form>
   	<div class="form-row">
@@ -318,8 +314,10 @@
   	</div>
   	</form>
   	</div>
+  	</div> -->
   	</div>
-  	</div>  
+  	</div>
+  	</div>
 
 	</body>
   
