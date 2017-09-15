@@ -2,6 +2,7 @@
 	
 	var L;
     var line;
+    kunta = null;
 
     var accuracyCircle = {
         obs: null,
@@ -180,8 +181,10 @@
         //  };
 
         sites.addTo(map);
+
         //assign variable only after json request complete, otherwise empty result
         var sitesAsJSON = sites.toGeoJSON();
+        var ownsitesAsJSON = ownsites.toGeoJSON();
 
        	L.control.layers(baseMaps, null, {collapsed: false}).addTo(map);
        	L.control.layers(null, siteLayers, {collapsed: false}).addTo(map);
@@ -192,8 +195,7 @@
         // custom controls
 
         raven({ position: 'bottomright' }).addTo(map);
-        // tools({ position: 'tophorisontalcenter' }).addTo(map);
-        
+        // tools({ position: 'tophorisontalcenter' }).addTo(map);      
 
         //otherwise click events pass through to map layer 
         el = document.getElementById('obs-tools');
@@ -258,17 +260,22 @@
             return newMarker; 
         }
 
-        function resetlayerGroups(types) {
+        resetlayerGroups = function resetlayerGroups(types) {
 
             Object.keys(accuracyRadius).forEach(v => accuracyRadius[v] = null);
-
             types.forEach(function(i) {
                 if (layerGroup[i]) {
                     layerGroup[i].remove();
                 }  
             });
+            if (line) {
+                        map.removeLayer(line);        
+                    } 
         }
 
+        function conlog() {
+            console.log('test function l2 code noob', parseKunta.kunta);
+        }
 
 		function onMapClick(e) { 
 
@@ -278,7 +285,7 @@
 				if (layerGroup['obs']) {
 	        		layerGroup['obs'].remove();
 	      		}  
-
+                getKunta(coords.bbox).done(parseKunta);
                 // disable label for now
                 // markerObs = new L.marker(e.latlng, {icon: currentMarker}).bindTooltip('Havainnoija', {permanent: true, direction: 'left' }).addTo(map);
                 
@@ -292,9 +299,7 @@
 				document.getElementById('obs-e-koord').value = coords.ea;
 	      		//poista tarkkuudesta disabled
 	      		document.getElementById('obs-accuracy').disabled = false;
-	      		//hae koordinaattipisteen kunta
-  				getKunta(coords.bbox).done(parseKunta);
-
+	      		
   			}
 
   			if (currentMarker === birdIcon) {  
@@ -375,7 +380,7 @@
             });
         });
 
-		function clearPositionForm(form) {
+		clearPositionForm = function clearPositionForm(form) {
 		//clear and reset input fields and markers after button press 	
 
 			var uppercaseScope = form.charAt(0).toUpperCase() + form.slice(1);
@@ -398,8 +403,9 @@
                 this[markerName] = null;         
 			} 
 
-            line = drawLine(markerObs, markerBird, line);
-
+            if (line) {
+                        map.removeLayer(line);        
+                    }
 		} 
 
 		$("#btn-observer").click(function(){
@@ -429,12 +435,10 @@
                         layerGroup['bird'].remove();
                     }        
        
-                    markerBird = new setMarker(e.latlng, {icon: currentMarker}, 'bird'). addTo(map);
+                    markerBird = new setMarker(markerObs.getLatLng(), { icon: birdIcon }, 'bird'). addTo(map);
                     markerBird.setRotationAngle(-75);
 
-                    if (line) {
-                        map.removeLayer(line);        
-                    }    
+                      
                 }
 		    }); 
 

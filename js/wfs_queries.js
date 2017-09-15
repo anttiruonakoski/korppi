@@ -40,16 +40,21 @@ function getKunta(bBox) {
   //   	}});
   // }
 
-  function parseKunta(response){ 
+  function parseKunta(response){   	
   //parsi kuntanimi
+
   if (response.totalFeatures) {
   document.getElementById('obs-kunta-name').value = response.features[0].properties.NAMEFIN;
   document.getElementById('obs-kunta-name').classList.remove('is-invalid');
+  this.kunta = response.features[0].properties.NAMEFIN;
   }
 
   //kysely ei palauta kohteita -> ulkomailla 
   else { 
   document.getElementById('obs-kunta-name').value = null;
+  resetlayerGroups(['obs']);
+  clearPositionForm('obs');
   document.getElementById('obs-kunta-name').classList.add('is-invalid');
+  this.kunta = null;
   }
   }
