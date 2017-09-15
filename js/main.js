@@ -2,7 +2,7 @@
 	
 	var L;
     var line;
-    kunta = null;
+    gKunta = null;
 
     var accuracyCircle = {
         obs: null,
@@ -469,6 +469,7 @@
 
         $("#btn-reset-map").click(function(){
                 map.setView(initMap.center, initMap.zoom);
+                // initMap.layers[0].addTo(map); buggy need to remove all base first;
                 clearPositionForm("obs");
                 clearPositionForm("bird");
                 resetlayerGroups(['obs','bird']);
@@ -493,7 +494,14 @@
                 centerObs(zoomLevel);
             });
 
-		
+        //spacebar pan testing 
+        
 
+		// map.on('keypress', function(ev) {
+  //           var keyPressed = ev.originalEvent.code;
+  //           if (keyPressed === 'Space') {
+  //           alert('spacebar downn'); // ev is an event object (MouseEvent in this case)
+  //           }
+
+  //           });
     }
-
