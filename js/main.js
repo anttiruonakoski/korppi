@@ -552,9 +552,9 @@
              });    
 
              //enable modal focus
-             $('#site-list-modal').on('shown.bs.modal', function () {
-             $(this).find('#sites-search').focus();
-             });
+             // $('#site-list-modal').on('shown.bs.modal', function () {
+             // $(this).find('#sites-search').focus();
+             // });
              
  
 

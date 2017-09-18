@@ -255,6 +255,7 @@
                   <ul>
                     <li>Havaintokunta määräytyy koordinaattipisteen perusteella. Havaintopaikan kirjaaminen väärään kuntaan tai ulkomaahan on estetty.</li>
                     <li>Kartan voi paikantaa sijaintiin, jossa työskennellään.</li>
+                    <li>Ennestään tallennetut havaintopaikat valittavissa listalta tai kartalta</li> 
                     <li>3 nopeasti latautuvaa, helposti vieritettävää taustakarttaa.</li>
                     <li>Automaattiset paikannimiehdotukset (tulossa).</li>
                   </ul></p>
@@ -267,8 +268,9 @@
                   </ul></p>
                   <p>Tekniikat:
                   <ul>
-                    <li>Leaflet 1.2, Leaflet.MML-layers, Proj4.js, Proj4leaflet.js ja muita Leaflet liitännäisiä</li>
-                    <li>jQuery 3.5</li>
+                    <li>Leaflet 1.2, Leaflet.MML-layers, Proj4.js, Proj4leaflet.js ja muita Leaflet-liitännäisiä</li>
+                    <li>jQuery 3.2</li>
+                    <li>List.js</li>
                     <li>Bootstrap 4.0</li>
                   </ul></p>
                   <p>Toteutus:</p> 
@@ -288,12 +290,12 @@
               <div class="modal-content">
                 <div class="modal-header" id="sites-title">
 
-               		<div class="input-group" id="sites-input">
+               		<div class="input-group mr-4" id="sites-input">
                  	<span class="input-group-addon" id="basic-addon1"><i class="fa fa-search" aria-hidden="true"></i></span>
 
-                 	<input type="text" id="sites-search" class="form-control search" placeholder="havaintopaikka" aria-label="Username" aria-describedby="basic-addon1" autofocus>
+                 	<input type="text" id="sites-search" class="form-control search" placeholder="havaintopaikka" aria-label="Username" aria-describedby="basic-addon1">
+                 	<!-- not autofocused -->
                		</div>
-
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -339,10 +341,10 @@
   <script type="text/javascript">
       //enable modal focus
     $('#site-list-modal').on('shown.bs.modal', function () {
-    $(this).find('#sites-search').focus();
+    // $(this).find('#sites-search').focus();
     });
 
- 	$('#sites-search').on('keyup', function() {
+ 	$('#sites-search').on('keyup input', function() {
   	var searchString = $(this).val();
   	sList.search(searchString);
 		});
