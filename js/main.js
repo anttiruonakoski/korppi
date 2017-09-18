@@ -81,12 +81,16 @@
     return L.circleMarker(latlng, siteMarkerOptions);
 	}, onEachFeature: onEachFeature});
 
-       sites.on('data:loaded', function () {
-             console.log('eureka');
-             });   
+        sites.on('data:loaded', function () {
+            var sitesAsJSON = sites.toGeoJSON();
+            console.log('eureka');
+            tableFeatures(sitesAsJSON,"yhditys");
+        });  
+
        ownsites.on('data:loaded', function () {
-             console.log('eureka ownsites');
-             }); 
+            var ownsitesAsJSON = ownsites.toGeoJSON();   
+            console.log('eureka ownsites');
+        }); 
 
     const EPSG3067 = L.TileLayer.MML.get3067Proj();
 
@@ -194,9 +198,7 @@
         sites.addTo(map);
 
         //assign variable only after json request complete, otherwise empty result
-        var sitesAsJSON = sites.toGeoJSON();
-        var ownsitesAsJSON = ownsites.toGeoJSON();
-
+        
        	L.control.layers(baseMaps, null, {collapsed: false}).addTo(map);
        	L.control.layers(null, siteLayers, {collapsed: false}).addTo(map);
 
@@ -539,8 +541,7 @@
   //           });
 
 // test functions
-    tableFeatures(sitesAsJSON,"yhditys");
-
+   
  
 
     }
