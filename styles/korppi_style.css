@@ -1,9 +1,4 @@
-<style type="text/css">
-
-        body, html {      
-        }
-
-       /* * {
+      /* * {
           font-size: 14px;
         }*/
         
@@ -13,10 +8,8 @@
                     border: 1px solid black;
                     margin: 0px;
                     padding: 0px;
-          }
+          }  
 
-
-     
         #main_div {
     	background: url('../images/corrax.jpg');
       background-size: 150px;
@@ -80,11 +73,12 @@
 */
       /*// Medium devices (tablets, 768px and up)
         */
+
       @media (min-width: 576px) and (max-width: 767px) {
         #map_div {
               height: 600px;
       }
-    }
+      }
 
     /*    // Large devices (desktops, 992px and up)*/
       /*@media (min-width: 992px) {}*/
@@ -98,13 +92,13 @@
 
        /*// Extra small devices (portrait phones, less than 576px)*/
       @media (max-width: 575px) {
+
           #map_div {
                     height: 480px;
-
           }
           #obs-tools {
                       margin-left: 45px;
-        }
+          }
       } 
 
       @media (max-width: 420px) {
@@ -115,15 +109,16 @@
           #obs-tools-primary {
                       margin-bottom: 4px;
       }                
+      }
 
       @media (max-width: 390px) {
           #map_div {
                     height: 420px;
           }
+
           #obs-tools {
                       margin-left: 45px;
                       max-width: 135px;  
-          }
           }
           #raven {
                       display: none; 
@@ -133,6 +128,11 @@
       .hack {
         margin-right: 0px!important;
       }
-  
 
-    </style>
+      .ul {
+        column-count: 2;
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        background-color: 'red';
+      }
+

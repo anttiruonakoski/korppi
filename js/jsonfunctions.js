@@ -11,7 +11,7 @@ function tableFeatures(jsonObj,scope) {
 
   var div = document.getElementById("sites-content");
   list = document.createElement('ul'); 
-  list.classList.add('list', 'list-group');
+  list.classList.add('list', 'list-group', 'sites');
 
   div.appendChild(list);
 
