@@ -87,30 +87,26 @@ function tableFeatures(jsonObj,scope) {
     		$('#site-list').modal('hide');
 
     		//GeoJSON and Leaflet express N/E in different order
-    		latlng = e.data.geometry.coordinates.reverse();
+    		// ll = e.data.geometry.coordinates.reverse();
+    		// fails sometimes, hence slice() which makes a copy of array
+
+    		const ll = e.data.geometry.coordinates.slice().reverse();
 
     		currentMarker = obsIcon;
     		var placeName = e.data.properties.name;
     		var kuntaName = e.data.properties.kunta;
-    		// var coords_ea = e.data.geometry.coordinates[0];
-    		// var coords_no = e.data.geometry.coordinates[1];
-
-    		//works only in ES6, may need fix later
-    		
-    		//also buggy, sometimes fails to swap before console.log()
-    		// [latlng[0], latlng[1]] = [latlng[1], latlng[0]];
-
+    
     		//get ETRS-TM35FIN coordinates
-    		coords = getCoords(EPSG3067.project(L.latLng(latlng)).toString());
+    		coords = getCoords(EPSG3067.project(L.latLng(ll)).toString());
 
  			console.log(placeName, kuntaName, coords.no, coords.ea);
- 			console.log(currentMarker, latlng);
+ 			console.log(ll);
 
  			if (layerGroup['obs']) {
  			    layerGroup['obs'].remove();
  			}     
  			
- 			markerObs = new gsetMarker(latlng, {icon: currentMarker}, 'obs');
+ 			markerObs = new gsetMarker(ll, {icon: currentMarker}, 'obs');
  			// coords = getCoords(EPSG3067.project(markerObs._latlng).toString());
     	       
     	            currentMarker = obsIcon;
