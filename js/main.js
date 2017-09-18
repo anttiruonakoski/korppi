@@ -9,6 +9,11 @@
     var gsetMarker;
     var centerObs;
     var drawLine;
+    var sList;
+
+    var currentMarker;
+    var markerObs, markerBird;
+
 
     var accuracyCircle = {
         obs: null,
@@ -112,9 +117,6 @@
 		icon: 'twitter', prefix: 'fa', markerColor: 'cadetblue'
 	});
 
-	var currentMarker;
-    var markerObs, markerBird;
-
     currentMarker = obsIcon;
 
     //make WFS-queries for placenames
@@ -130,7 +132,7 @@
     	};
 
     	const siteLayers = {
-    		"<span id='common-sites-control'>Yhdistyspaikat</span>" : sites,
+    		"Yhdistyspaikat <span id='common-sites-control'>LLY</span>" : sites,
     		"Omat paikat" : ownsites
     	};
 
@@ -228,7 +230,7 @@
             map.flyTo(markerObs.getLatLng(),zoomLvl);
         }
 
-        var drawLine = function drawLine(obs,bird,line) {
+        drawLine = function drawLine(obs,bird,line) {
             var polyline = line; 
             if (polyline) {
                 map.removeLayer(polyline);        
@@ -440,7 +442,7 @@
             if (line) {
                         map.removeLayer(line);        
                     }
-		} 
+		}; 
 
 		$("#btn-observer").click(function(){
 				currentMarker = obsIcon; 
@@ -541,7 +543,19 @@
   //           });
 
 // test functions
-   
+            
+         //scripts needed for bootstrap
+
+         // enable tooltips
+             $(function () {
+               $('[data-toggle="tooltip"]').tooltip();
+             });    
+
+             //enable modal focus
+             $('#site-list-modal').on('shown.bs.modal', function () {
+             $(this).find('#sites-search').focus();
+             });
+             
  
 
     }

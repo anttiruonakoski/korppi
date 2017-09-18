@@ -8,23 +8,34 @@ function tableFeatures(jsonObj,scope) {
   const headerText = {yhditys: "Yhdistyksen havaintopaikat", omat :"Omat havaintopaikat"};
 
   var header = document.getElementById("sites-title"); 		
+
   var div = document.getElementById("sites-content");
-  header.textContent = headerText[scope];
+  list = document.createElement('ul'); 
+  list.classList.add('list', 'list-group');
+
+  div.appendChild(list);
+
+  // header.textContent = headerText[scope];
       
   for (var i = 0; i < features.length; i++) {
     // var myArticle = document.createElement('article');
     // var myH2 = document.createElement('h2');
-    // var kunta = document.createElement('p');
-    var siteName = document.createElement('p');
+    var siteName = document.createElement('li');
     var sid = 'site_' + features[i].properties.id;
+    var di2 = document.createElement('div');
+    di2.classList.add('paikka');
+ 
     siteName.id = sid;
+    siteName.classList.add('list-group-item', 'list-group-item-action');
+
+    siteName.appendChild(di2); 
 
     // var myPara3 = document.createElement('p');
     // var myList = document.createElement('ul');
 
     // myH2.textContent = features[i].name;
     // kunta.textContent = 'Kunta: ' + features[i].properties.kunta;
-    siteName.textContent = 'Havaintopaikka: ' + features[i].properties.name + ' kunta: ' + features[i].properties.kunta;
+    di2.innerHTML = '<a href="#" class="text-primary">' + features[i].properties.name +'</a>' + '<span class="font-weight-bold"> ' + features[i].properties.kunta + '</span>';
 
     // myPara3.textContent = 'Superpowers:';
         
@@ -37,7 +48,7 @@ function tableFeatures(jsonObj,scope) {
 
     // myArticle.appendChild(myH2);
     // div.appendChild(kunta);
-    div.appendChild(siteName);
+    list.appendChild(siteName);
 
     // siteName.addEventListener('click', function(){
     // 	alert ('clikattu');
@@ -53,7 +64,7 @@ function tableFeatures(jsonObj,scope) {
 
     function setSite (e) {
 
-    		$('#site-list').modal('hide');
+    		$('#site-list-modal').modal('hide');
 
     		//GeoJSON and Leaflet express N/E in different order
     		// ll = e.data.geometry.coordinates.reverse();
@@ -76,6 +87,7 @@ function tableFeatures(jsonObj,scope) {
  			}     
  			
  			markerObs = new gsetMarker(ll, {icon: currentMarker}, 'obs');
+
  			// coords = getCoords(EPSG3067.project(markerObs._latlng).toString());
     	       
     	            currentMarker = obsIcon;
@@ -105,32 +117,30 @@ function tableFeatures(jsonObj,scope) {
 
     	            document.getElementById('obs-n-koord').value = coords.no;   
     	            document.getElementById('obs-e-koord').value = coords.ea;
+
     	            //poista tarkkuudesta disabled
     	            document.getElementById('obs-accuracy').disabled = false;
     	            document.getElementById('obs-kunta-name').value = kuntaName;
     	            document.getElementById('obs-place-name').value = placeName;
-
     	            document.getElementById("obs-kunta-name").classList.remove('is-invalid');
 
-    	            if (markerObs && markerBird) {
-    	                line = drawLine(markerObs, markerBird, line);
-    	            }    
-    	   }
-    	    // map.closePopup();
+    	            //lienee syytä nollata linnun paikka
 
-    	    $( "#"+sid ). click(features[i]
-    	     , setSite      
+    	            clearPositionForm('bird');
+
+    	   }
+
+    	    $( "#"+sid ). click(features[i], setSite
     	);
 
-	
-    // myArticle.appendChild(myPara3);
-    // myArticle.appendChild(myList);
-
-    // section.appendChild(myArticle);
   }
+
+	var options = {
+	  valueNames: ['paikka']
+	};
+
+	sList = new List('sites-content', options);
+
 }
 	
-	// tableFeatures(sites,"yhditys");
-
-// }
 

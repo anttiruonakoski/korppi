@@ -6,8 +6,8 @@
       $('[data-toggle="tooltip"]').tooltip();
     });    
 
-    //enable modal
-    $('#myModal').on('shown.bs.modal', function () {
-      $('#myInput').focus();
+    //enable modal focus
+    $('#site-list-modal').on('shown.bs.modal', function () {
+    $(this).find('#sites-search').focus();
     });
  
