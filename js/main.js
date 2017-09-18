@@ -1,8 +1,14 @@
 // main.js
 	
+
+    var map;
 	var L;
     var line;
-    gKunta = null;
+    var gKunta = null;
+    var clearPositionForm;
+    var gsetMarker;
+    var centerObs;
+    var drawLine;
 
     var accuracyCircle = {
         obs: null,
@@ -119,7 +125,7 @@
     		"Omat paikat" : ownsites
     	};
 
-        const map = new L.map('map_div', initMap);
+        map = new L.map('map_div', initMap);
 
         // Create additional Control placeholders https://stackoverflow.com/questions/33614912/how-to-locate-leaflet-zoom-control-in-a-desired-position
 
@@ -211,11 +217,11 @@
       		return {no: no, ea: ea, bbox: bbox};
         }
 
-        function centerObs(zoomLvl) {
+        centerObs =  function centerObs(zoomLvl) {
             map.flyTo(markerObs.getLatLng(),zoomLvl);
         }
 
-        function drawLine(obs,bird,line) {
+        drawLine = function drawLine(obs,bird,line) {
             var polyline = line; 
             if (polyline) {
                 map.removeLayer(polyline);        
@@ -260,6 +266,27 @@
             return newMarker; 
         }
 
+
+        gsetMarker = function gsetMarker(latlng,icon,type) {
+
+
+            console.log('piirretään');
+            newMarker = L.marker(latlng, icon).addTo(map);
+
+            layerGroup[type] = new L.layerGroup().addTo(map);
+
+                if (accuracyRadius[type]) {
+                    drawaccuracyCircle(latlng, accuracyRadius[type], type);    
+                }     
+
+            layerGroup[type].addLayer(newMarker); 
+
+            // bindTooltip('Havainnoija', {permanent: true, direction: 'left' }).addTo(map);
+
+            return newMarker; 
+        }
+
+
         resetlayerGroups = function resetlayerGroups(types) {
 
             Object.keys(accuracyRadius).forEach(v => accuracyRadius[v] = null);
@@ -289,7 +316,7 @@
                 // disable label for now
                 // markerObs = new L.marker(e.latlng, {icon: currentMarker}).bindTooltip('Havainnoija', {permanent: true, direction: 'left' }).addTo(map);
                 
-                markerObs = new setMarker(e.latlng, {icon: currentMarker}, 'obs').addTo(map);
+                markerObs = new setMarker(e.latlng, {icon: currentMarker}, 'obs');
 
                 // if (accuracyRadius['obs']) {
                 // drawaccuracyCircle(markerObs.getLatLng(), accuracyRadius['obs'], 'obs');
@@ -494,6 +521,7 @@
                 centerObs(zoomLevel);
             });
 
+
         //spacebar pan testing 
         
 
@@ -504,4 +532,9 @@
   //           }
 
   //           });
+
+// test functions
+
+    tableFeatures(sitesAsJSON,"yhditys");
+
     }
