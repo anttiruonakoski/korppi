@@ -1,6 +1,7 @@
 *.sublime-project
 *.sublime-workspace
 bower_components/*.md
+bower_components/docs
 test/*
 test*
 table*

@@ -129,8 +129,8 @@
         margin-right: 0px!important;
       }
 
-      .ul {
-        column-count: 2;
+      ul {
+        column-count: 2!important;
         -webkit-column-count: 2;
         -moz-column-count: 2;
         background-color: 'red';
