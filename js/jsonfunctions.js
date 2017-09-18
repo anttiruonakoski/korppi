@@ -1,33 +1,6 @@
 // jsonfunctions.js
 // parse json to html table
 
-
-	const si = new L.GeoJSON.AJAX("data/lintutornit_lly_kaikki_2017_wgs84.geojson");
-
-	// const si = new L.GeoJSON.AJAX("data/lintutornit_lly_kaikki_2017_wgs84.geojson", { 
-		
-	// 	pointToLayer : function(geoJsonPoint, latlng) {
-	//     return L.circleMarker(latlng, siteMarkerOptions);
-	// 	}, onEachFeature: onEachFeature});
-
-	// si.on('data:loaded', function () {
-	// 		console.log('eureka');
-	// 		});	 
-
-	// si.on('data:loading', function () {
-	// 	console.log('eureka');
-	// 	});	 
-
-
-// function init() {
-		
-// 	// var m= L.map('map');
-
-// 	// si.addTo(m);
-
-// 	console.log(si.toGeoJSON());
-
-// 	sites = si.toGeoJSON();	
 function tableFeatures(jsonObj,scope) {
 
   var features = jsonObj['features'];
@@ -37,10 +10,6 @@ function tableFeatures(jsonObj,scope) {
   var header = document.getElementById("sites-title"); 		
   var div = document.getElementById("sites-content");
   header.textContent = headerText[scope];
-
-  var myPara = document.createElement('p');
-
-  myPara.textContent = 'koes';
       
   for (var i = 0; i < features.length; i++) {
     // var myArticle = document.createElement('article');

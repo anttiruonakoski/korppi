@@ -81,7 +81,12 @@
     return L.circleMarker(latlng, siteMarkerOptions);
 	}, onEachFeature: onEachFeature});
 
-    const testLayer = new L.GeoJSON();
+       sites.on('data:loaded', function () {
+             console.log('eureka');
+             });   
+       ownsites.on('data:loaded', function () {
+             console.log('eureka ownsites');
+             }); 
 
     const EPSG3067 = L.TileLayer.MML.get3067Proj();
 
@@ -91,7 +96,7 @@
         zoom: 6,
         minZoom: 3,
         maxZoom: 13,
-        layers: [maastokartta],    
+        layers: [taustakartta],    
         maxBounds: [[58.2133,16.16359],
                     [71.2133,36.16359]]
 		};
@@ -221,7 +226,7 @@
             map.flyTo(markerObs.getLatLng(),zoomLvl);
         }
 
-        drawLine = function drawLine(obs,bird,line) {
+        var drawLine = function drawLine(obs,bird,line) {
             var polyline = line; 
             if (polyline) {
                 map.removeLayer(polyline);        
@@ -534,7 +539,8 @@
   //           });
 
 // test functions
-
     tableFeatures(sitesAsJSON,"yhditys");
+
+ 
 
     }
