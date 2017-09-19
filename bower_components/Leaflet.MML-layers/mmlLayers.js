@@ -25,7 +25,7 @@
 }(function (L) {
     L.TileLayer.MML = L.TileLayer.extend({
         options: {
-            attribution : '&copy; <a href="http://www.maanmittauslaitos.fi/avoindata_lisenssi_versio1_20120501"' +
+            attribution : '&copy; <a href="http://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/asiantuntevalle-kayttajalle/maastotiedot-ja-niiden-hankinta/avoimen-0"' +
                           'target=new>Maanmittauslaitos</a>'
         },
 
@@ -87,7 +87,7 @@
             style: "default",
             maxZoom: 15,
             minZoom: 0,
-            attribution : '&copy; <a href="http://www.maanmittauslaitos.fi/avoindata_lisenssi_versio1_20120501"' +
+            attribution : '&copy; <a href="http://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/asiantuntevalle-kayttajalle/maastotiedot-ja-niiden-hankinta/avoimen-0"' +
                           'target=new>Maanmittauslaitos</a>'
         }
     });

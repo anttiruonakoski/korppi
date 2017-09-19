@@ -129,14 +129,25 @@
         margin-right: 0px!important;
       }
 
-      li.list-group-item {
-        padding: 5px;
+      .list-group-item{
+        font-size: 90%;
+        padding-top: 4px;
+        padding-bottom: 4px;
       }
 
-      ul.sites {
+  /*    .sites {
         width: 100%;
         column-count: 2!important;
         -webkit-column-count: 2;
         -moz-column-count: 2;
+      }*/
+
+      .dropdown-menu a {
+      font-size: 90%;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      padding-left: 8px;
+      padding-right: 8px;
+
       }
 

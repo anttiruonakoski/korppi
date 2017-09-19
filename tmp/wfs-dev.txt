@@ -14,3 +14,6 @@ anna varoitus:
 
 element = havainto
 data
+
+
+yhdistyspaikkoja on noin 7800 kpl

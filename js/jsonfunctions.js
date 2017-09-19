@@ -11,7 +11,7 @@ function tableFeatures(jsonObj,scope) {
 
   var div = document.getElementById("sites-content");
   list = document.createElement('ul'); 
-  list.classList.add('list', 'list-group', 'sites');
+  list.classList.add('list', 'list-group', 'sites', 'col-6');
 
   div.appendChild(list);
 
@@ -23,7 +23,7 @@ function tableFeatures(jsonObj,scope) {
     var siteName = document.createElement('li');
     var sid = 'site_' + features[i].properties.id;
     var di2 = document.createElement('div');
-    di2.classList.add('paikka', 'col-6');
+    di2.classList.add('paikka', 'text-truncate');
  
     siteName.id = sid;
     siteName.classList.add('list-group-item', 'list-group-item-action');

@@ -134,16 +134,35 @@
 		</div>
 <!-- 		end of map_div   -->
 
-    <div class="col-lg-4 col-md-5 col-12 pl-md-1 pl-lg-3 pl-1 pr-1 mt-1 mt-sm-1 mt-md-1 mt-lg-0 mt-xl-0 clearfix" id="lomake">
+    <div class="col-lg-4 col-md-5 col-12 pl-md-1 pl-lg-3 pl-1 pr-1 mt-1 mt-sm-1 mt-md-1 mt-lg-0 mt-xl-0" id="lomake">
     		<div class="row hack clearfix">  
 
-				<div class="col-4 col-xl-6 py-1 pr-0 mr-xl-0">
-				Havainnoijan paikka
-				</div> 
-				<div class="col-auto ml-sm-0 ml-md-0 ml-lg-0 px-3 px-lg-3 px-md-1">
-    	  <button class="btn btn-secondary btn-sm" type="button" id="common-sites" data-toggle="modal" data-target="#site-list-modal">Hae paikka listalta</button>
-    	  <button class="btn btn-secondary btn-sm" type="button" id="common-sites-changer" >LLY</button>
+				<div class="col-4 ml-sm-0 ml-md-0 ml-lg-0 px-3 px-lg-3 px-md-1">
+    	  <button class="btn btn-primary btn-sm mb-2" type="button" id="common-sites" data-toggle="modal" data-target="#site-list-modal">Hae paikka listalta</button>
+    	  Havainnoijan paikka
+    	  </div>
+				
+    	  <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 ml-sm-0 ml-md-0 ml-lg-0 px-3 px-lg-3 px-md-1">
+    	  <div class="dropdown">
+
+    	  			<button class="btn btn-secondary btn-sm clear-right dropdown-toggle" type="button" id="common-sites-changer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="soc-selected">Lapin lintutieteellinen yhdistys ry</button>
+    	  			<div class="dropdown-menu" aria-labelledby="common-sites-changer">
+    	  				<h6 class="dropdown-header">Yhdistys, jonka havaintopaikat näytetään</h6>
+    						<a class="dropdown-item" href="#" id="soc-1" >Kemi-Tornion lintuharrastajat Xenus ry</a>
+    						<a class="dropdown-item" href="#" id="soc-2">Suomenselän Lintutieteellinen Yhdistys ry (SSLTY)</a>
+    						<a class="dropdown-item" href="#" id="soc-3">Turun Lintutieteellinen Yhdistys ry</a>
+
+    					<!-- this menu could be populated from a static json file with click listeners. events should load geoJSON, which includes obs points and update layers, update text in button id="common-sites-changer" and "disable" respective dropdown-item.-->
+
+    					</div>	
+    	  </div>	
+    	
+		
     		</div>
+
+				<!-- <div class="col-4 col-xl-6 py-1 pr-0 mr-xl-0">
+				Havainnoijan paikka
+				</div>  -->
 
 	<div class="col">
 
@@ -289,7 +308,7 @@
 
           <!-- Modal sitelist scaffolding -->
           <div class="modal" id="site-list-modal" tabindex="-1" role="dialog" aria-labelledby="sitelistlabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog modal-lg modal-md-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header" id="sites-title">
 

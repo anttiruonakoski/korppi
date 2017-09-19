@@ -71,7 +71,7 @@
         if (feature.properties && feature.properties.name) {
             layer.bindPopup('Siirry omaan paikkaan: <button type="button" class="btn btn-sm btn-primary btn-select-site">' + feature.properties.name +'</button>', {
                 maxWidth : 'auto'
-                });   
+                });      
             }
             layer._leaflet_id = feature.id;
     }
@@ -86,16 +86,18 @@
     return L.circleMarker(latlng, siteMarkerOptions);
 	}, onEachFeature: onEachFeature});
 
+    //
+
         sites.on('data:loaded', function () {
             var sitesAsJSON = sites.toGeoJSON();
-            console.log('eureka');
             tableFeatures(sitesAsJSON,"yhditys");
         });  
 
        ownsites.on('data:loaded', function () {
             var ownsitesAsJSON = ownsites.toGeoJSON();   
-            console.log('eureka ownsites');
         }); 
+
+    // 
 
     const EPSG3067 = L.TileLayer.MML.get3067Proj();
 
@@ -107,7 +109,9 @@
         maxZoom: 13,
         layers: [taustakartta],    
         maxBounds: [[58.2133,16.16359],
-                    [71.2133,36.16359]]
+                    [71.2133,36.16359]],
+        //test canvas renderer
+        renderer: L.canvas()                   
 		};
 
 	const obsIcon = L.AwesomeMarkers.icon({
@@ -132,7 +136,7 @@
     	};
 
     	const siteLayers = {
-    		"Yhdistyspaikat <span id='common-sites-control'>LLY</span>" : sites,
+    		"Yhdistyspaikat <span id='common-sites-control'></span>" : sites,
     		"Omat paikat" : ownsites
     	};
 
