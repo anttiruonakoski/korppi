@@ -58,7 +58,7 @@
      // does this feature have a property named name?
 
         if (feature.properties && feature.properties.name) {
-            layer.bindPopup('Siirry yhdistyspaikkaan: <button type="button" class="btn btn-sm btn-success btn-select-site">' + feature.properties.name +'</button>', {
+            layer.bindPopup('Siirry yhdistyspaikkaan: <button type="button" class="btn btn-sm btn-primary btn-select-site">' + feature.properties.name +'</button>', {
                 maxWidth : 'auto'
                 });
             }
@@ -69,7 +69,7 @@
      // does this feature have a property named name?
 
         if (feature.properties && feature.properties.name) {
-            layer.bindPopup('Siirry omaan paikkaan: <button type="button" class="btn btn-sm btn-success btn-select-site">' + feature.properties.name +'</button>', {
+            layer.bindPopup('Siirry omaan paikkaan: <button type="button" class="btn btn-sm btn-primary btn-select-site">' + feature.properties.name +'</button>', {
                 maxWidth : 'auto'
                 });   
             }
@@ -161,7 +161,7 @@
         	onAdd: function(map) {
         	        var img = L.DomUtil.create('img');
 
-        	        img.src = 'images/corrax.jpg';
+        	        img.src = 'images/corrax.png';
         	        img.style.width = '48px';
                     img.id = 'raven'
 

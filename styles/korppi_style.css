@@ -11,7 +11,7 @@
           }  
 
         #main_div {
-    	background: url('../images/corrax.jpg');
+    	background: url('../images/corrax.png');
       background-size: 150px;
     	background-position: right bottom; /*Positioning*/
    		background-repeat: no-repeat; /*Prevent showing multiple background images*/
@@ -129,10 +129,14 @@
         margin-right: 0px!important;
       }
 
-      ul {
+      li.list-group-item {
+        padding: 5px;
+      }
+
+      ul.sites {
+        width: 100%;
         column-count: 2!important;
         -webkit-column-count: 2;
         -moz-column-count: 2;
-        background-color: 'red';
       }
 

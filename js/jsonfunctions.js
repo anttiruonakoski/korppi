@@ -23,7 +23,7 @@ function tableFeatures(jsonObj,scope) {
     var siteName = document.createElement('li');
     var sid = 'site_' + features[i].properties.id;
     var di2 = document.createElement('div');
-    di2.classList.add('paikka');
+    di2.classList.add('paikka', 'col-6');
  
     siteName.id = sid;
     siteName.classList.add('list-group-item', 'list-group-item-action');
