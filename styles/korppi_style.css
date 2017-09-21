@@ -10,13 +10,22 @@
                     padding: 0px;
           }  
 
-        #main_div {
+        #main_div, #info{
     	background: url('../images/corrax.png');
       background-size: 150px;
     	background-position: right bottom; /*Positioning*/
    		background-repeat: no-repeat; /*Prevent showing multiple background images*/
       max-width: 1900px;
         }
+
+      .info-flip {
+      background-position: left bottom!important;
+      transform: scaleX(-1);
+      }   
+
+       .reverse-flip {
+      transform: scaleX(-1);
+      }     
 
         .leaflet-container {
   		cursor: crosshair !important;
@@ -129,10 +138,11 @@
         margin-right: 0px!important;
       }
 
-      .list-group-item{
+      .list-group-item {
         font-size: 90%;
         padding-top: 4px;
         padding-bottom: 4px;
+        padding-left: 12px;
       }
 
   /*    .sites {

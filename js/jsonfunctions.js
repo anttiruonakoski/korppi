@@ -3,56 +3,118 @@
 
 function tableFeatures(jsonObj,scope) {
 
-  var features = jsonObj['features'];
+    //observation site lists population relies on list.js
+    //generic appendchild method & class changes would be faster but list.js gives indexed, searchable object
+    //id = leafet marker (layer) id 
 
-  const headerText = {yhditys: "Yhdistyksen havaintopaikat", omat :"Omat havaintopaikat"};
+    var options = {
+        valueNames: ['place', 'kunta', { data: ['id'] }],
+        indexAsync: true,
+        item: '<li class="list-group-item list-group-item-action"><a href="#" class="text-primary place"></a><span class="font-weight-bold kunta"></span></li>'
+    }; 
 
-  var header = document.getElementById("sites-title"); 		
+    var features = jsonObj.features;
+    console.log('Kohteita listalle :' + features.length + scope);
 
-  var div = document.getElementById("sites-content");
-  list = document.createElement('ul'); 
-  list.classList.add('list', 'list-group', 'sites', 'col-6');
+    var listLength = features.length;
 
-  div.appendChild(list);
+    const headerText = {societySites: "Yhdistyspaikat", ownSites: "Omat havaintopaikat"};
 
-  // header.textContent = headerText[scope];
-      
-  for (var i = 0; i < features.length; i++) {
-    // var myArticle = document.createElement('article');
-    // var myH2 = document.createElement('h2');
-    var siteName = document.createElement('li');
-    var sid = 'site_' + features[i].properties.id;
-    var di2 = document.createElement('div');
-    di2.classList.add('paikka', 'text-truncate');
- 
-    siteName.id = sid;
-    siteName.classList.add('list-group-item', 'list-group-item-action');
+    // var header = document.getElementById("sites-title"); 
 
-    siteName.appendChild(di2); 
+    var sc = document.getElementById("tabs");
+    // sc.classList.add('row');
 
-    // var myPara3 = document.createElement('p');
-    // var myList = document.createElement('ul');
+    var tab = document.getElementById("tabheader");
+    var div = document.createElement('div');
+    sc.appendChild(div);
 
-    // myH2.textContent = features[i].name;
-    // kunta.textContent = 'Kunta: ' + features[i].properties.kunta;
-    di2.innerHTML = '<a href="#" class="text-primary">' + features[i].properties.name +'</a>' + '<span class="font-weight-bold"> ' + features[i].properties.kunta + '</span>';
+    //some magic to hide list header during 1-column layout and show tabs instead. should be improved to show tabs side by side, not one top of another. 
 
-    // myPara3.textContent = 'Superpowers:';
+    tab.innerHTML = '<div class="col-12 d-lg-none d-xl-none">  <ul class="nav nav-tabs nav-fill"> <li class="nav-item"> <a class="nav-link active" href="#"> Omat paikat </a> </li> <li class="nav-item"> <a class="nav-link" href="#societySites" >Yhdistyspaikat</a> </li> </div>';
+    div.classList.add('col-xs-12', 'col-sm-12', 'col-md-12', 'col-lg-6', 'col-xl-6');
+
+    div2 = document.createElement('div');
+    div.appendChild(div2);
+
+    div2.textContent = headerText[scope];
+    div2.classList.add('d-lg-inline-block','d-md-none', 'd-sm-none', 'd-none');
+
+    //it's important to define layout order. otherwise it'd depend which div's file was loaded first.
+
+    if (scope === 'ownSites') {
+        div.classList.add('order-1');
+    }
+    else {
+        div.classList.add('order-12');
+        div2.classList.remove('d-md-none', 'd-sm-none', 'd-none');
+    }
+
+    //magic ends
+
+    div.id = scope;
+
+
+    var list = document.createElement('ul');
+    list.classList.add('list', 'list-group'); 
+
+    // header.textContent = headerText[scope] + ' ' + listLength + ' kpl';
+    
+    var textcon;
+    var listValues = [];
+
+    console.time('lista');   
+
+    for (var i = 0; i < features.length; i++) {
+
+        textcon = features[i].properties.name + ' ';
+        listValues.push({place: textcon,
+                        kunta: features[i].properties.kunta,
+                        id: features[i].properties.id
+                        });
+
+    
+    // former appendchild method, was quite fast.  
+    //     sid = 'site_' + features[i].properties.id;
+    //     // console.log(sid);
+
+    //     siteName = document.createElement('li');
+    //     // siteName.classList.add('list-group-item', 'list-group-item-action');
+    //     siteName.className = 'list-group-item';
+
+    //     siteName.id = sid;
+
+    //     di2 = document.createElement('div');
+    //     di2.className = 'paikka' 
+    
+    //     siteName.appendChild(di2); 
+    //     a = document.createElement('a');
+    // // kunta.textContent = 'Kunta: ' + features[i].properties.kunta;
+
         
-    // var superPowers = features[i].powers;
-    // for (var j = 0; j < superPowers.length; j++) {
-    //   var listItem = document.createElement('li');
-    //   listItem.textContent = superPowers[j];
-    //   myList.appendChild(listItem);
-    // }
+    //     di2.appendChild(a);
+    //     a.className = 'text-primary';
+    //     a.appendChild(document.createTextNode(textcon));
 
-    // myArticle.appendChild(myH2);
-    // div.appendChild(kunta);
-    list.appendChild(siteName);
+    //     // di2.innerHTML = '<a href="#" class="text-primary">' + features[i].properties.name +'</a>' + '<span class="font-weight-bold"> ' + features[i].properties.kunta + '</span>';
 
-    // siteName.addEventListener('click', function(){
-    // 	alert ('clikattu');
-    // 	}, false);
+    //     // console.log(listValues.length);
+    //     list.appendChild(siteName);        
+
+    }
+
+    // console.log('tehdään lista n itemistä: ',listValues.length);
+
+    div.appendChild(list);
+
+    // console.timeEnd('lista');
+    // console.time('list.js');
+
+    //sList [0,1] can't say which is society's which user's cause it's ambiguos which is populated first. 
+    
+    sList[Object.keys(headerText).indexOf(scope)] = new List(scope, options, listValues);
+
+    // console.timeEnd('list.js');
 
         function getCoords(point) {
     		var point_temp = point.replace("Point(", "").replace(")", "").split(", ");
@@ -62,7 +124,7 @@ function tableFeatures(jsonObj,scope) {
       		return {no: no, ea: ea, bbox: bbox};
         }
 
-    function setSite (e) {
+    function setSite (site) {
 
     		$('#site-list-modal').modal('hide');
 
@@ -70,25 +132,20 @@ function tableFeatures(jsonObj,scope) {
     		// ll = e.data.geometry.coordinates.reverse();
     		// fails sometimes, hence slice() which makes a copy of array
 
-    		const ll = e.data.geometry.coordinates.slice().reverse();
+    		const ll = site._latlng;
 
     		currentMarker = obsIcon;
-    		var placeName = e.data.properties.name;
-    		var kuntaName = e.data.properties.kunta;
+
+    		var placeName = site.feature.properties.name;
+    		var kuntaName = site.feature.properties.kunta;
     
     		//get ETRS-TM35FIN coordinates
     		coords = getCoords(EPSG3067.project(L.latLng(ll)).toString());
 
- 			console.log(placeName, kuntaName, coords.no, coords.ea);
- 			console.log(ll);
-
  			if (layerGroup['obs']) {
  			    layerGroup['obs'].remove();
- 			}     
- 			
- 			markerObs = new gsetMarker(ll, {icon: currentMarker}, 'obs');
-
- 			// coords = getCoords(EPSG3067.project(markerObs._latlng).toString());
+ 			}     	
+ 			markerObs = new setMarker(ll, {icon: currentMarker}, 'obs');
     	       
     	            currentMarker = obsIcon;
 
@@ -105,14 +162,14 @@ function tableFeatures(jsonObj,scope) {
     	            }
 
     	            //should really fix this, no logic here
-    	            map.removeLayer(sites);
-    	            map.removeLayer(ownsites);
+    	            // map.removeLayer(sites);
+    	            // map.removeLayer(ownsites);
     	            
     	            centerObs(zoomLevel);
 
     	            map.once('moveend', function() {
-    	                map.addLayer(sites);
-    	                map.addLayer(ownsites);
+    	                // map.addLayer(sites);
+    	                // map.addLayer(ownsites);
     	            });  
 
     	            document.getElementById('obs-n-koord').value = coords.no;   
@@ -130,16 +187,22 @@ function tableFeatures(jsonObj,scope) {
 
     	   }
 
-    	    $( "#"+sid ). click(features[i], setSite
-    	);
+    	$( '#' + scope ). on( 'click', 'li', function() {
 
-  }
+        layergroupName = scope + 'Group';
+        hashkey = scope.substr(0, scope.length - 5);
 
-	var options = {
-	  valueNames: ['paikka']
-	};
+        console.log(hashkey);
+                        
+        id = $( this ).data('id');
 
-	sList = new List('sites-content', options);
+        internalid = idHashes[hashkey][id];
+
+
+        sitePoint = siteLayerGroups[layergroupName].getLayer(internalid);
+
+        setSite(sitePoint);
+        });   
 
 }
 	

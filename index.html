@@ -135,17 +135,16 @@
 <!-- 		end of map_div   -->
 
     <div class="col-lg-4 col-md-5 col-12 pl-md-1 pl-lg-3 pl-1 pr-1 mt-1 mt-sm-1 mt-md-1 mt-lg-0 mt-xl-0" id="lomake">
-    		<div class="row hack clearfix">  
+    		<div class="row hack">  
 
-				<div class="col-4 ml-sm-0 ml-md-0 ml-lg-0 px-3 px-lg-3 px-md-1">
-    	  <button class="btn btn-primary btn-sm mb-2" type="button" id="common-sites" data-toggle="modal" data-target="#site-list-modal">Hae paikka listalta</button>
-    	  Havainnoijan paikka
+				<div class="col-xl-3 col-auto">
+    	  <button class="btn btn-primary btn-sm mb-1" type="button" id="common-sites" data-toggle="modal" data-target="#site-list-modal">Hae paikka listalta</button>
     	  </div>
 				
-    	  <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 ml-sm-0 ml-md-0 ml-lg-0 px-3 px-lg-3 px-md-1">
+    	  <div class="col-auto">
     	  <div class="dropdown">
 
-    	  			<button class="btn btn-secondary btn-sm clear-right dropdown-toggle" type="button" id="common-sites-changer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="soc-selected">Lapin lintutieteellinen yhdistys ry</button>
+    	  			<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="common-sites-changer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="soc-selected">Lapin lintutieteellinen yhdistys ry</button>
     	  			<div class="dropdown-menu" aria-labelledby="common-sites-changer">
     	  				<h6 class="dropdown-header">Yhdistys, jonka havaintopaikat näytetään</h6>
     						<a class="dropdown-item" href="#" id="soc-1" >Kemi-Tornion lintuharrastajat Xenus ry</a>
@@ -165,7 +164,7 @@
 				</div>  -->
 
 	<div class="col">
-
+				Havainnoijan paikka
 				<form class="needs-validation" id="obs-form" novalidate>
           <div class="form-group">
             <div class="row m-0 p-0 justify-content-start">
@@ -249,11 +248,11 @@
 
 
     <div class="py-3" >            
- 			<button class="btn btn-primary btn-sm" type="button" ><i class="fa fa-check fa-1x" aria-hidden="true"></i>Tallenna omiin paikkoihin</button>
+ 			<button class="btn btn-primary btn-sm" type="button" ><i class="fa fa-check fa-1x" aria-hidden="true"></i> Tallenna omiin paikkoihin</button>
     </div>
 
     <div class="py-3">
-        <button class="btn btn-success btn-sm" type="button"><i class="fa fa-check fa-1x" aria-hidden="true"></i> Hyväksy paikka</button>
+        <button class="btn btn-success btn-sm" type="button"><i class="fa fa-lock fa-1x" aria-hidden="true"></i> Lukitse paikka</button>
     </div>
 
     <div class="bottom-column">
@@ -264,20 +263,22 @@
 
           <!-- Modal -->
           <div class="modal fade" id="tietoa-sivusta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Mikä tämä sivu on?</h5>
+                  <h5 class="modal-title" id="">Mikä tämä sivu on?</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body info-flip" id="info"> 
+                <div class="reverse-flip">  
+
                   <p>Luonnos siitä millainen viisas lintuhavaintojärjestelmän karttapohja voisi olla vuonna 2017 ja tulevaisuudessa. Teknisiä kohokohtia:
                   <ul>
-                    <li>Havaintokunta määräytyy koordinaattipisteen perusteella. Havaintopaikan kirjaaminen väärään kuntaan tai ulkomaahan on estetty.</li>
+                    <li>Havaintokunta määräytyy koordinaattipisteen perusteella. Siten paikan kirjaaminen väärään kuntaan tai ulkomaahan on estetty.</li>
                     <li>Kartan voi paikantaa sijaintiin, jossa työskennellään.</li>
-                    <li>Ennestään tallennetut havaintopaikat valittavissa listalta tai kartalta</li> 
+                    <li>Ennestään tallennetut omat ja lintuyhdistysten havaintopaikat valittavissa listalta tai kartalta.</li> 
                     <li>3 nopeasti latautuvaa, helposti vieritettävää taustakarttaa.</li>
                     <li>Automaattiset paikannimiehdotukset (tulossa).</li>
                   </ul></p>
@@ -295,9 +296,9 @@
                     <li>List.js</li>
                     <li>Bootstrap 4.0</li>
                   </ul></p>
-                  <p>Toteutus:</p> 
+                  <p>Toteutus:</p>
                   <address>Antti Ruonakoski <span class="text-secondary">aruonakoski@gmail.com</span> <a href="https://github.com/anttiruonakoski/korppi">https://github.com/anttiruonakoski/korppi</a></address>
-                  
+                </div>  
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-primary" data-dismiss="modal">Selvä!</button>
@@ -307,33 +308,36 @@
           </div> 
 
           <!-- Modal sitelist scaffolding -->
-          <div class="modal" id="site-list-modal" tabindex="-1" role="dialog" aria-labelledby="sitelistlabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-md-lg" role="document">
-              <div class="modal-content">
-                <div class="modal-header" id="sites-title">
+     <div class="modal" id="site-list-modal" tabindex="-1" role="dialog" aria-labelledby="sitelistlabel" aria-hidden="true">
+       <div class="modal-dialog modal-lg modal-md-lg" role="document">
+         <div class="modal-content">
+           <div class="modal-header" id="sites-title">
 
-               		<div class="input-group mr-3" id="sites-input">
-                 	<span class="input-group-addon" id="basic-addon1"><i class="fa fa-search" aria-hidden="true"></i></span>
+          		<div class="input-group mr-3" id="sites-input">
+            	<span class="input-group-addon" id="basic-addon1"><i class="fa fa-search" aria-hidden="true"></i></span>
 
-                 	<input type="text" id="sites-search" class="form-control search" placeholder="havaintopaikka" aria-label="Username" aria-describedby="basic-addon1">
-                 	<!-- not autofocused -->
-                 	<span class="input-group-addon"><i class="fa fa-ban" aria-hidden="true"></i></span>
+            	<input type="text" id="sites-search" class="form-control search" placeholder="havaintopaikka" aria-label="Username" aria-describedby="basic-addon1">
+            	<!-- not autofocused -->
+            	<span class="input-group-addon"><i class="fa fa-ban" aria-hidden="true"></i></span>
 
-               		</div>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
+          		</div>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+           <div class="modal-body pt-2" id="sites-content">
+             <div class="row" id="tabs" >
+               <div class="col-12" id="tabheader"> tabis tähä </div>  
 
 
-                <div class="modal-body" id="sites-content">
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" data-dismiss="modal">Selvä!</button>
-                </div>
-              </div>
-            </div>
-          </div>      
+               </div> 
+             </div>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-primary" data-dismiss="modal">Selvä!</button>
+           </div>
+         </div>
+       </div>
+     </div>           
 
     </div>  
       	</div>
@@ -362,18 +366,43 @@
   	
   	</div>
 
-  <script type="text/javascript">
+  	<script type="text/javascript">
+
+  const searchMinChar =3;
+  var searchOff = true;
+
       //enable modal focus
     $('#site-list-modal').on('shown.bs.modal', function () {
-    $("#sites-search").val('');
-    sList.search(null);
+    $("#sites-search").val(null);
     // $(this).find('#sites-search').focus();
     });
 
- 	$('#sites-search').on('input', function() {
+ 	  $('#sites-search').on('input', function() {
+
   	var searchString = $(this).val();
-  	sList.search(searchString);
+
+    if (searchString.length >= searchMinChar) {
+      sList[0].search(searchString);
+      sList[1].search(searchString);
+      searchOff = false;
+    }
+    else {  
+    if (searchString.length === searchMinChar-1 && searchOff === false) {
+      searchOff = true;
+      sList[0].search();
+      sList[1].search();
+    }   
+    } 
 		});
+
+    $('#site-list-modal').on('hidden.bs.modal', function () {
+    if (searchOff === false) {
+        sList[0].search();
+        sList[1].search();
+    }   
+    });
+   
+    // $(this).find('#sites-search').focus();
 
   </script>
 

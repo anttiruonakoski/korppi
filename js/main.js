@@ -9,11 +9,29 @@
     var gsetMarker;
     var centerObs;
     var drawLine;
-    var sList;
+    let sList = [];
+    let siteLayerGroups = {
+        societySitesGroup : new L.layerGroup(),
+        ownSitesGroup : new L.layerGroup()
+    };
+
+    // hash table is needed, because leaflet layers (or markers) can only have internal id. you can't mix it with GeoJSON feature ids. 
+    societyHash = {};
+    ownHash = {};
+
+    let idHashes = {
+        society: societyHash,
+        own: ownHash
+    };
+
+    // getLayer is a LayerGroup method, so those needed too 
+    let societySitesGroup = L.layerGroup();
+    let ownSitesGroup = L.layerGroup();
 
     var currentMarker;
     var markerObs, markerBird;
 
+    var counter = 0;
 
     var accuracyCircle = {
         obs: null,
@@ -30,6 +48,11 @@
         bird: null
     };
 
+    var ownSitesFile = 'data/100.geojson';
+
+    var societySitesFile = 'data/lintutornit_lly_kaikki_2017_wgs84.geojson';
+    // var societySitesFile = 'data/7500.geojson';
+
   	const taustakartta = L.tileLayer.mml_wmts({ layer: "taustakartta" });
     const maastokartta = L.tileLayer.mml_wmts({ layer: "maastokartta" });
     const ortokuva = L.tileLayer.mml("Ortokuva_3067");
@@ -38,11 +61,11 @@
     // const taustakartta_uusi = L.tileLayer.mml("Taustakartta_3067");
 
     const siteMarkerOptions = {
-    	radius : 8,
-    	fillOpacity : 0.8,
+    	radius : 4,
+    	fillOpacity : 1,
     	fillColor : '#4169E1',
     	color : 'dimgray',
-    	weight: 2 
+        stroke: false
     };
 
     const ownsiteMarkerOptions = {
@@ -58,43 +81,54 @@
      // does this feature have a property named name?
 
         if (feature.properties && feature.properties.name) {
+            counter++;
             layer.bindPopup('Siirry yhdistyspaikkaan: <button type="button" class="btn btn-sm btn-primary btn-select-site">' + feature.properties.name +'</button>', {
                 maxWidth : 'auto'
                 });
-            }
-            layer._leaflet_id = feature.id;
+            }            
+             siteLayerGroups.societySitesGroup.addLayer(layer); 
+             idHashes.society[feature.properties.id] = layer._leaflet_id;
     }
 
     function onEachFeature_own(feature, layer) {
      // does this feature have a property named name?
 
         if (feature.properties && feature.properties.name) {
+            counter++;
             layer.bindPopup('Siirry omaan paikkaan: <button type="button" class="btn btn-sm btn-primary btn-select-site">' + feature.properties.name +'</button>', {
                 maxWidth : 'auto'
                 });      
             }
-            layer._leaflet_id = feature.id;
+            siteLayerGroups.ownSitesGroup.addLayer(layer); 
+            idHashes.own[feature.properties.id] = layer._leaflet_id;  
     }
 
     // example_100_random_site.geojson
 
-    const ownsites = new L.GeoJSON.AJAX("data/100_random_site.geojson", { pointToLayer : function(geoJsonPoint, latlng) {
+    const ownsites = new L.GeoJSON.AJAX( ownSitesFile, { pointToLayer : function(geoJsonPoint, latlng) {
     return L.circleMarker(latlng, ownsiteMarkerOptions);
     }, onEachFeature: onEachFeature_own});
 
-    const sites = new L.GeoJSON.AJAX("data/lintutornit_lly_kaikki_2017_wgs84.geojson", { pointToLayer : function(geoJsonPoint, latlng) {
+
+    // lintutornit_lly_kaikki_2017_wgs84.geojson
+    const sites = new L.GeoJSON.AJAX( societySitesFile, { pointToLayer : function(geoJsonPoint, latlng) {
     return L.circleMarker(latlng, siteMarkerOptions);
 	}, onEachFeature: onEachFeature});
 
     //
 
         sites.on('data:loaded', function () {
+            console.log('tasolla kohteita: ', counter);
+            counter = 0;
             var sitesAsJSON = sites.toGeoJSON();
-            tableFeatures(sitesAsJSON,"yhditys");
+            tableFeatures(sitesAsJSON,"societySites");
         });  
 
        ownsites.on('data:loaded', function () {
-            var ownsitesAsJSON = ownsites.toGeoJSON();   
+            console.log('omalla tasolla kohteita: ', counter);
+            counter = 0;
+            var sitesAsJSON = ownsites.toGeoJSON();   
+            tableFeatures(sitesAsJSON,"ownSites");
         }); 
 
     // 
@@ -110,8 +144,9 @@
         layers: [taustakartta],    
         maxBounds: [[58.2133,16.16359],
                     [71.2133,36.16359]],
-        //test canvas renderer
-        renderer: L.canvas()                   
+        //test canvas renderer,
+        renderer: L.canvas(),
+        prefercanvas: true                   
 		};
 
 	const obsIcon = L.AwesomeMarkers.icon({
@@ -201,7 +236,7 @@
         //     return new L.Control.Tools(opts);
         //  };
 
-        sites.addTo(map);
+        // sites.addTo(map);
 
         //assign variable only after json request complete, otherwise empty result
         
@@ -262,28 +297,8 @@
             
         }
 
-        function setMarker(latlng,icon,type) {
+        setMarker = function setMarker(latlng,icon,type) {
 
-            newMarker = L.marker(latlng, icon).addTo(map);
-
-            layerGroup[type] = new L.layerGroup().addTo(map);
-
-                if (accuracyRadius[type]) {
-                    drawaccuracyCircle(latlng, accuracyRadius[type], type);    
-                }     
-
-            layerGroup[type].addLayer(newMarker); 
-
-            // bindTooltip('Havainnoija', {permanent: true, direction: 'left' }).addTo(map);
-
-            return newMarker; 
-        }
-
-
-        gsetMarker = function gsetMarker(latlng,icon,type) {
-
-
-            console.log('piirretään');
             newMarker = L.marker(latlng, icon).addTo(map);
 
             layerGroup[type] = new L.layerGroup().addTo(map);
@@ -358,7 +373,6 @@
                 line = drawLine(markerObs, markerBird, line);
             }
 		}
-
 	
 		map.on('click', onMapClick);
 
