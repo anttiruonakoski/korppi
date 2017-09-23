@@ -140,7 +140,7 @@
         center: [66.5, 25.3],
         zoom: 6,
         minZoom: 3,
-        maxZoom: 13,
+        maxZoom: 14,
         layers: [taustakartta],    
         maxBounds: [[58.2133,16.16359],
                     [71.2133,36.16359]],
@@ -199,11 +199,9 @@
         L.Control.Raven = L.Control.extend({
         	onAdd: function(map) {
         	        var img = L.DomUtil.create('img');
-
-        	        img.src = 'images/corrax.png';
-        	        img.style.width = '48px';
-                    img.id = 'raven'
-
+          	        img.src = 'images/corrax.png';
+                    img.classList.add('reverse-flip', 'ravenimg');
+                    img.id = 'raven';
         	        return img;
         	    },
 
@@ -248,7 +246,7 @@
 
         // custom controls
 
-        raven({ position: 'bottomright' }).addTo(map);
+        raven({ position: 'bottomleft' }).addTo(map);
         // tools({ position: 'tophorisontalcenter' }).addTo(map);      
 
         //otherwise click events pass through to map layer 

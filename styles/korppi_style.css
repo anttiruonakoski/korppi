@@ -18,17 +18,40 @@
       max-width: 1900px;
         }
 
+      img.ravenimg {
+        width: 60px;
+        opacity: 0.4;       
+      }
+
       .info-flip {
-      background-position: left bottom!important;
-      transform: scaleX(-1);
-      }   
+        background-position: left bottom!important;
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+      }
+
+      .info-text {
+
+      }
 
        .reverse-flip {
-      transform: scaleX(-1);
+              -moz-transform: scaleX(-1);
+              -o-transform: scaleX(-1);
+              -webkit-transform: scaleX(-1);
+              transform: scaleX(-1);
+              filter: FlipH;
+              -ms-filter: "FlipH";
       }     
 
         .leaflet-container {
-  		cursor: crosshair !important;
+  		  cursor: crosshair !important;
+      }
+
+      .leaflet-control-layers-expanded{ 
+          background-color: #F8F9FA;
       }
 
         .fill { 
@@ -75,6 +98,7 @@
       padding: 3px!important;
       position: relative;
       z-index: 800;
+      background: rgba(255,255,255,.7);
     }
 
       /*// Small devices (landscape phones, 576px and up)*/
@@ -152,12 +176,30 @@
         -moz-column-count: 2;
       }*/
 
-      .dropdown-menu a {
-      font-size: 90%;
+      a.dropdown-item, .dropdown-header {
+      font-size: 80%;
       padding-top: 4px;
       padding-bottom: 4px;
       padding-left: 8px;
       padding-right: 8px;
 
+      }
+
+      /*      hack, maybe needed cause bug below
+*/    ul.modal-body {
+      will-change: transform;
+      }
+
+      /*chrome bug affecting bootstrap modal performance*/
+      a,
+      area,
+      button,
+      [role="button"],
+      input:not([type=range]),
+      label,
+      select,
+      summary,
+      textarea {
+        touch-action: auto!important;
       }
 

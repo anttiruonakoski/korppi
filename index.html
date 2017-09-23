@@ -28,7 +28,9 @@
     <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"> -->
+
+<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
 
    <!--  integrity attribute causes loading twice	 -->
    <!--  integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"> -->
@@ -38,16 +40,19 @@
     <link rel="stylesheet" href="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css">
     <link rel="stylesheet" href="bower_components/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
 
-    <link rel="stylesheet" type="text/css" href="styles/korppi_style.css" />
+   
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
     <link rel="stylesheet" href="lib/leaflet-measure-path/leaflet-measure-path.css" />
 
+    <link rel="stylesheet" type="text/css" href="styles/korppi_style.css" />
     <!--site dependencies. manage with bower later maybe-->
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script> 
+
+  <!--   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script> -->
 
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.4.4/proj4.js"></script>
@@ -94,22 +99,22 @@
 <!--  tool buttons on map (hack) should be a proper leaflet control-->   			
  		<div id="obs-tools" class="leaflet-control leaflet-control-layers leaflet-control-layers-expanded">
     <div class="btn-group" data-toggle="buttons" aria-label="obs-tools" id="obs-tools-primary">
-     	<label class="btn btn-secondary btn-sm active" id="btn-observer" data-toggle="tooltip" data-placement="bottom" title="Aseta havainnoija" >
+     	<label class="btn btn-secondary active" id="btn-observer" data-toggle="tooltip" data-placement="bottom" title="Aseta havainnoija" >
      		<input type="radio" name="options" autocomplete="off" id="btn-observer-label" >	
        	<i class="fa fa-binoculars" aria-hidden="true"></i>
       </label>     	
-      <label class="btn btn-secondary btn-sm" id="btn-bird" data-toggle="tooltip" data-placement="bottom" title="Aseta lintu">
+      <label class="btn btn-secondary" id="btn-bird" data-toggle="tooltip" data-placement="bottom" title="Aseta lintu">
       	<input type="radio" name="options" autocomplete="off" >
        	<i class="fa fa-twitter" aria-hidden="true"></i>
       </label> 	
 
     <!-- secondary tools -->
      
-      <label class="btn btn-secondary btn-sm" id="btn-move" data-toggle="tooltip" data-placement="bottom" title="Siirrä karttaa">
+      <label class="btn btn-secondary" id="btn-move" data-toggle="tooltip" data-placement="bottom" title="Siirrä karttaa">
      		<input type="radio" name="options" autocomplete="off" >
     		<i class="fa fa-arrows" aria-hidden="true"></i>
     	</label>
-     	<label class="btn btn-secondary btn-sm" id="btn-ruler" data-toggle="tooltip" data-placement="bottom" title="Mittaa matka">
+     	<label class="btn btn-secondary" id="btn-ruler" data-toggle="tooltip" data-placement="bottom" title="Mittaa matka">
      		<input type="radio" name="options" autocomplete="off" >
      		<i class="fa fa-arrows-h" aria-hidden="true"></i>
      	</label>
@@ -118,15 +123,15 @@
     <div class="btn-group mx-0 ml-lg-2" role="group btn-group-sm" aria-label="tools"> 		
 
       <!--  <button type="button" class="btn btn-secondary btn-sm" id="btn-x" data-toggle="tooltip" data-placement="bottom" title="empty for a while"><i class="fa fa-question" aria-hidden="true"></i></button> -->
-      <button type="button" class="btn btn-secondary btn-sm" id="btn-obs-center" data-toggle="tooltip" data-placement="bottom" title="Keskitä havainnoijaan"><i class="fa fa-crosshairs" aria-hidden="true"></i></button>
-      <button type="button" class="btn btn-secondary btn-sm" id="btn-obs-centerzoom" data-toggle="tooltip" data-placement="bottom" title="Keskitä ja zoomaa havainnoijaan"><i class="fa fa-search-plus" aria-hidden="true"></i></button> 
+      <button type="button" class="btn btn-secondary" id="btn-obs-center" data-toggle="tooltip" data-placement="bottom" title="Keskitä havainnoijaan"><i class="fa fa-crosshairs" aria-hidden="true"></i></button>
+      <button type="button" class="btn btn-secondary" id="btn-obs-centerzoom" data-toggle="tooltip" data-placement="bottom" title="Keskitä ja zoomaa havainnoijaan"><i class="fa fa-search-plus" aria-hidden="true"></i></button> 
     </div> 
     <!-- end  -->   
 
    <div class="btn-group ml-0 ml-lg-2" role="group btn-group-sm" aria-label="tools">
 
-    <button type="button" class="btn btn-danger btn-sm" id="btn-reset-map" data-toggle="tooltip" data-placement="bottom" title="Palauta kartta alkuun"><i class="fa fa-reply" aria-hidden="true"></i></button>
-    <button type="button" class="btn btn-danger btn-sm" id="btn-trash-all" data-toggle="tooltip" data-placement="bottom" title="Tyhjennä paikkatiedot"><i class="fa fa-trash" aria-hidden="true"></i></button>
+    <button type="button" class="btn btn-danger" id="btn-reset-map" data-toggle="tooltip" data-placement="bottom" title="Palauta kartta alkuun"><i class="fa fa-reply" aria-hidden="true"></i></button>
+    <button type="button" class="btn btn-danger" id="btn-trash-all" data-toggle="tooltip" data-placement="bottom" title="Tyhjennä paikkatiedot"><i class="fa fa-trash" aria-hidden="true"></i></button>
   </div>
 
     </div> 
@@ -138,30 +143,29 @@
     		<div class="row hack">  
 
 				<div class="col-xl-3 col-auto">
-    	  <button class="btn btn-primary btn-sm mb-1" type="button" id="common-sites" data-toggle="modal" data-target="#site-list-modal">Hae paikka listalta</button>
+    	  <button class="btn btn-primary btn-sm mb-1" type="button" id="common-sites" data-toggle="modal" data-target="#site-list-modal">Hae listalta</button>
     	  </div>
 				
     	  <div class="col-auto">
     	  <div class="dropdown">
 
-    	  			<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="common-sites-changer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="soc-selected">Lapin lintutieteellinen yhdistys ry</button>
+    	  			<button class="btn btn-secondary btn-sm dropdown-toggle clear-right" type="button" id="common-sites-changer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="soc-selected">Lapin lintutieteellinen yhdistys ry</button>
     	  			<div class="dropdown-menu" aria-labelledby="common-sites-changer">
     	  				<h6 class="dropdown-header">Yhdistys, jonka havaintopaikat näytetään</h6>
-    						<a class="dropdown-item" href="#" id="soc-1" >Kemi-Tornion lintuharrastajat Xenus ry</a>
-    						<a class="dropdown-item" href="#" id="soc-2">Suomenselän Lintutieteellinen Yhdistys ry (SSLTY)</a>
-    						<a class="dropdown-item" href="#" id="soc-3">Turun Lintutieteellinen Yhdistys ry</a>
+    						<a class="dropdown-item" href="#" data-id="25" >Kemi-Tornion lintuharrastajat Xenus ry</a>
+    						<a class="dropdown-item" href="#" data-id="12">Suomenselän Lintutieteellinen Yhdistys ry (SSLTY)</a>
+    						<a class="dropdown-item" href="#" data-id="10">Turun Lintutieteellinen Yhdistys ry</a>
+                <a class="dropdown-item" href="#" data-id="11"></a>
+                <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" data-id="99">Koko Suomi</a>
+                </div>
+
 
     					<!-- this menu could be populated from a static json file with click listeners. events should load geoJSON, which includes obs points and update layers, update text in button id="common-sites-changer" and "disable" respective dropdown-item.-->
 
-    					</div>	
+    		</div>	
     	  </div>	
     	
-		
-    		</div>
-
-				<!-- <div class="col-4 col-xl-6 py-1 pr-0 mr-xl-0">
-				Havainnoijan paikka
-				</div>  -->
 
 	<div class="col">
 				Havainnoijan paikka
@@ -192,7 +196,7 @@
               <div class="btn-group col-lg-2 col-sm-1 col-1 p-0 m-0 align-self-end" data-toggle="buttons">   
                   <button type="button" class="btn btn-sm btn-danger" id="btn-clear-obs" data-toggle="tooltip" data-placement="bottom" title="Tyhjennä havaintopaikka"><i class="fa fa-times" aria-hidden="true"></i></button>
 
-                  <label class="btn btn-sm btn-success active" id="btn-get-placenames">
+                  <label class="btn btn-sm btn-secondary active" id="btn-get-placenames">
                   <input type="checkbox" checked autocomplete="off">
                   <i class="fa fa-paper-plane" aria-hidden="true"></i> </label>
                   
@@ -237,7 +241,7 @@
               <div class="btn-group col-lg-2 col-sm-1 col-1 ml-0 p-0 align-self-end"> 	
                  <button type="button" class="btn btn-sm btn-danger" id="btn-clear-bird" data-toggle="tooltip" data-placement="bottom" title="Tyhjennä linnun paikka"><i class="fa fa-times" aria-hidden="true"></i></button>
 
-                 <button type="button" class="btn btn-sm btn-success" id="btn-connect-bird" data-toggle="tooltip" data-placement="bottom" title="Aseta samaksi kuin havaintopaikka"><i class="fa fa-clone" aria-hidden="true"></i></button>
+                 <button type="button" class="btn btn-sm btn-secondary" id="btn-connect-bird" data-toggle="tooltip" data-placement="bottom" title="Aseta samaksi kuin havaintopaikka"><i class="fa fa-clone" aria-hidden="true"></i></button>
 
                </div>   
 
@@ -252,7 +256,7 @@
     </div>
 
     <div class="py-3">
-        <button class="btn btn-success btn-sm" type="button"><i class="fa fa-lock fa-1x" aria-hidden="true"></i> Lukitse paikka</button>
+        <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-lock fa-1x" aria-hidden="true"></i> Lukitse paikka</button>
     </div>
 
     <div class="bottom-column">
@@ -279,7 +283,7 @@
                     <li>Havaintokunta määräytyy koordinaattipisteen perusteella. Siten paikan kirjaaminen väärään kuntaan tai ulkomaahan on estetty.</li>
                     <li>Kartan voi paikantaa sijaintiin, jossa työskennellään.</li>
                     <li>Ennestään tallennetut omat ja lintuyhdistysten havaintopaikat valittavissa listalta tai kartalta.</li> 
-                    <li>3 nopeasti latautuvaa, helposti vieritettävää taustakarttaa.</li>
+                    <li>3 nopeasti latautuvaa, <span class="p-1 bg-info-light"> helposti vieritettävää</span> taustakarttaa.</li>
                     <li>Automaattiset paikannimiehdotukset (tulossa).</li>
                   </ul></p>
                   <p>Aineistolähteet:
@@ -291,7 +295,7 @@
                   </ul></p>
                   <p>Tekniikat:
                   <ul>
-                    <li>Leaflet 1.2, Leaflet.MML-layers, Proj4.js, Proj4leaflet.js ja muita Leaflet-liitännäisiä</li>
+                    <li><span class="p-1 bg-info-light">Leaflet 1.2</span>, Leaflet.MML-layers, Proj4.js, Proj4leaflet.js ja muita Leaflet-liitännäisiä</li>
                     <li>jQuery 3.2</li>
                     <li>List.js</li>
                     <li>Bootstrap 4.0</li>

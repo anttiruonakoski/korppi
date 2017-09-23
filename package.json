@@ -1,0 +1,27 @@
+{
+  "name": "korppi",
+  "version": "1.0.0",
+  "description": "Luonnos siitä millainen viisas lintuhavaintojärjestelmän karttapohja voisi olla vuonna 2017 ja tulevaisuudessa.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "npm --prefix node_modules/bootstrap run css && rsync -r node_modules/bootstrap/dist/css/ dist/css" 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anttiruonakoski/korppi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anttiruonakoski/korppi/issues"
+  },
+  "homepage": "https://github.com/anttiruonakoski/korppi#readme",
+  "dependencies": {
+    "bootstrap": "^4.0.0-beta"
+  }
+}

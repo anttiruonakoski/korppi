@@ -2,6 +2,7 @@
 *.sublime-workspace
 bower_components/*.md
 bower_components/docs
+node_modules/
 test/*
 test*
 table*
