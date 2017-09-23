@@ -37,6 +37,8 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
 
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab:700" rel="stylesheet"/>
+
     <link rel="stylesheet" href="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css">
     <link rel="stylesheet" href="bower_components/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
 
@@ -98,18 +100,20 @@
 
 <!--  tool buttons on map (hack) should be a proper leaflet control-->   			
  		<div id="obs-tools" class="leaflet-control leaflet-control-layers leaflet-control-layers-expanded">
-    <div class="btn-group" data-toggle="buttons" aria-label="obs-tools" id="obs-tools-primary">
-     	<label class="btn btn-secondary active" id="btn-observer" data-toggle="tooltip" data-placement="bottom" title="Aseta havainnoija" >
+
+    <div class="btn-group ml-lg-1" data-toggle="buttons" aria-label="obs-tools" id="obs-tools-primary">
+     	<label class="btn btn-primary active" id="btn-observer" data-toggle="tooltip" data-placement="bottom" title="Aseta havainnoija" >
      		<input type="radio" name="options" autocomplete="off" id="btn-observer-label" >	
        	<i class="fa fa-binoculars" aria-hidden="true"></i>
       </label>     	
-      <label class="btn btn-secondary" id="btn-bird" data-toggle="tooltip" data-placement="bottom" title="Aseta lintu">
+      <label class="btn btn-primary" id="btn-bird" data-toggle="tooltip" data-placement="bottom" title="Aseta lintu">
       	<input type="radio" name="options" autocomplete="off" >
        	<i class="fa fa-twitter" aria-hidden="true"></i>
       </label> 	
+    </div>
 
     <!-- secondary tools -->
-     
+    <div class="btn-group mx-0 ml-lg-2" data-toggle="buttons" aria-label="obs-tools" id="obs-tools-secondary">
       <label class="btn btn-secondary" id="btn-move" data-toggle="tooltip" data-placement="bottom" title="Siirrä karttaa">
      		<input type="radio" name="options" autocomplete="off" >
     		<i class="fa fa-arrows" aria-hidden="true"></i>
@@ -118,18 +122,20 @@
      		<input type="radio" name="options" autocomplete="off" >
      		<i class="fa fa-arrows-h" aria-hidden="true"></i>
      	</label>
-
     </div>
-    <div class="btn-group mx-0 ml-lg-2" role="group btn-group-sm" aria-label="tools"> 		
+   
+   <!-- third buttons  -->
+
+    <div class="btn-group mx-0 ml-lg-2" role="group btn-group-sm" aria-label="tools">
 
       <!--  <button type="button" class="btn btn-secondary btn-sm" id="btn-x" data-toggle="tooltip" data-placement="bottom" title="empty for a while"><i class="fa fa-question" aria-hidden="true"></i></button> -->
       <button type="button" class="btn btn-secondary" id="btn-obs-center" data-toggle="tooltip" data-placement="bottom" title="Keskitä havainnoijaan"><i class="fa fa-crosshairs" aria-hidden="true"></i></button>
       <button type="button" class="btn btn-secondary" id="btn-obs-centerzoom" data-toggle="tooltip" data-placement="bottom" title="Keskitä ja zoomaa havainnoijaan"><i class="fa fa-search-plus" aria-hidden="true"></i></button> 
     </div> 
-    <!-- end  -->   
 
-   <div class="btn-group ml-0 ml-lg-2" role="group btn-group-sm" aria-label="tools">
+    <!-- red buttons  -->   
 
+   <div class="btn-group ml-0 ml-lg-2 mr-lg-1" role="group btn-group-sm" aria-label="tools">
     <button type="button" class="btn btn-danger" id="btn-reset-map" data-toggle="tooltip" data-placement="bottom" title="Palauta kartta alkuun"><i class="fa fa-reply" aria-hidden="true"></i></button>
     <button type="button" class="btn btn-danger" id="btn-trash-all" data-toggle="tooltip" data-placement="bottom" title="Tyhjennä paikkatiedot"><i class="fa fa-trash" aria-hidden="true"></i></button>
   </div>
@@ -270,7 +276,8 @@
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="">Mikä tämä sivu on?</h5>
+                  <h5 class="modal-title info-title">Mikä sivu tämä on?</h5>
+
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -278,13 +285,13 @@
                 <div class="modal-body info-flip" id="info"> 
                 <div class="reverse-flip">  
 
-                  <p>Luonnos siitä millainen viisas lintuhavaintojärjestelmän karttapohja voisi olla vuonna 2017 ja tulevaisuudessa. Teknisiä kohokohtia:
+                  <p><span class="p-1 bg-info-light">Luonnos</span> siitä millainen viisas lintuhavaintojärjestelmän karttapohja voisi olla vuonna 2017 ja tulevaisuudessa. Teknisiä kohokohtia:
                   <ul>
                     <li>Havaintokunta määräytyy koordinaattipisteen perusteella. Siten paikan kirjaaminen väärään kuntaan tai ulkomaahan on estetty.</li>
-                    <li>Kartan voi paikantaa sijaintiin, jossa työskennellään.</li>
+                    <li>Kartan voi <span class="p-1 bg-info-light">paikantaa sijaintiin</span>, jossa työskennellään.</li>
                     <li>Ennestään tallennetut omat ja lintuyhdistysten havaintopaikat valittavissa listalta tai kartalta.</li> 
-                    <li>3 nopeasti latautuvaa, <span class="p-1 bg-info-light"> helposti vieritettävää</span> taustakarttaa.</li>
-                    <li>Automaattiset paikannimiehdotukset (tulossa).</li>
+                    <li>3 nopeasti latautuvaa, <span class="p-1 bg-info-light"> helposti liikutettavaa</span> taustakarttaa.</li>
+                    <li>Automaattiset <span class="p-1 bg-info-light">paikannimiehdotukset</span> (tulossa).</li>
                   </ul></p>
                   <p>Aineistolähteet:
                   <ul>
@@ -305,7 +312,7 @@
                 </div>  
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" data-dismiss="modal">Selvä!</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-binoculars" aria-hidden="true"></i>&nbsp;&nbsp;Selvä!</button>
                 </div>
               </div>
             </div>

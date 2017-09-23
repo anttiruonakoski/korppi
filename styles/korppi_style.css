@@ -1,6 +1,9 @@
-      /* * {
-          font-size: 14px;
-        }*/
+/*  custom CSS
+
+*/
+      @font-face {
+        font-family: 'Roboto', sans-serif;
+      }  
         
           #map_div {
                     width: 100%;
@@ -33,8 +36,8 @@
         -ms-filter: "FlipH";
       }
 
-      .info-text {
-
+      .info-title {
+        font-family: 'Roboto Slab', serif; 
       }
 
        .reverse-flip {
@@ -98,7 +101,7 @@
       padding: 3px!important;
       position: relative;
       z-index: 800;
-      background: rgba(255,255,255,.7);
+      background: rgba(255,255,255,.8);
     }
 
       /*// Small devices (landscape phones, 576px and up)*/
