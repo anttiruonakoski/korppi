@@ -1,21 +1,27 @@
 // main.js
 	
-
+    
     var map;
 	var L;
+    var sites = [];
+
     var line;
     var gKunta = null;
     var clearPositionForm;
     var gsetMarker;
     var centerObs;
     var drawLine;
-    let sList = [];
+    let sList = []; //List representing sites [0] own, [1] society
+
+    //Site markers must be grouped as a layerGroup, so that we can select feature by id.
+    // getLayer is a LayerGroup method
     let siteLayerGroups = {
-        societySitesGroup : new L.layerGroup(),
+        societySitesGroup : new Array (new L.layerGroup()) ,
         ownSitesGroup : new L.layerGroup()
     };
 
-    // hash table is needed, because leaflet layers (or markers) can only have internal id. you can't mix it with GeoJSON feature ids. 
+    // objet literal needed, because leaflet layers (or markers) can only have internal id. you can't mix it with GeoJSON feature ids. 
+
     societyHash = {};
     ownHash = {};
 
@@ -25,8 +31,8 @@
     };
 
     // getLayer is a LayerGroup method, so those needed too 
-    let societySitesGroup = L.layerGroup();
-    let ownSitesGroup = L.layerGroup();
+    // let societySitesGroup = L.layerGroup();
+    // let ownSitesGroup = L.layerGroup();
 
     var currentMarker;
     var markerObs, markerBird;
@@ -49,8 +55,8 @@
     };
 
     var ownSitesFile = 'data/100.geojson';
-
     var societySitesFile = 'data/lintutornit_lly_kaikki_2017_wgs84.geojson';
+
     // var societySitesFile = 'data/7500.geojson';
 
   	const taustakartta = L.tileLayer.mml_wmts({ layer: "taustakartta" });
@@ -86,7 +92,7 @@
                 maxWidth : 'auto'
                 });
             }            
-             siteLayerGroups.societySitesGroup.addLayer(layer); 
+             siteLayerGroups.societySitesGroup[0].addLayer(layer); 
              idHashes.society[feature.properties.id] = layer._leaflet_id;
     }
 
@@ -105,23 +111,23 @@
 
     // example_100_random_site.geojson
 
-    const ownsites = new L.GeoJSON.AJAX( ownSitesFile, { pointToLayer : function(geoJsonPoint, latlng) {
+    var ownsites = new L.GeoJSON.AJAX( ownSitesFile, { pointToLayer : function(geoJsonPoint, latlng) {
     return L.circleMarker(latlng, ownsiteMarkerOptions);
     }, onEachFeature: onEachFeature_own});
 
 
     // lintutornit_lly_kaikki_2017_wgs84.geojson
-    const sites = new L.GeoJSON.AJAX( societySitesFile, { pointToLayer : function(geoJsonPoint, latlng) {
+    sites[0] = new L.GeoJSON.AJAX( societySitesFile, { pointToLayer : function(geoJsonPoint, latlng) {
     return L.circleMarker(latlng, siteMarkerOptions);
 	}, onEachFeature: onEachFeature});
 
     //
 
-        sites.on('data:loaded', function () {
+        sites[0].on('data:loaded', function () {
             console.log('tasolla kohteita: ', counter);
             counter = 0;
-            var sitesAsJSON = sites.toGeoJSON();
-            tableFeatures(sitesAsJSON,"societySites");
+            var sitesAsJSON = sites[0].toGeoJSON();
+            tableFeatures(sitesAsJSON,"societySites");         
         });  
 
        ownsites.on('data:loaded', function () {
@@ -141,7 +147,7 @@
         zoom: 6,
         minZoom: 3,
         maxZoom: 14,
-        layers: [taustakartta],    
+        layers: [taustakartta, sites[0]],    
         maxBounds: [[58.2133,16.16359],
                     [71.2133,36.16359]],
         //test canvas renderer,
@@ -171,7 +177,7 @@
     	};
 
     	const siteLayers = {
-    		"Yhdistyspaikat <span id='common-sites-control'></span>" : sites,
+    		"Yhdistyspaikat <span id='common-sites-control'></span>" : sites[0],
     		"Omat paikat" : ownsites
     	};
 
@@ -237,9 +243,14 @@
         // sites.addTo(map);
 
         //assign variable only after json request complete, otherwise empty result
+
+        //for collapsing layer switcher
+
+        var collapseState = sizeCheck();
+        console.log(collapseState);
         
-       	L.control.layers(baseMaps, null, {collapsed: false}).addTo(map);
-       	L.control.layers(null, siteLayers, {collapsed: false}).addTo(map);
+       	var baseControl = L.control.layers(baseMaps, null, {collapsed: false}).addTo(map);
+       	var siteControl = L.control.layers(null, siteLayers, {collapsed: collapseState}).addTo(map);
 
         L.control.locate().addTo(map);
         L.control.scale({maxWidth: 400, imperial: false}).addTo(map);
@@ -405,13 +416,13 @@
                         }
 
                         //should really fix this, no logic here
-                        map.removeLayer(sites);
+                        map.removeLayer(sites[0]);
                         map.removeLayer(ownsites);
                         
                         centerObs(zoomLevel);
 
                         map.once('moveend', function() {
-                            map.addLayer(sites);
+                            map.addLayer(sites[0]);
                             map.addLayer(ownsites);
                         });  
 
@@ -545,6 +556,39 @@
                 const zoomLevel = 12;
                 centerObs(zoomLevel);
             });
+
+        $(".dropdown-item").click(function(){
+            var soc = ( $(this).data ( 'id' ));
+            sites[soc] = createLayer (soc);
+            });
+
+
+
+        //collapse obs point layer switcher, when under certain display resolution
+
+        function sizeCheck() {
+            //@media (max-width: 390px)
+
+            const collapseWidth = 390;
+
+            //initialization
+            if  (typeof siteControl === 'undefined') {
+            return (map.getContainer().offsetWidth < collapseWidth);            
+            }
+
+            // just not working, collpased remains false even if collapse()
+
+            // var coll = siteControl.options.collapsed;
+            // console.log(coll);
+
+            // if ( (map.getContainer().offsetWidth < collapseWidth) && !coll ) {
+            //     siteControl.collapse();
+            //     // coll = true;
+            // }
+            // return;
+        }
+
+        map.on('resize', sizeCheck);
 
 
         //spacebar pan testing 
