@@ -3,6 +3,7 @@
 
 function tableFeatures(jsonObj,scope) {
 
+    //scope societySites, ownSites
     //observation site lists population relies on list.js
     //generic appendchild method & class changes would be faster but list.js gives indexed, searchable object
     //id = leafet marker (layer) id 
@@ -37,7 +38,7 @@ function tableFeatures(jsonObj,scope) {
     div2 = document.createElement('div');
     div.appendChild(div2);
 
-    div2.textContent = headerText[scope];
+    div2.textContent = headerText[scope] + ' ' + listLength + ' kpl';
     div2.classList.add('d-lg-inline-block','d-md-none', 'd-sm-none', 'd-none');
 
     //it's important to define layout order. otherwise it'd depend which div's file was loaded first.
@@ -112,7 +113,10 @@ function tableFeatures(jsonObj,scope) {
 
     //sList [0,1] can't say which is society's which user's cause it's ambiguos which is populated first. 
     
-    sList[Object.keys(headerText).indexOf(scope)] = new List(scope, options, listValues);
+    return new List(scope, options, listValues);
+
+    // sList[Object.keys(headerText).indexOf(scope)] = new List(scope, options, listValues);
+}    
 
     // console.timeEnd('list.js');
 
@@ -187,23 +191,5 @@ function tableFeatures(jsonObj,scope) {
 
     	   }
 
-    	$( '#' + scope ). on( 'click', 'li', function() {
-
-        layergroupName = scope + 'Group';
-        hashkey = scope.substr(0, scope.length - 5);
-
-        console.log(hashkey);
-                        
-        id = $( this ).data('id');
-
-        internalid = idHashes[hashkey][id];
-
-
-        sitePoint = siteLayerGroups[layergroupName].getLayer(internalid);
-
-        setSite(sitePoint);
-        });   
-
-}
 	
 

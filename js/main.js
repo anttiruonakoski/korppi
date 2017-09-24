@@ -1,34 +1,60 @@
 // main.js
 	
-    
     var map;
 	var L;
-    var sites = [];
 
+    var hashMaps = {};
+    var siteLists = {};
+
+    var idhashMap = new Map();
+    var sList = {};
+
+    const me = {  
+                id: 0,
+                name: 'own'
+    };    
+
+    const associations = [
+               {id: 23, name: 'Lapin lintutieteellinen yhdistys ry'} ,
+               {id: 99, name: 'Koko Suomi', }
+    ];  
+          
+    //shorthand for organizations
+    orgsNames = associations;
+    orgsNames.push(me);
+
+    orgsNames.forEach(function (org) {
+    //23, [lly, {havaintopaikan id: leaflet-id}]    
+       hashMaps[org.id] = new Map();
+       siteLists[org.id] = null;
+
+    });
+
+    var org = 23; //deftault to LLY
+  
     var line;
     var gKunta = null;
     var clearPositionForm;
     var gsetMarker;
     var centerObs;
     var drawLine;
-    let sList = []; //List representing sites [0] own, [1] society
 
     //Site markers must be grouped as a layerGroup, so that we can select feature by id.
     // getLayer is a LayerGroup method
     let siteLayerGroups = {
-        societySitesGroup : new Array (new L.layerGroup()) ,
+        societySitesGroup : new L.layerGroup(),
         ownSitesGroup : new L.layerGroup()
     };
 
-    // objet literal needed, because leaflet layers (or markers) can only have internal id. you can't mix it with GeoJSON feature ids. 
+    // hashmap (objet literal) needed, because leaflet layers (or markers) can only have internal id. you can't mix it with GeoJSON feature ids. 
 
-    societyHash = {};
-    ownHash = {};
+    // societyHash = {};
+    // ownHash = {}; //orgData.
 
-    let idHashes = {
-        society: societyHash,
-        own: ownHash
-    };
+    // let idHashes = [{
+    //     society: societyHash,
+    //     own: ownHash
+    // }];
 
     // getLayer is a LayerGroup method, so those needed too 
     // let societySitesGroup = L.layerGroup();
@@ -92,8 +118,9 @@
                 maxWidth : 'auto'
                 });
             }            
-             siteLayerGroups.societySitesGroup[0].addLayer(layer); 
-             idHashes.society[feature.properties.id] = layer._leaflet_id;
+             siteLayerGroups.societySitesGroup.addLayer(layer); 
+            hashMaps[org].set(feature.properties.id, layer._leaflet_id);
+        
     }
 
     function onEachFeature_own(feature, layer) {
@@ -105,8 +132,9 @@
                 maxWidth : 'auto'
                 });      
             }
-            siteLayerGroups.ownSitesGroup.addLayer(layer); 
-            idHashes.own[feature.properties.id] = layer._leaflet_id;  
+            siteLayerGroups.ownSitesGroup.addLayer(layer);
+            hashMaps[0].set(feature.properties.id, layer._leaflet_id);
+        
     }
 
     // example_100_random_site.geojson
@@ -117,24 +145,25 @@
 
 
     // lintutornit_lly_kaikki_2017_wgs84.geojson
-    sites[0] = new L.GeoJSON.AJAX( societySitesFile, { pointToLayer : function(geoJsonPoint, latlng) {
+    var sites = new L.GeoJSON.AJAX( societySitesFile, { pointToLayer : function(geoJsonPoint, latlng) {
     return L.circleMarker(latlng, siteMarkerOptions);
 	}, onEachFeature: onEachFeature});
 
     //
 
-        sites[0].on('data:loaded', function () {
+        sites.on('data:loaded', function () {
             console.log('tasolla kohteita: ', counter);
             counter = 0;
-            var sitesAsJSON = sites[0].toGeoJSON();
-            tableFeatures(sitesAsJSON,"societySites");         
+            var sitesAsJSON = sites.toGeoJSON();
+            siteLists[org] = tableFeatures(sitesAsJSON,"societySites"); 
+
         });  
 
        ownsites.on('data:loaded', function () {
             console.log('omalla tasolla kohteita: ', counter);
             counter = 0;
             var sitesAsJSON = ownsites.toGeoJSON();   
-            tableFeatures(sitesAsJSON,"ownSites");
+            siteLists[0] = tableFeatures(sitesAsJSON,"ownSites");
         }); 
 
     // 
@@ -147,7 +176,7 @@
         zoom: 6,
         minZoom: 3,
         maxZoom: 14,
-        layers: [taustakartta, sites[0]],    
+        layers: [taustakartta, sites],    
         maxBounds: [[58.2133,16.16359],
                     [71.2133,36.16359]],
         //test canvas renderer,
@@ -177,7 +206,7 @@
     	};
 
     	const siteLayers = {
-    		"Yhdistyspaikat <span id='common-sites-control'></span>" : sites[0],
+    		"Yhdistyspaikat <span id='common-sites-control'></span>" : sites,
     		"Omat paikat" : ownsites
     	};
 
@@ -560,8 +589,45 @@
         $(".dropdown-item").click(function(){
             var soc = ( $(this).data ( 'id' ));
             sites[soc] = createLayer (soc);
+            
+            map.addLayer(sites[soc]);
+
             });
 
+        $('#sites-content'). on( 'click', 'li', function() {
+
+            scope = this.closest('div').id;
+            console.log(scope);
+
+            m = (scope === 'ownSites') ? 0 : org; 
+
+            layergroupName = scope + 'Group';
+        
+            //own or society, ugly fix this by changin function call
+            hashkey = scope.substr(0, scope.length - 5);
+
+            id = $( this ).data('id');
+
+            console.log(hashkey, id);
+
+            //get Leaflet internal layer ID from our table
+
+            internalid = hashMaps[m].get(id);
+
+            console.log('internal ' + internalid + ' id ' + id);
+
+            //when we know ID, we can get layer from LayerGroup
+            // societySitesGroup is an array of layerGroups
+
+            if (scope === "societySites") {
+                sitePoint = siteLayerGroups[layergroupName].getLayer(internalid);
+            }
+            else {
+                sitePoint = siteLayerGroups[layergroupName].getLayer(internalid);           
+            }
+
+            setSite(sitePoint);
+        });   
 
 
         //collapse obs point layer switcher, when under certain display resolution
@@ -590,17 +656,6 @@
 
         map.on('resize', sizeCheck);
 
-
-        //spacebar pan testing 
-        
-
-		// map.on('keypress', function(ev) {
-  //           var keyPressed = ev.originalEvent.code;
-  //           if (keyPressed === 'Space') {
-  //           alert('spacebar downn'); // ev is an event object (MouseEvent in this case)
-  //           }
-
-  //           });
 
 // test functions
             
