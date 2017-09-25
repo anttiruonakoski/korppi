@@ -3,6 +3,9 @@
 
 function tableFeatures(jsonObj,scope) {
 
+
+
+
     //scope societySites, ownSites
     //observation site lists population relies on list.js
     //generic appendchild method & class changes would be faster but list.js gives indexed, searchable object
@@ -111,6 +114,7 @@ function tableFeatures(jsonObj,scope) {
     // console.log('tehdään lista n itemistä: ',listValues.length);
 
     div.appendChild(list);
+    siteElements[org] = div.cloneNode(true);
 
     // console.timeEnd('lista');
     // console.time('list.js');

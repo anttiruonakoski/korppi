@@ -3,10 +3,14 @@
     var map;
 	var L;
     var ownSites;
+    var orgsNames;
 
     var hashMaps = {};
     var siteLists = {};
+    var siteElements = {};
+
     var assocSites = {};
+    var assocGroups = {};
     var sList = {};
 
     const me = {  
@@ -15,8 +19,9 @@
     };    
 
     const associations = [
-               {id: 23, name: 'Lapin lintutieteellinen yhdistys ry'} ,
-               {id: 99, name: 'Koko Suomi', }
+               {id: 23, name: 'Lapin lintutieteellinen yhdistys ry'},
+               {id: 99, name: 'Koko Suomi'},
+               {id: 25, name: 'Kemi-Tornion lintuharrastajat Xenus ry'}
     ];  
           
     //shorthand for organizations
@@ -28,6 +33,8 @@
        hashMaps[org.id] = new Map();
        siteLists[org.id] = null;
        assocSites[org.id] = null;
+       siteElements[org.id] = null;
+       assocGroups[org.id] = new L.layerGroup();
     });
 
     var org = 23; //deftault to LLY
@@ -42,7 +49,7 @@
     //Site markers must be grouped as a layerGroup, so that we can select feature by id.
     // getLayer is a LayerGroup method
     let siteLayerGroups = {
-        societySitesGroup : new L.layerGroup(),
+        societySitesGroup : assocGroups,
         ownSitesGroup : new L.layerGroup()
     };
 
@@ -118,7 +125,7 @@
                 maxWidth : 'auto'
                 });
             }            
-            siteLayerGroups.societySitesGroup.addLayer(layer); 
+            siteLayerGroups.societySitesGroup[org].addLayer(layer); 
             hashMaps[org].set(feature.properties.id, layer._leaflet_id);
         
     }
@@ -536,8 +543,14 @@
 		    }); 
 
 		$("#btn-save-site").click(function(){
-				$('#alert-save-site').removeClass('fade');
+
+                div = document.getElementById('alertbox');
+                div.innerHTML = '<div class="col-7 alert alert-success alert-dismissible fade show" role="alert" id="alert-save-site"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button> Tallennettu omiin paikkoihin </div> ';
+
+				// $('#alert-save-site').removeClass('fade');
 		    });
+
+
 
             $("#btn-get-placenames").click(function(){
                 getPlaceNames = !getPlaceNames;
@@ -592,11 +605,13 @@
 
         $(".dropdown-item").click(function(){
             var soc = ( $(this).data ( 'id' ));
-            sites[soc] = createLayer (soc);
+            console.log(soc);
             
-            map.addLayer(sites[soc]);
+            createLayer(soc);
 
-            });
+        }); 
+
+            // map.addLayer(sites);
 
         $('#sites-content'). on( 'click', 'li', function() {
 
@@ -614,19 +629,18 @@
 
             internalid = hashMaps[m].get(id);
 
-            console.log('internal ' + internalid + ' id ' + id);
-
+            console.log('internal ' + internalid + ' id ' + id + ' org' + org);
             //when we know ID, we can get layer from LayerGroup
 
             if (scope === "societySites") {
-                sitePoint = siteLayerGroups[layergroupName].getLayer(internalid);
+                sitePoint = siteLayerGroups.societySitesGroup[org].getLayer(internalid);
             }
             else {
-                sitePoint = siteLayerGroups[layergroupName].getLayer(internalid);           
+                sitePoint = siteLayerGroups.ownSitesGroup.getLayer(internalid);           
             }
 
             setSite(sitePoint);
-        });   
+        });
 
 
         //collapse obs point layer switcher, when under certain display resolution

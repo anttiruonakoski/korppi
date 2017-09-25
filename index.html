@@ -259,22 +259,23 @@
         </form>
 
 
-    <div class="py-3" >            
- 			<button class="btn btn-primary btn-sm" type="button" id="btn-save-site"><i class="fa fa-check fa-1x" aria-hidden="true"></i> Tallenna omiin paikkoihin</button>
-    </div>
+    
+    <div class="py-3 col-12 ml-0 mr-0 pl-0" > 
 
-    <div class="col-12 alert alert-success alert-dismissible fade d-none" role="alert" id="alert-save-site">
+ 			<button class="btn btn-primary btn-sm" type="button" id="btn-save-site"><i class="fa fa-check fa-1x" aria-hidden="true"></i> Tallenna omiin paikkoihin</button>
+
+        <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-lock fa-1x" aria-hidden="true"></i> Lukitse paikka</button>
+    </div>
+   
+
+    <div id="alertbox">
+    <!-- <div class="col-7 alert alert-success alert-dismissible hide" role="alert" id="alert-save-site">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
       </button>
-      Tallennettu
-    </div>  
-
-
-    <div class="py-3">
-        <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-lock fa-1x" aria-hidden="true"></i> Lukitse paikka</button>
-    </div>
-
+      Tallennettu omiin paikkoihin
+    </div>   -->
+    </div> 
 
 <!--     ilmoituslomake alkaa
  -->
@@ -414,23 +415,59 @@
 
 
   	
-<div class="row hack">
-  	<div class="col mt-2">
-  	<form>
+
+  	
+  <div class="row hack">
+    <div class="col-lg-9">
+    <form>
   	<div class="form-row">
+
   		<div class ="col-2">
+        <label class="form-control-label">Laji</label>
   			<input type="text" class="form-control form-control-sm" placeholder="Laji">
   		</div>
   		<div class ="col-1">
+         <label class="form-control-label">Lukumäärä</label>
   			<input type="text" class="form-control form-control-sm" placeholder="Lkm">
   		</div>
-  		<div class ="col-7">
-  			<p>Havainnon tiedot tulevat tänne</p>
-  		</div>
+      <div class ="col-1">
+         <label class="form-control-label"><i class="fa fa-mars" aria-hidden="true"></i>&nbsp;<i class="fa fa-venus" aria-hidden="true"></i>
+      </label>
+        <input type="text" class="form-control form-control-sm" placeholder="sukupuoli">
+      </div>
+      <div class ="col-2">
+         <label class="form-control-label">Tila</label>
+        <input type="text" class="form-control form-control-sm" placeholder="Tila">
+      </div>
+      <div class ="col-3">
+         <label class="form-control-label">Lisätietoja</label>
+        <input type="text" class="form-control form-control-sm" placeholder="Lisätietoja">
+      </div>
+      <div class ="col-1">
+         <label class="form-control-label">Puku</label>
+        <input type="text" class="form-control form-control-sm" placeholder="Puku">
+      </div>
+       <div class ="col-1">
+         <label class="form-control-label">Ikä</label>
+        <input type="text" class="form-control form-control-sm" placeholder="Ikä">
+      </div>
+       <div class ="col-1">
+         <label class="form-control-label">Parvi</label>
+        <input type="text" class="form-control form-control-sm" placeholder="Parvi">
+      </div>
+      
+
+  		
+
   	</div>
   	</form>
   	</div>
-  	</div> 
+
+    <div class="col-lg-3 d-flex align-items-end">
+    <button class="btn btn-success">Tallenna</button>
+    </div>
+
+  </div>
 
   	
   	</div>

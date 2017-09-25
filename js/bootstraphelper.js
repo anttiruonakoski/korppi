@@ -43,5 +43,7 @@
     time1.setAttribute('placeholder', obsStartTime); 
     // time.attr;
 
+    $(".alert-save-site").alert('close')
+
     });
  
