@@ -19,7 +19,7 @@ function tableFeatures(jsonObj,scope) {
 
     var listLength = features.length;
 
-    const headerText = {societySites: "Yhdistyspaikat", ownSites: "Omat havaintopaikat"};
+    const headerText = {societySites: "Yhdistyspaikat", ownSites: "Omat paikat"};
 
     // var header = document.getElementById("sites-title"); 
 
@@ -36,9 +36,13 @@ function tableFeatures(jsonObj,scope) {
     div.classList.add('col-xs-12', 'col-sm-12', 'col-md-12', 'col-lg-6', 'col-xl-6');
 
     div2 = document.createElement('div');
-    div.appendChild(div2);
+    hdr = document.createElement('h6');
+    div.appendChild(div2).appendChild(hdr);
 
-    div2.textContent = headerText[scope] + ' ' + listLength + ' kpl';
+    hdr.textContent = headerText[scope] + ' ' + listLength + ' kpl';
+
+    // hdr.classList.add('');
+
     div2.classList.add('d-lg-inline-block','d-md-none', 'd-sm-none', 'd-none');
 
     //it's important to define layout order. otherwise it'd depend which div's file was loaded first.

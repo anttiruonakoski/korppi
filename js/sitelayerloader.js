@@ -1,17 +1,18 @@
 // new layer loader
 
-function createLayer (societyID) {
+function createLayer (assocId) {
 
-	console.log(typeof sites[societyID]);
+	console.log(typeof assocsites[assocId]);
 	var newLayer;
 
-	if (typeof sites[societyID] !== "undefined" ) {
+	if (typeof assocsites[assocId] !== "undefined" ) {
 		return;
 	}  
 
-	switch (societyID) {
+	switch (assocId) {
 		case 99: 
-			var societySitesFile = 'data/7500.geojson';			
+			var societySitesFile = 'data/7500.geojson';	
+			console.log('koko suomi ladataan');			
 			break; 
 	}
 

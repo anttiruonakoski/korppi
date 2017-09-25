@@ -3,8 +3,17 @@
 */
       @font-face {
         font-family: 'Roboto', sans-serif;
-      }  
-        
+      }
+
+      h6, h5 {
+        font-family: 'Roboto Slab', serif;
+      }
+
+      label.form-control-label {
+        font-size: 80%!important;
+        margin-bottom: 0;
+      }
+
           #map_div {
                     width: 100%;
                     height: 720px;
@@ -114,6 +123,15 @@
         #map_div {
               height: 600px;
       }
+
+          #main_div, #info{
+            background: url('../images/corrax.png');
+            background-size: 50px;
+            background-position: right bottom; /*Positioning*/
+            background-repeat: no-repeat; /*Prevent showing multiple background images*/
+            max-width: 1900px;
+        }
+
       }
 
     /*    // Large devices (desktops, 992px and up)*/
@@ -135,6 +153,9 @@
           #obs-tools {
                       margin-left: 45px;
           }
+
+        
+
       } 
 
       @media (max-width: 420px) {
@@ -189,7 +210,7 @@
       }
 
       /*      hack, maybe needed cause bug below
-*/    ul.modal-body {
+*/    .modal-body {
       will-change: transform;
       }
 

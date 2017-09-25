@@ -2,11 +2,11 @@
 	
     var map;
 	var L;
+    var ownSites;
 
     var hashMaps = {};
     var siteLists = {};
-
-    var idhashMap = new Map();
+    var assocSites = {};
     var sList = {};
 
     const me = {  
@@ -27,7 +27,7 @@
     //23, [lly, {havaintopaikan id: leaflet-id}]    
        hashMaps[org.id] = new Map();
        siteLists[org.id] = null;
-
+       assocSites[org.id] = null;
     });
 
     var org = 23; //deftault to LLY
@@ -118,7 +118,7 @@
                 maxWidth : 'auto'
                 });
             }            
-             siteLayerGroups.societySitesGroup.addLayer(layer); 
+            siteLayerGroups.societySitesGroup.addLayer(layer); 
             hashMaps[org].set(feature.properties.id, layer._leaflet_id);
         
     }
@@ -155,6 +155,7 @@
             console.log('tasolla kohteita: ', counter);
             counter = 0;
             var sitesAsJSON = sites.toGeoJSON();
+            assocSites[org] = sites; 
             siteLists[org] = tableFeatures(sitesAsJSON,"societySites"); 
 
         });  
@@ -445,13 +446,13 @@
                         }
 
                         //should really fix this, no logic here
-                        map.removeLayer(sites[0]);
+                        map.removeLayer(sites);
                         map.removeLayer(ownsites);
                         
                         centerObs(zoomLevel);
 
                         map.once('moveend', function() {
-                            map.addLayer(sites[0]);
+                            map.addLayer(sites);
                             map.addLayer(ownsites);
                         });  
 
@@ -534,11 +535,14 @@
                 }
 		    }); 
 
-
-		$("#btn-get-placenames").click(function(){
-				getPlaceNames = !getPlaceNames;
-				console.log(getPlaceNames);
+		$("#btn-save-site").click(function(){
+				$('#alert-save-site').removeClass('fade');
 		    });
+
+            $("#btn-get-placenames").click(function(){
+                getPlaceNames = !getPlaceNames;
+                console.log(getPlaceNames);
+            });
 
         // clears
 
@@ -596,19 +600,15 @@
 
         $('#sites-content'). on( 'click', 'li', function() {
 
+            //click was in own sites or assoc sites
             scope = this.closest('div').id;
-            console.log(scope);
-
             m = (scope === 'ownSites') ? 0 : org; 
 
             layergroupName = scope + 'Group';
-        
-            //own or society, ugly fix this by changin function call
+            //ugly, fix this by changin function call
             hashkey = scope.substr(0, scope.length - 5);
 
             id = $( this ).data('id');
-
-            console.log(hashkey, id);
 
             //get Leaflet internal layer ID from our table
 
@@ -617,7 +617,6 @@
             console.log('internal ' + internalid + ' id ' + id);
 
             //when we know ID, we can get layer from LayerGroup
-            // societySitesGroup is an array of layerGroups
 
             if (scope === "societySites") {
                 sitePoint = siteLayerGroups[layergroupName].getLayer(internalid);

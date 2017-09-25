@@ -35,9 +35,9 @@
    <!--  integrity attribute causes loading twice	 -->
    <!--  integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"> -->
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab:700" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab:400" rel="stylesheet"/>
 
     <link rel="stylesheet" href="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css">
     <link rel="stylesheet" href="bower_components/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
@@ -146,17 +146,17 @@
 		</div>
 <!-- 		end of map_div   -->
 
-    <div class="col-lg-4 col-md-5 col-12 pl-md-1 pl-lg-3 pl-1 pr-1 mt-1 mt-sm-1 mt-md-1 mt-lg-0 mt-xl-0" id="lomake">
+    <div class="col-lg-4 col-md-5 col-12 pl-md-1 pl-lg-3 pl-1 pr-1 mt-1 mt-sm-1 mt-md-1 mt-lg-0 mt-xl-0 d-flex align-items-start flex-wrap" id="lomake">
     		<div class="row hack">  
 
 				<div class="col-xl-3 col-auto">
-    	  <button class="btn btn-primary btn-sm mb-1" type="button" id="common-sites" data-toggle="modal" data-target="#site-list-modal">Hae listalta</button>
+    	  <button class="btn btn-primary btn-sm mb-1" type="button" id="common-sites" data-toggle="modal" data-target="#site-list-modal"><i class="fa fa-superpowers" aria-hidden="true">&nbsp;&nbsp;</i>Hae listalta</button>
     	  </div>
 				
     	  <div class="col-auto">
     	  <div class="dropdown">
 
-    	  			<button class="btn btn-secondary btn-sm dropdown-toggle clear-right" type="button" id="common-sites-changer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="soc-selected">Lapin lintutieteellinen yhdistys ry</button>
+    	  			<button class="btn btn-secondary btn-sm dropdown-toggle clear-right" type="button" id="common-sites-changer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="soc-selected"><i class="fa fa-map" aria-hidden="true"></i>&nbsp;&nbsp;Lapin lintutieteellinen yhdistys ry</button>
     	  			<div class="dropdown-menu" aria-labelledby="common-sites-changer">
     	  				<h6 class="dropdown-header">Yhdistys, jonka havaintopaikat näytetään</h6>
     						<a class="dropdown-item" href="#" data-id="25" >Kemi-Tornion lintuharrastajat Xenus ry</a>
@@ -175,21 +175,21 @@
     	  </div>	
     	
 
-	<div class="col">
+	<div class="col-12">
 				Havainnoijan paikka
 				<form class="needs-validation" id="obs-form" novalidate>
           <div class="form-group">
             <div class="row m-0 p-0 justify-content-start">
               <div class="col-lg-3 col-sm-3 col-3 mr-1 p-0">
-    				    <label class="mb-0"><small>P-koord:</small></label>
+    				    <label class="form-control-label">P-koord:</label>
     				    <input type="text" class="form-control form-control-sm" id="obs-n-koord" placeholder="0000000" size="8" disabled>
               </div>
               <div class="col-lg-3 col-sm-3 col-3 mx-1 p-0">
-    				    <label class="mb-0"><small>I-koord:</small></label>
+    				    <label class="form-control-label">I-koord:</label>
     				    <input type="text" class="form-control form-control-sm" id="obs-e-koord" placeholder="000000" size="6" disabled>	
               </div>  
               <div class="col-lg-3 col-sm-3 col-auto mx-1 p-0 align-self-end">
-                <label class="mb-0 d-block"><small>Tarkkuus:</small></label>
+                <label class="form-control-label d-block">Tarkkuus:</label>
                 <select class="custom-select form-control-sm d-block" id="obs-accuracy" disabled>
                   <option selected value="0">ei määr.</option>
                   <option value="50">alle 50 m</option>
@@ -210,33 +210,33 @@
                   
               </div> 
             </div>   
-    				<label class="d-sm-none d-lg-inline"><small>Kunta:</small></label>
+    				<label class="form-control-label d-sm-none d-lg-inline">Kunta:</label>
     				<input type="text" class="form-control form-control-sm my-sm-1 my-md-1 my-lg-0" id="obs-kunta-name" placeholder="ei kuntaa" size="25" disabled/>
                 <div class="invalid-feedback">
                     Et voi asettaa havaintopaikkaa Suomen ulkopuolelle.
                 </div>
-    				<label class="d-sm-none d-lg-inline" ><small>Paikannimi:</small></label>
+    				<label class="form-control-label d-sm-none d-lg-inline" >Paikannimi:</label>
     				<input type="text" class="form-control form-control-sm my-sm-1 my-md-1 my-lg-0" id="obs-place-name" placeholder="anna paikka" size="25">
     	</form>
 
     	
     	 <form class="needs-validation" id="bird-form" novalidate>
     			<fieldset>
-    				<div class="col-6 col-xl-6 py-1 pl-0 mr-xl-0">
+    				<div class="col-6 col-xl-6 pt-1 pl-0 pb-0 mr-xl-0 mb-0">
 						Linnun paikka
 						</div> 
 
     				<div class="row m-0 p-0 justify-content-start">
               <div class="col-lg-3 col-sm-3 col-3 mr-1 p-0">
-    				    <label class="mb-1"><small>P-koord:</small></label>
+    				    <label class="form-control-label">P-koord:</label>
     				    <input type="text" class="form-control form-control-sm" id="bird-n-koord" placeholder="0000000" size="8" readonly />
               </div>
               <div class="col-lg-3 col-sm-3 col-3 mx-1 p-0">
-    				    <label class="mb-1"><small>I-koord:</small></label>
+    				    <label class="form-control-label">I-koord:</label>
     				    <input type="text" class="form-control form-control-sm" id="bird-e-koord" placeholder="000000" size="6" readonly />	
               </div>  
               <div class="col-lg-3 col-sm-3 col-auto mx-1 p-0 align-self-end">
-                <label class="mb-1"><small>Tarkkuus:</small></label>
+                <label class="form-control-label">Tarkkuus:</label>
                 <select class="custom-select form-control-sm d-block" id="bird-accuracy" disabled>
                   <option selected value="0">ei määr.</option>
                   <option value="10">alle 10 m</option>
@@ -260,18 +260,53 @@
 
 
     <div class="py-3" >            
- 			<button class="btn btn-primary btn-sm" type="button" ><i class="fa fa-check fa-1x" aria-hidden="true"></i> Tallenna omiin paikkoihin</button>
+ 			<button class="btn btn-primary btn-sm" type="button" id="btn-save-site"><i class="fa fa-check fa-1x" aria-hidden="true"></i> Tallenna omiin paikkoihin</button>
     </div>
+
+    <div class="col-12 alert alert-success alert-dismissible fade d-none" role="alert" id="alert-save-site">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
+      Tallennettu
+    </div>  
+
 
     <div class="py-3">
         <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-lock fa-1x" aria-hidden="true"></i> Lukitse paikka</button>
     </div>
 
+
+<!--     ilmoituslomake alkaa
+ -->
+
+    <form>
+       <div class="form-row">
+        <div class="col-3">
+        <label class="form-control-label">Alkupäivä</label>
+        <input type="text" class="form-control form-control-sm" id="obs-start-date" placeholder="">
+      </div>
+        <div class="col-3">
+        <label class="form-control-label">Loppupäivä</label>
+        <input type="text" class="form-control form-control-sm" id="obs-start-date" placeholder="">
+      </div>
+
+      <div class="col-2">
+        <label class="form-control-label">Havainnointiaika</label>
+        <input type="text" class="form-control form-control-sm" id="obs-start-time" placeholder="">
+      </div>
+      <div class="col-2">
+        <label class="form-control-label"> </label>
+        <input type="text" class="form-control form-control-sm" id="obs-start-time" placeholder="">
+      </div>
+
+    </div>
+    </form>
+
+
+
     <div class="bottom-column">
           
-          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#tietoa-sivusta">
-          <i class="fa fa-info fa-1x" aria-hidden="true"></i> Sivusta
-          </button>   
+          
 
           <!-- Modal -->
           <div class="modal fade" id="tietoa-sivusta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -340,7 +375,7 @@
            </div>
            <div class="modal-body pt-2" id="sites-content">
              <div class="row" id="tabs" >
-               <div class="col-12" id="tabheader"> tabis tähä </div>  
+               <div class="col-12" id="tabheader"> tabit tähän </div>  
                </div> 
              </div>
            <div class="modal-footer">
@@ -350,11 +385,34 @@
        </div>
      </div>           
 
-    </div>  
+    </div> 
+
+   
+
       	</div>
+
+
   	</div>
+
+        
+        
+
+
   	</div>
-  	</div>
+
+      <div class="align-self-end"> 
+         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#tietoa-sivusta">
+         <i class="fa fa-info fa-1x" aria-hidden="true"></i> Sivusta</button>
+       </div>  
+
+
+  	</div><!--  row -->
+
+
+
+    <!--  info button -->
+
+
   	
 <div class="row hack">
   	<div class="col mt-2">
@@ -393,25 +451,25 @@
   	var searchString = $(this).val();
 
     if (searchString.length >= searchMinChar) {
-      sList[0].search(searchString);
-      sList[1].search(searchString);
+      siteLists[0].search(searchString);
+      siteLists[org].search(searchString);
       searchOff = false;
     }
     else {  
     if (searchString.length === searchMinChar-1 && searchOff === false) {
       searchOff = true;
-      sList[0].search();
-      sList[1].search();
+      siteLists[0].search();
+      siteLists[org].search();
     }   
-    } 
+org   } 
 		});
 
     $('#site-list-modal').on('hidden.bs.modal', function () {
     if (searchOff === false) {
-        sList[0].search();
-        sList[1].search();
+        siteLists[0].search();
+        siteLists[org].search();
     }   
-    });
+org   });
    
     // $(this).find('#sites-search').focus();
 
